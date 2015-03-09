@@ -21,7 +21,8 @@ module.exports = function(grunt) {
 		uglify: {
 			 target: {
 			 	files: {
-			 		'js/scripts.js': ['src/js/scripts.js']
+			 		'js/scripts.js': ['src/js/scripts.js'],
+			 		'js/lib/knockout-3.3.0.js': ['src/js/lib/knockout-3.3.0.js']
 			 	}
 			 }
 		},
