@@ -1,0 +1,22 @@
+{
+  "name": "neighborhood-map",
+  "version": "1.0.0",
+  "description": "project 5 - Front-End Nanodegree",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "grunt": "^0.4.5"
+  },
+  "devDependencies": {
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-cssmin": "^0.12.2",
+    "grunt-contrib-imagemin": "^0.9.3",
+    "grunt-contrib-uglify": "^0.8.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-inline": "^0.3.4"
+  }
+}
