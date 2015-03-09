@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 		uglify: {
 			 target: {
 			 	files: {
-			 		'build/js/scripts.js': ['src/js/scripts.js']
+			 		'js/scripts.js': ['src/js/scripts.js']
 			 	}
 			 }
 		},
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: 'src/css',
 					src: ['*.css', '!*.min.css'],
-					dest: 'build/css',
+					dest: 'css',
 					ext: '.css'
 				}]
 			}
@@ -42,24 +42,24 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: 'src/images',
 					src: ['**/*.{png,jpg,gif,svg}'],
-					dest: 'build/images'
+					dest: 'images'
 				}]
 			}
 		},
 		inline: {
 			dist: {
 				src: 'src/index.html',
-				dest: 'build/index.html'
+				dest: 'index.html'
 			}
 		},
 		watch: {
 			js: {
 				files: ['src/js/**/*.js'],
-				tasks: ['concat', 'inline'],
+				tasks: ['concat', 'uglify', 'inline'],
 			},
 			css: {
 				files: ['src/css/**/*.css'],
-				tasks: ['concat', 'inline'],
+				tasks: ['concat', 'cssmin', 'inline'],
 			},
 			img: {
 				files: ['src/images/**/*'],
