@@ -7,3 +7,6 @@
 ## Sources
 The code in this repository as well as the ideas put in practice here were possible thanks to the authors of the following:
 * <a href="http://webdesigntutsplus.s3.amazonaws.com/tuts/365_google_maps/demo/index.html">Responsive, Retinafied Google Map Images</a>
+* <a href="http://bradfrost.com/blog/post/adaptive-maps/">Adaptive Maps</a>
+* <a href="https://developers.google.com/maps/documentation/javascript/tutorial">Google Maps JavaScript API v3</a>
+* <a href="https://developers.google.com/maps/documentation/staticmaps/">Static Maps API V2 Developer Guide</a>
