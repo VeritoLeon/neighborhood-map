@@ -1,1 +1,1 @@
-function initialize(){{var a={center:{lat:-34.397,lng:150.644},zoom:8};new google.maps.Map(document.getElementById("map-canvas"),a)}}var Map=function(){},ViewModel=function(){};google.maps.event.addDomListener(window,"load",initialize);
+function initialize(){{var a={center:{lat:27.495,lng:-109.969},zoom:15};new google.maps.Map(document.getElementById("map-canvas"),a)}}var Map=function(){},ViewModel=function(){};google.maps.event.addDomListener(window,"load",initialize);
