@@ -5,6 +5,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link rel="stylesheet" href="css/vendors.css"/>
 	<style>
+#topbar {
+	padding: 0.25em;
+}
+
 #map-canvas { 
 	height: 100%;
 	margin: 0; 
@@ -43,6 +47,16 @@ only screen and (min-device-pixel-ratio: 2){
 </style>
 </head>
 <body>
+		<form id="topbar" class="fixed">
+			<div class="row collapse postfix">
+			    <div class="large-8 small-9 columns">
+			      <input type="text" placeholder="Find places">
+			    </div>
+			    <div class="large-4 small-3 columns">
+			      <a href="#" class="button postfix">Search</a>
+			    </div>
+		  </div>
+		</form>		
 	<div id="map-canvas">
 		<div  class="google_map">
 			<img src="https://maps.googleapis.com/maps/api/staticmap?center=27.4950000,-109.969000&zoom=15&size=640x640" alt="Map showing ITSON and Laguna del Nainari">
@@ -59,7 +73,18 @@ var ViewModel = function() {};
 function initialize() {
 	var mapOptions = {
 		center: { lat: 27.4950000, lng: -109.969000},
-		zoom: 15
+		zoom: 15,
+		panControl: false,
+		streetViewControl: false,
+		zoomControl: true,
+		overviewMapControl: false,
+		mapTypeControlOptions: {
+			style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+			mapTypeIds: [
+		        google.maps.MapTypeId.ROADMAP,
+		        google.maps.MapTypeId.TERRAIN
+		      ]
+		    }
 	};
 	var map = new google.maps.Map(document.getElementById('map-canvas'),
 		mapOptions);
