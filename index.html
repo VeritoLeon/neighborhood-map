@@ -6,7 +6,12 @@
 	<link rel="stylesheet" href="css/vendors.css"/>
 	<style>
 #topbar {
+	background-color: #868173;
+}
+
+#search-container {
 	padding: 0.25em;
+	border: none;
 }
 
 #map-canvas { 
@@ -48,11 +53,11 @@ only screen and (min-device-pixel-ratio: 2){
 </head>
 <body>
 		<form id="topbar" class="fixed">
-			<div class="row collapse postfix">
-			    <div class="large-8 small-9 columns">
+			<div id="search-container" class="row collapse postfix">
+			    <div class="large-5 small-9 columns">
 			      <input type="text" placeholder="Find places">
 			    </div>
-			    <div class="large-4 small-3 columns">
+			    <div class="large-2 end small-3 columns">
 			      <a href="#" class="button postfix">Search</a>
 			    </div>
 		  </div>

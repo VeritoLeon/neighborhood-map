@@ -1,5 +1,10 @@
 #topbar {
+	background-color: #868173;
+}
+
+#search-container {
 	padding: 0.25em;
+	border: none;
 }
 
 #map-canvas { 
