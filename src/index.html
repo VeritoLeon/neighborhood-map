@@ -1,30 +1,46 @@
 <html>
-<head>
-	<title>Neighborhood Map</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="stylesheet" href="css/vendors.css"/>
-	<link rel="stylesheet" href="css/styles.css?__inline=true"/>
-</head>
-<body>
-		<form id="topbar" class="fixed">
-			<div id="search-container" class="row collapse postfix">
-			    <div class="large-5 small-9 columns">
-			      <input type="text" placeholder="Find places">
-			    </div>
-			    <div class="large-2 end small-3 columns">
-			      <a href="#" class="button postfix">Search</a>
-			    </div>
-		  </div>
-		</form>		
-	<div id="map-canvas">
-		<div  class="google_map">
-			<img src="https://maps.googleapis.com/maps/api/staticmap?center=27.4950000,-109.969000&zoom=15&size=640x640" alt="Map showing ITSON and Laguna del Nainari">
+	<head>
+		<title>Neighborhood Map</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="css/vendors.css?__inline=true"/>
+		<link rel="stylesheet" href="css/styles.css?__inline=true"/>
+	</head>
+	<body>
+		
+		<nav id="topbar" class="fixed">
+			<div id="search-container" class="row collapse postfix small-centered">
+				<button id="details-button"><i class="icon-menu"></i></button>
+				<div class="columns small-9 medium-4">
+					<input id="search-input" type="text" placeholder="Find places">
+				</div>
+				<div class="columns small-3 medium-2 end">
+					<a href="#" class="button postfix">Search</a>
+				</div>
+			</div>
+		</nav>	
+		<div class="placeslist fixed">
+			<input type="checkbox" id="placeslist-switcher"/>
+			<label id="place" class="placebar-button" for="placeslist-switcher">
+				<span><i class="icon-cancel"></i></span>
+				<span><i class="icon-location"></i></span>
+			</label>
+			<div>
+				<div>
+					<ul>
+						<li>Place</li><li>Place</li><li>Place</li><li>Place</li><li>Place</li><li>Place</li><li>Place</li><li>Place</li>
+					</ul>
+				</div>
+			</div>
 		</div>
-	</div>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="js/lib/knockout-3.3.0.js"></script>
-	<script type="text/javascript" src="js/scripts.js?__inline=true"></script>
-</body>
+		<div id="map-canvas">
+				<div  class="google_map">
+					<img width="640" height="640" src="" alt="Map showing ITSON and Laguna del Nainari">
+				</div>
+		</div>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="js/lib/knockout-3.3.0.js"></script>
+		<script type="text/javascript" src="js/scripts.js?__inline=true"></script>
+	</body>
 </html>

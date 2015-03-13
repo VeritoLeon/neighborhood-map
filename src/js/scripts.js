@@ -8,7 +8,7 @@ function initialize() {
 		zoom: 15,
 		panControl: false,
 		streetViewControl: false,
-		zoomControl: true,
+		zoomControl: false,
 		overviewMapControl: false,
 		mapTypeControlOptions: {
 			style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -21,4 +21,9 @@ function initialize() {
 	var map = new google.maps.Map(document.getElementById('map-canvas'),
 		mapOptions);
 }
-google.maps.event.addDomListener(window, 'load', initialize);
+
+try {
+	google.maps.event.addDomListener(window, 'load', initialize);
+} catch (e) {
+  console.log('Google map wasn\'t loaded');
+}

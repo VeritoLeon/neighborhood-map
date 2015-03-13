@@ -53,6 +53,14 @@ module.exports = function(grunt) {
 				dest: 'index.html'
 			}
 		},
+		copy: {
+			files: {
+				cwd: 'src/font',
+				src: '**/*',      
+				dest: 'font',
+				expand: true
+			}
+		},
 		watch: {
 			js: {
 				files: ['src/js/**/*.js'],
@@ -76,6 +84,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-inline');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.registerTask('default', ['concat', 'uglify', 'cssmin', 'imagemin', 'inline', 'watch']);
