@@ -6837,7 +6837,7 @@ th {
  .placeslist > div
 {
     margin-top: -150%;
-    padding: 0 1.5em;
+    padding: 0 64px;
     font-size: 12px;
 }
  
@@ -6885,6 +6885,7 @@ th {
 {
     opacity: 1;
     transition: opacity 300ms 300ms ease-in-out;
+    position: fixed;
 }
  
 .placeslist input:not(:checked) ~ .placebar-button span:last-child
@@ -6900,6 +6901,11 @@ th {
 .placeslist input:checked ~  div
 {
     margin-top: 2.7rem;
+}
+
+.placeslist ul {
+    overflow: hidden;
+    overflow-y: scroll;
 }
 
 .placeslist li {
@@ -6924,6 +6930,7 @@ th {
     .placeslist > div {
         box-shadow: none;
         margin-top: 45px;
+        padding: 0 1.5em;
         height: 100vh;
     }
 
