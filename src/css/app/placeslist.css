@@ -1,7 +1,10 @@
 /*
  * Based on "CSS3 Hello Bar" by Martin Ivanov (http://wemakesites.net/)
  **/
- 
+ .hidden {
+    display: none;
+ }
+
 :root .placeslist,
 .placebar-button,
 .placebar-button span
@@ -113,7 +116,8 @@
 
 .placeslist ul {
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
+    max-height: 90vh;
 }
 
 .placeslist li {

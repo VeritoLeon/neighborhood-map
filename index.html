@@ -6793,7 +6793,10 @@ th {
 /*
  * Based on "CSS3 Hello Bar" by Martin Ivanov (http://wemakesites.net/)
  **/
- 
+ .hidden {
+    display: none;
+ }
+
 :root .placeslist,
 .placebar-button,
 .placebar-button span
@@ -6905,7 +6908,8 @@ th {
 
 .placeslist ul {
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
+    max-height: 90vh;
 }
 
 .placeslist li {
@@ -7041,7 +7045,7 @@ img {
 				</div>
 			</div>
 		</nav>	
-		<div class="placeslist fixed">
+		<div class="placeslist fixed hidden">
 			<input type="checkbox" id="placeslist-switcher"/>
 			<label id="place" class="placebar-button" for="placeslist-switcher">
 				<span><i class="icon-cancel"></i></span>
@@ -7125,6 +7129,8 @@ function initialize() {
 	infowindow = new google.maps.InfoWindow();
 
 	ko.applyBindings(new ViewModel());
+
+	$('.placeslist.fixed').removeClass('hidden');
 }
 
 try {

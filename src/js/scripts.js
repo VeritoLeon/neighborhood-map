@@ -59,6 +59,8 @@ function initialize() {
 	infowindow = new google.maps.InfoWindow();
 
 	ko.applyBindings(new ViewModel());
+
+	$('.placeslist.fixed').removeClass('hidden');
 }
 
 try {
