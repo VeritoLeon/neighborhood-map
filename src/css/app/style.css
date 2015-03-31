@@ -43,6 +43,12 @@ body {
 	margin: 0; 
 	padding: 0;
 }
+
+div#map-canvas.center {
+  width: 100vw;
+  left: 0;
+}
+
 /*
 nav {
 	margin-top: 44px;

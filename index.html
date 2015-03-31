@@ -6793,9 +6793,6 @@ th {
 /*
  * Based on "CSS3 Hello Bar" by Martin Ivanov (http://wemakesites.net/)
  **/
- .hidden {
-    display: none;
- }
 
 :root .placeslist,
 .placebar-button,
@@ -6842,6 +6839,7 @@ th {
     margin-top: -150%;
     padding: 0 64px;
     font-size: 12px;
+    background-image: url("img/map-bg-3.png");
 }
  
 .placeslist > div > div
@@ -6876,7 +6874,6 @@ th {
 {
     box-shadow: none;
     background: none;
-    color: #C8C8C8;
 }
  
 .placeslist input:not(:checked) ~ .placebar-button span:first-child
@@ -6906,15 +6903,33 @@ th {
     margin-top: 2.7rem;
 }
 
+.location-title {    
+    font-size: 2rem;
+    font-weight: 700;
+    color: #FAEBD7;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
 .placeslist ul {
     overflow: hidden;
     overflow-y: auto;
-    max-height: 90vh;
+    max-height: 70%;
 }
 
 .placeslist li {
     min-height: 48px;
 }
+
+.placeslist a {
+    color: #FFF;
+    background-color: #79726D; 
+    font-size: 1.5em;
+}
+
+.hidden.placeslist.fixed {
+    display: none;
+ }
 
 @media only screen and (min-width: 40.063em) {
     #map-canvas {
@@ -6938,12 +6953,17 @@ th {
         height: 100vh;
     }
 
+    .placeslist > div ul {
+        background-color: #79726D;
+    }
+
     .placeslist > div a {
         display: block;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
         padding: 0 1.5em;
+        font-size: 1em;
     }
 }
 body {
@@ -6991,6 +7011,12 @@ body {
 	margin: 0; 
 	padding: 0;
 }
+
+div#map-canvas.center {
+  width: 100vw;
+  left: 0;
+}
+
 /*
 nav {
 	margin-top: 44px;
@@ -7045,7 +7071,7 @@ img {
 				</div>
 			</div>
 		</nav>	
-		<div class="placeslist fixed hidden">
+		<div class="hidden placeslist fixed">
 			<input type="checkbox" id="placeslist-switcher"/>
 			<label id="place" class="placebar-button" for="placeslist-switcher">
 				<span><i class="icon-cancel"></i></span>
@@ -7053,13 +7079,14 @@ img {
 			</label>
 			<div>
 				<div>
+					<h1 class="location-title"><i class="icon-location"></i> Locations</h1>
 					<ul data-bind="foreach: locations">
 						<li><a data-bind="text: title, click: $parent.openInfoWindow" href="#"></a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
-		<div id="map-canvas">
+		<div id="map-canvas" class="center">
 				<div  class="google_map">
 					<img width="640" height="640" src="" alt="Map showing ITSON and Laguna del Nainari">
 				</div>
@@ -7108,6 +7135,7 @@ var ViewModel = function() {
 
 var map, infowindow;
 function initialize() {
+	$('#map-canvas').removeClass('center');
 	var mapOptions = {
 		center: { lat: 27.4950000, lng: -109.969000},
 		zoom: 15,

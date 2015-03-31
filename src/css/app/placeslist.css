@@ -1,9 +1,6 @@
 /*
  * Based on "CSS3 Hello Bar" by Martin Ivanov (http://wemakesites.net/)
  **/
- .hidden {
-    display: none;
- }
 
 :root .placeslist,
 .placebar-button,
@@ -50,6 +47,7 @@
     margin-top: -150%;
     padding: 0 64px;
     font-size: 12px;
+    background-image: url("../img/map-bg-3.png");
 }
  
 .placeslist > div > div
@@ -84,7 +82,6 @@
 {
     box-shadow: none;
     background: none;
-    color: #C8C8C8;
 }
  
 .placeslist input:not(:checked) ~ .placebar-button span:first-child
@@ -114,15 +111,33 @@
     margin-top: 2.7rem;
 }
 
+.location-title {    
+    font-size: 2rem;
+    font-weight: 700;
+    color: #FAEBD7;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
 .placeslist ul {
     overflow: hidden;
     overflow-y: auto;
-    max-height: 90vh;
+    max-height: 70%;
 }
 
 .placeslist li {
     min-height: 48px;
 }
+
+.placeslist a {
+    color: #FFF;
+    background-color: #79726D; 
+    font-size: 1.5em;
+}
+
+.hidden.placeslist.fixed {
+    display: none;
+ }
 
 @media only screen and (min-width: 40.063em) {
     #map-canvas {
@@ -146,11 +161,16 @@
         height: 100vh;
     }
 
+    .placeslist > div ul {
+        background-color: #79726D;
+    }
+
     .placeslist > div a {
         display: block;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
         padding: 0 1.5em;
+        font-size: 1em;
     }
 }

@@ -19,7 +19,7 @@
 				</div>
 			</div>
 		</nav>	
-		<div class="placeslist fixed hidden">
+		<div class="hidden placeslist fixed">
 			<input type="checkbox" id="placeslist-switcher"/>
 			<label id="place" class="placebar-button" for="placeslist-switcher">
 				<span><i class="icon-cancel"></i></span>
@@ -27,13 +27,14 @@
 			</label>
 			<div>
 				<div>
+					<h1 class="location-title"><i class="icon-location"></i> Locations</h1>
 					<ul data-bind="foreach: locations">
 						<li><a data-bind="text: title, click: $parent.openInfoWindow" href="#"></a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
-		<div id="map-canvas">
+		<div id="map-canvas" class="center">
 				<div  class="google_map">
 					<img width="640" height="640" src="" alt="Map showing ITSON and Laguna del Nainari">
 				</div>

@@ -38,6 +38,7 @@ var ViewModel = function() {
 
 var map, infowindow;
 function initialize() {
+	$('#map-canvas').removeClass('center');
 	var mapOptions = {
 		center: { lat: 27.4950000, lng: -109.969000},
 		zoom: 15,
