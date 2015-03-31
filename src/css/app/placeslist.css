@@ -54,6 +54,8 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    min-height: 2.5em;
+    padding: 1em 0;
 }
  
 .placebar-button,

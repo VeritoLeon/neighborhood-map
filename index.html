@@ -2,7 +2,7 @@
 	<head>
 		<title>Neighborhood Map</title>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<style>
 /*
    Animation example, for spinners
@@ -6783,6 +6783,17 @@ th {
 
 </style>
 		<style>
+.info-title {
+	font-family: Roboto, Arial, sans-serif;
+	font-size: 1.5em;
+}
+
+.info-description {
+	font-family: Roboto, Arial, sans-serif;
+	font-size: 16px;
+}
+
+
 /*
  * Based on "CSS3 Hello Bar" by Martin Ivanov (http://wemakesites.net/)
  **/
@@ -6839,6 +6850,8 @@ th {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    min-height: 2.5em;
+    padding: 1em 0;
 }
  
 .placebar-button,
@@ -6890,6 +6903,10 @@ th {
 .placeslist input:checked ~  div
 {
     margin-top: 2.7rem;
+}
+body {
+	background-color: #eeeade;
+	background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSczMDAnIGhlaWdodD0nMzAwJyB2aWV3Qm94PScwIDAgMzAwIDMwMCc+Cgk8ZGVmcz4KCQk8cGF0dGVybiBpZD0nYmx1ZXN0cmlwZScgcGF0dGVyblVuaXRzPSd1c2VyU3BhY2VPblVzZScgeD0nMCcgeT0nMCcgd2lkdGg9JzEwMCcgaGVpZ2h0PScxMDAnIHZpZXdCb3g9JzAgMCAyMDAgMjAwJyA+CgkJPHJlY3Qgd2lkdGg9JzExMCUnIGhlaWdodD0nMTEwJScgZmlsbD0nI2VlZWFkZScvPgoJCQk8cGF0aCBkPSdNMSwxaDIwMHYyMDBoLTIwMHYtMjAwJyBmaWxsLW9wYWNpdHk9JzAnIHN0cm9rZS13aWR0aD0nMS44JyBzdHJva2UtZGFzaGFycmF5PScwLDEsMScgc3Ryb2tlPScjZjVmM2VjJy8+CgkJPC9wYXR0ZXJuPiAKCQk8ZmlsdGVyIGlkPSdmdXp6JyB4PScwJyB5PScwJz4KCQkJPGZlVHVyYnVsZW5jZSB0eXBlPSd0dXJidWxlbmNlJyByZXN1bHQ9J3QnIGJhc2VGcmVxdWVuY3k9Jy4yIC4zJyBudW1PY3RhdmVzPSc1JyBzdGl0Y2hUaWxlcz0nc3RpdGNoJy8+CgkJCTxmZUNvbG9yTWF0cml4IHR5cGU9J3NhdHVyYXRlJyBpbj0ndCcgdmFsdWVzPScwJy8+CgkJPC9maWx0ZXI+Cgk8L2RlZnM+Cgk8cmVjdCB3aWR0aD0nMTAwJScgaGVpZ2h0PScxMDAlJyBmaWxsPSd1cmwoI2JsdWVzdHJpcGUpJy8+CjxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbHRlcj0ndXJsKCNmdXp6KScgb3BhY2l0eT0nMCcvPgo8L3N2Zz4K');
 }
 #topbar {
 	background-color: #E5E3DF;
@@ -6977,7 +6994,7 @@ img {
 		
 		<nav id="topbar" class="fixed">
 			<div id="search-container" class="row collapse postfix small-centered">
-				<button id="details-button"><i class="icon-menu"></i></button>
+				<button id="details-button"><i class="icon-filter"></i></button>
 				<div class="columns small-9 medium-4">
 					<input id="search-input" type="text" placeholder="Find places">
 				</div>
@@ -6994,8 +7011,8 @@ img {
 			</label>
 			<div>
 				<div>
-					<ul>
-						<li>Place</li><li>Place</li><li>Place</li><li>Place</li><li>Place</li><li>Place</li><li>Place</li><li>Place</li>
+					<ul data-bind="foreach: locations">
+						<li><a data-bind="text: title, click: $parent.openInfoWindow" href="#"></a></li>
 					</ul>
 				</div>
 			</div>
@@ -7009,10 +7026,45 @@ img {
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="js/lib/knockout-3.3.0.js"></script>
 		<script>
-var Map = function() {};
+var Location = function(title, description, latitude, longitude, icon) {
+	var self = this;
+	self.title = ko.observable(title);
+	self.content = '<h2 class="info-title">' + title + '</h2>'
+					+ '<p class="info-description">' + description + '</p>';
+	self.latitude = ko.observable(latitude);
+	self.longitude = ko.observable(longitude);
+	self.icon = ko.observable(icon);
+	self.marker = new google.maps.Marker({ 
+		position: new google.maps.LatLng(self.latitude(), self.longitude()), 
+		map: map ,
+		icon: self.icon()
+	});
+	self.infoWindow = function() {
+			infowindow.setContent(self.content);
+		  	infowindow.open(map, self.marker);
+		  	$('#placeslist-switcher').attr('checked', false);
+	}
+	google.maps.event.addListener(self.marker, 'click', self.infoWindow);
+};
 
-var ViewModel = function() {};
+var ViewModel = function() {
+	var self = this;
+	self.locations = ko.observableArray(
+		[
+			new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, 'img/cafetaria.png')
+			,new Location('Lockers', 'Sports restaurant and bar (Trying the "Michael Phelps" pizza is a must)', 27.493921, -109.974107, 'img/pizzaria.png')
+			,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, 'img/cafetaria.png')
+			,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, 'img/cafetaria.png')
+			,new Location('Doña Magui', 'Homemade food', 27.490330, -109.972750, 'img/restaurant.png')
+		]
+	);
 
+	self.openInfoWindow = function(obj) {
+		obj.infoWindow();
+	};
+};
+
+var map, infowindow;
 function initialize() {
 	var mapOptions = {
 		center: { lat: 27.4950000, lng: -109.969000},
@@ -7024,13 +7076,17 @@ function initialize() {
 		mapTypeControlOptions: {
 			style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
 			mapTypeIds: [
-		        google.maps.MapTypeId.ROADMAP,
-		        google.maps.MapTypeId.TERRAIN
-		      ]
-		    }
+				google.maps.MapTypeId.ROADMAP,
+				google.maps.MapTypeId.TERRAIN
+				]
+			}
 	};
-	var map = new google.maps.Map(document.getElementById('map-canvas'),
+	map = new google.maps.Map(document.getElementById('map-canvas'),
 		mapOptions);
+	
+	infowindow = new google.maps.InfoWindow();
+
+	ko.applyBindings(new ViewModel());
 }
 
 try {

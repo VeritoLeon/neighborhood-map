@@ -54,10 +54,16 @@ module.exports = function(grunt) {
 			}
 		},
 		copy: {
-			files: {
+			fonts: {
 				cwd: 'src/font',
 				src: '**/*',      
 				dest: 'font',
+				expand: true
+			},
+			images: {
+				cwd: 'src/img',
+				src: '**/*',      
+				dest: 'img',
 				expand: true
 			}
 		},
