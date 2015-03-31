@@ -6837,7 +6837,7 @@ th {
  .placeslist > div
 {
     margin-top: -150%;
-    padding: 0 64px;
+    padding: 0 1.5em;
     font-size: 12px;
 }
  
@@ -6904,6 +6904,36 @@ th {
 
 .placeslist li {
     min-height: 48px;
+}
+
+@media only screen and (min-width: 40.063em) {
+    #map-canvas {
+        width: 70vw;
+        left: 30vw;
+    }
+
+    .placeslist.fixed {
+        z-index: 0;
+        width: 30vw;
+    }
+
+    .placebar-button, #place{
+        display: none;
+    }
+
+    .placeslist > div {
+        box-shadow: none;
+        margin-top: 45px;
+        height: 100vh;
+    }
+
+    .placeslist > div a {
+        display: block;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding: 0 1.5em;
+    }
 }
 body {
 	background-color: #eeeade;
