@@ -85,13 +85,14 @@
     border-top: 0;
     border-radius: 0 0 4px 4px;
     cursor: pointer;
-    color: #C8C8C8;
+    color: #E8ABAB;
 }
  
 .placeslist input ~ .placebar-button span:first-child
 {
     box-shadow: none;
     background: none;
+    color: #C8C8C8;
 }
  
 .placeslist input:not(:checked) ~ .placebar-button span:first-child
@@ -118,6 +119,10 @@
 .placeslist input:checked ~  div
 {
     margin-top: 2.7rem;
+}
+
+.placeslist li {
+    min-height: 48px;
 }
 body {
 	background-color: #eeeade;
