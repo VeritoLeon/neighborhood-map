@@ -57,7 +57,7 @@ nav {
 
 .google_map {
 	display: block;
-	background-image: url("https://maps.googleapis.com/maps/api/staticmap?center=27.4950000,-109.969000&zoom=15&size=640x640");
+	background-image: url("https://maps.googleapis.com/maps/api/staticmap?center=27.4950000,-109.969000&zoom=16&size=640x640");
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	line-height: 0;
@@ -79,7 +79,7 @@ only screen and (-webkit-min-device-pixel-ratio: 2),
 only screen and (min-device-pixel-ratio: 2){
 
 	.google_map {
-		background-image: url("https://maps.googleapis.com/maps/api/staticmap?center=27.4950000,-109.969000&zoom=15&size=640x640&scale=2");	
+		background-image: url("https://maps.googleapis.com/maps/api/staticmap?center=27.4950000,-109.969000&zoom=16&size=640x640&scale=2");	
 		background-size: 640px 640px
 	}
 	

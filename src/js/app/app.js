@@ -23,11 +23,11 @@ var ViewModel = function() {
 	var self = this;
 	self.locations = ko.observableArray(
 		[
-			new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, 'img/cafetaria.png')
-			,new Location('Lockers', 'Sports restaurant and bar (Trying the "Michael Phelps" pizza is a must)', 27.493921, -109.974107, 'img/pizzaria.png')
+			new Location('Lockers', 'Sports restaurant and bar (Trying the "Michael Phelps" pizza is a must)', 27.493921, -109.974107, 'img/pizzaria.png')
+			,new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, 'img/cafetaria.png')
+			,new Location('Doña Magui', 'Homemade food', 27.490330, -109.972750, 'img/restaurant.png')
 			,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, 'img/cafetaria.png')
 			,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, 'img/cafetaria.png')
-			,new Location('Doña Magui', 'Homemade food', 27.490330, -109.972750, 'img/restaurant.png')
 		]
 	);
 
@@ -41,7 +41,7 @@ function initialize() {
 	$('#map-canvas').removeClass('center');
 	var mapOptions = {
 		center: { lat: 27.4950000, lng: -109.969000},
-		zoom: 15,
+		zoom: 16,
 		panControl: false,
 		streetViewControl: false,
 		zoomControl: false,
