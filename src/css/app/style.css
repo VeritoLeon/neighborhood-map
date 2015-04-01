@@ -47,7 +47,7 @@ body {
 }
 
 #details-button:focus,
-#details-button:hover  {
+#details-button:hover {
 	color: #000;	
 	outline-color: rgba(0, 0, 0, 0);
 }
@@ -59,8 +59,8 @@ body {
 }
 
 div#map-canvas.center {
-  width: 100vw;
-  left: 0;
+	width: 100vw;
+	left: 0;
 }
 
 .google_map {
@@ -84,7 +84,7 @@ div#map-canvas.center {
 @media only screen and (min--moz-device-pixel-ratio: 2), 
 only screen and (-o-min-device-pixel-ratio: 2/1), 
 only screen and (-webkit-min-device-pixel-ratio: 2), 
-only screen and (min-device-pixel-ratio: 2){
+only screen and (min-device-pixel-ratio: 2) {
 	.google_map {
 		background-image: url("https://maps.googleapis.com/maps/api/staticmap?center=27.4950000,-109.969000&zoom=16&size=640x640&scale=2");	
 		background-size: 640px 640px
@@ -92,10 +92,9 @@ only screen and (min-device-pixel-ratio: 2){
 }
 
 .hidden.placeslist.fixed,
-#topbar.hidden
- {
-    display: none;
- }
+#topbar.hidden {
+	display: none;
+}
 
 img {
 	max-width: none;
@@ -105,16 +104,17 @@ img {
 	.alert-box.warning {
 		font-size: 1.2em;
 	}
-    #map-canvas {
-        width: 70vw;
-        left: 30vw;
-    }
 
-    #details-button {
-    	display: none;
-    }
+	#map-canvas {
+		width: 70vw;
+		left: 30vw;
+	}
 
-    #search-input {
-    	padding-left: 8px;
-    }
+	#details-button {
+		display: none;
+	}
+
+	#search-input {
+		padding-left: 8px;
+	}
 }

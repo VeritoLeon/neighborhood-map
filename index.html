@@ -6796,21 +6796,18 @@ th {
 
 :root .placeslist,
 .placebar-button,
-.placebar-button span
-{
+.placebar-button span {
     display: block;
 }
  
 .placeslist,
-.placeslist *
-{
+.placeslist * {
     margin: 0;
     padding: 0;
 }
  
 .placeslist > div,
-.placebar-button span
-{
+.placebar-button span {
     line-height: 48px;
     text-align: center;
     color: rgba(0, 0, 0, 0.74902);
@@ -6820,13 +6817,11 @@ th {
 }
  
 .placeslist,
-.placeslist input
-{
+.placeslist input {
     display: none;
 }
  
-.placeslist
-{
+.placeslist {
     z-index: 1;
     font-family: Arial, Helvetica, Verdana, Sans-serif;
     color: #000;
@@ -6834,16 +6829,14 @@ th {
     max-height: 90%;
 }
 
- .placeslist > div
-{
+ .placeslist > div {
     margin-top: -150%;
     padding: 0 64px;
     font-size: 12px;
     background-image: url("img/map-bg-3.png");
 }
  
-.placeslist > div > div
-{
+.placeslist > div > div {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -6852,14 +6845,12 @@ th {
 }
  
 .placebar-button,
-#place
-{
+#place {
     float: right;
     margin: 2.7rem 1em 0 0;
 }
  
-.placebar-button span
-{
+.placebar-button span {
     width: 48px;
     height: 48px;
     font-size: 1.5rem;
@@ -6870,36 +6861,30 @@ th {
     color: #E8ABAB;
 }
  
-.placeslist input ~ .placebar-button span:first-child
-{
+.placeslist input ~ .placebar-button span:first-child {
     box-shadow: none;
     background: none;
 }
  
-.placeslist input:not(:checked) ~ .placebar-button span:first-child
-{
+.placeslist input:not(:checked) ~ .placebar-button span:first-child {
     opacity: 0;
 }
  
-.placeslist input:checked ~ .placebar-button span:first-child
-{
+.placeslist input:checked ~ .placebar-button span:first-child {
     opacity: 1;
     transition: opacity 300ms 300ms ease-in-out;
     position: fixed;
 }
  
-.placeslist input:not(:checked) ~ .placebar-button span:last-child
-{
+.placeslist input:not(:checked) ~ .placebar-button span:last-child {
     margin-top: -51px;
 }
  
-.placeslist input:checked ~ .placebar-button span:last-child
-{
+.placeslist input:checked ~ .placebar-button span:last-child {
     margin-top: -100px;
 }
  
-.placeslist input:checked ~  div
-{
+.placeslist input:checked ~  div {
     margin-top: 2.7rem;
 }
 
@@ -6934,7 +6919,7 @@ th {
         width: 30vw;
     }
 
-    .placebar-button, #place{
+    .placebar-button, #place {
         display: none;
     }
 
@@ -7007,7 +6992,7 @@ body {
 }
 
 #details-button:focus,
-#details-button:hover  {
+#details-button:hover {
 	color: #000;	
 	outline-color: rgba(0, 0, 0, 0);
 }
@@ -7019,8 +7004,8 @@ body {
 }
 
 div#map-canvas.center {
-  width: 100vw;
-  left: 0;
+	width: 100vw;
+	left: 0;
 }
 
 .google_map {
@@ -7044,7 +7029,7 @@ div#map-canvas.center {
 @media only screen and (min--moz-device-pixel-ratio: 2), 
 only screen and (-o-min-device-pixel-ratio: 2/1), 
 only screen and (-webkit-min-device-pixel-ratio: 2), 
-only screen and (min-device-pixel-ratio: 2){
+only screen and (min-device-pixel-ratio: 2) {
 	.google_map {
 		background-image: url("https://maps.googleapis.com/maps/api/staticmap?center=27.4950000,-109.969000&zoom=16&size=640x640&scale=2");	
 		background-size: 640px 640px
@@ -7052,10 +7037,9 @@ only screen and (min-device-pixel-ratio: 2){
 }
 
 .hidden.placeslist.fixed,
-#topbar.hidden
- {
-    display: none;
- }
+#topbar.hidden {
+	display: none;
+}
 
 img {
 	max-width: none;
@@ -7065,18 +7049,19 @@ img {
 	.alert-box.warning {
 		font-size: 1.2em;
 	}
-    #map-canvas {
-        width: 70vw;
-        left: 30vw;
-    }
 
-    #details-button {
-    	display: none;
-    }
+	#map-canvas {
+		width: 70vw;
+		left: 30vw;
+	}
 
-    #search-input {
-    	padding-left: 8px;
-    }
+	#details-button {
+		display: none;
+	}
+
+	#search-input {
+		padding-left: 8px;
+	}
 }
 </style>
 	</head>

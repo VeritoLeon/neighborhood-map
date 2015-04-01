@@ -15,167 +15,152 @@
 
 :root .placeslist,
 .placebar-button,
-.placebar-button span
-{
-    display: block;
+.placebar-button span {
+	display: block;
 }
  
 .placeslist,
-.placeslist *
-{
-    margin: 0;
-    padding: 0;
+.placeslist * {
+	margin: 0;
+	padding: 0;
 }
  
 .placeslist > div,
-.placebar-button span
-{
-    line-height: 48px;
-    text-align: center;
-    color: rgba(0, 0, 0, 0.74902);
-    background:#fafafa;
-    transition: margin 300ms ease-in-out;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+.placebar-button span {
+	line-height: 48px;
+	text-align: center;
+	color: rgba(0, 0, 0, 0.74902);
+	background:#fafafa;
+	transition: margin 300ms ease-in-out;
+	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
 }
  
 .placeslist,
-.placeslist input
-{
-    display: none;
+.placeslist input {
+	display: none;
 }
  
-.placeslist
-{
-    z-index: 1;
-    font-family: Arial, Helvetica, Verdana, Sans-serif;
-    color: #000;
-    cursor: default;
-    max-height: 90%;
+.placeslist {
+	z-index: 1;
+	font-family: Arial, Helvetica, Verdana, Sans-serif;
+	color: #000;
+	cursor: default;
+	max-height: 90%;
 }
 
- .placeslist > div
-{
-    margin-top: -150%;
-    padding: 0 64px;
-    font-size: 12px;
-    background-image: url("../img/map-bg-3.png");
+ .placeslist > div {
+	margin-top: -150%;
+	padding: 0 64px;
+	font-size: 12px;
+	background-image: url("../img/map-bg-3.png");
 }
  
-.placeslist > div > div
-{
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    min-height: 2.5em;
-    padding: 1em 0;
+.placeslist > div > div {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	min-height: 2.5em;
+	padding: 1em 0;
 }
  
 .placebar-button,
-#place
-{
-    float: right;
-    margin: 2.7rem 1em 0 0;
+#place {
+	float: right;
+	margin: 2.7rem 1em 0 0;
 }
  
-.placebar-button span
-{
-    width: 48px;
-    height: 48px;
-    font-size: 1.5rem;
-    padding-top: 0.5rem;
-    border-top: 0;
-    border-radius: 0 0 4px 4px;
-    cursor: pointer;
-    color: #E8ABAB;
+.placebar-button span {
+	width: 48px;
+	height: 48px;
+	font-size: 1.5rem;
+	padding-top: 0.5rem;
+	border-top: 0;
+	border-radius: 0 0 4px 4px;
+	cursor: pointer;
+	color: #E8ABAB;
 }
  
-.placeslist input ~ .placebar-button span:first-child
-{
-    box-shadow: none;
-    background: none;
+.placeslist input ~ .placebar-button span:first-child {
+	box-shadow: none;
+	background: none;
 }
  
-.placeslist input:not(:checked) ~ .placebar-button span:first-child
-{
-    opacity: 0;
+.placeslist input:not(:checked) ~ .placebar-button span:first-child {
+	opacity: 0;
 }
  
-.placeslist input:checked ~ .placebar-button span:first-child
-{
-    opacity: 1;
-    transition: opacity 300ms 300ms ease-in-out;
-    position: fixed;
+.placeslist input:checked ~ .placebar-button span:first-child {
+	opacity: 1;
+	transition: opacity 300ms 300ms ease-in-out;
+	position: fixed;
 }
  
-.placeslist input:not(:checked) ~ .placebar-button span:last-child
-{
-    margin-top: -51px;
+.placeslist input:not(:checked) ~ .placebar-button span:last-child {
+	margin-top: -51px;
 }
  
-.placeslist input:checked ~ .placebar-button span:last-child
-{
-    margin-top: -100px;
+.placeslist input:checked ~ .placebar-button span:last-child {
+	margin-top: -100px;
 }
  
-.placeslist input:checked ~  div
-{
-    margin-top: 2.7rem;
+.placeslist input:checked ~  div {
+	margin-top: 2.7rem;
 }
 
-.location-title {    
-    font-size: 2rem;
-    font-weight: 700;
-    color: #FAEBD7;
-    display: flex;
-    flex-direction: column-reverse;
+.location-title {	
+	font-size: 2rem;
+	font-weight: 700;
+	color: #FAEBD7;
+	display: flex;
+	flex-direction: column-reverse;
 }
 
 .placeslist ul {
-    overflow: hidden;
-    overflow-y: auto;
-    max-height: 70%;
+	overflow: hidden;
+	overflow-y: auto;
+	max-height: 70%;
 }
 
 .placeslist li {
-    min-height: 48px;
+	min-height: 48px;
 }
 
 .placeslist a {
-    color: #FFF;
-    background-color: #79726D; 
-    font-size: 1.5em;
+	color: #FFF;
+	background-color: #79726D; 
+	font-size: 1.5em;
 }
 
 @media only screen and (min-width: 40.063em) {
 
-    .placeslist.fixed {
-        z-index: 0;
-        width: 30vw;
-    }
+	.placeslist.fixed {
+		z-index: 0;
+		width: 30vw;
+	}
 
-    .placebar-button, #place{
-        display: none;
-    }
+	.placebar-button, #place {
+		display: none;
+	}
 
-    .placeslist > div {
-        box-shadow: none;
-        margin-top: 45px;
-        padding: 0 1.5em;
-        height: 100vh;
-    }
+	.placeslist > div {
+		box-shadow: none;
+		margin-top: 45px;
+		padding: 0 1.5em;
+		height: 100vh;
+	}
 
-    .placeslist > div ul {
-        background-color: #79726D;
-    }
+	.placeslist > div ul {
+		background-color: #79726D;
+	}
 
-    .placeslist > div a {
-        display: block;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        padding: 0 1.5em;
-        font-size: 1em;
-    }
+	.placeslist > div a {
+		display: block;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		padding: 0 1.5em;
+		font-size: 1em;
+	}
 }
 body {
 	background-color: #eeeade;
@@ -226,7 +211,7 @@ body {
 }
 
 #details-button:focus,
-#details-button:hover  {
+#details-button:hover {
 	color: #000;	
 	outline-color: rgba(0, 0, 0, 0);
 }
@@ -238,8 +223,8 @@ body {
 }
 
 div#map-canvas.center {
-  width: 100vw;
-  left: 0;
+	width: 100vw;
+	left: 0;
 }
 
 .google_map {
@@ -263,7 +248,7 @@ div#map-canvas.center {
 @media only screen and (min--moz-device-pixel-ratio: 2), 
 only screen and (-o-min-device-pixel-ratio: 2/1), 
 only screen and (-webkit-min-device-pixel-ratio: 2), 
-only screen and (min-device-pixel-ratio: 2){
+only screen and (min-device-pixel-ratio: 2) {
 	.google_map {
 		background-image: url("https://maps.googleapis.com/maps/api/staticmap?center=27.4950000,-109.969000&zoom=16&size=640x640&scale=2");	
 		background-size: 640px 640px
@@ -271,10 +256,9 @@ only screen and (min-device-pixel-ratio: 2){
 }
 
 .hidden.placeslist.fixed,
-#topbar.hidden
- {
-    display: none;
- }
+#topbar.hidden {
+	display: none;
+}
 
 img {
 	max-width: none;
@@ -284,16 +268,17 @@ img {
 	.alert-box.warning {
 		font-size: 1.2em;
 	}
-    #map-canvas {
-        width: 70vw;
-        left: 30vw;
-    }
 
-    #details-button {
-    	display: none;
-    }
+	#map-canvas {
+		width: 70vw;
+		left: 30vw;
+	}
 
-    #search-input {
-    	padding-left: 8px;
-    }
+	#details-button {
+		display: none;
+	}
+
+	#search-input {
+		padding-left: 8px;
+	}
 }
