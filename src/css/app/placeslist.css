@@ -135,10 +135,6 @@
     font-size: 1.5em;
 }
 
-.hidden.placeslist.fixed {
-    display: none;
- }
-
 @media only screen and (min-width: 40.063em) {
 
     .placeslist.fixed {
