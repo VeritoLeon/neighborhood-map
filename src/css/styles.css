@@ -53,6 +53,7 @@
 	padding: 0 64px;
 	font-size: 12px;
 	background-image: url("../img/map-bg-3.png");
+	background-image: linear-gradient( rgba(0, 0, 0, 0.5),rgba(121, 114, 109, 0.78) ), url("../img/map-bg-3.png");
 }
  
 .placeslist > div > div {
@@ -127,7 +128,6 @@
 
 .placeslist a {
 	color: #FFF;
-	background-color: #79726D; 
 	font-size: 1.5em;
 }
 
@@ -147,10 +147,6 @@
 		margin-top: 45px;
 		padding: 0 1.5em;
 		height: 100vh;
-	}
-
-	.placeslist > div ul {
-		background-color: #79726D;
 	}
 
 	.placeslist > div a {
