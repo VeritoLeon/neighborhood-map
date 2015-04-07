@@ -20,10 +20,12 @@ module.exports = function(grunt) {
 		},
 		uglify: {
 			 target: {
-			 	files: {
-			 		'js/scripts.js': ['src/js/scripts.js'],
-			 		'js/lib/knockout-3.3.0.js': ['src/js/lib/knockout-3.3.0.js']
-			 	}
+			 	files: [{
+			 		expand: true,
+					cwd: 'src/js',
+					src: '**/*.js',
+					dest: 'js'
+				}]
 			 }
 		},
 		cssmin: {
@@ -31,7 +33,7 @@ module.exports = function(grunt) {
 				files: [{
 					expand: true,
 					cwd: 'src/css',
-					src: ['*.css', '!*.min.css'],
+					src: ['*.css'],
 					dest: 'css',
 					ext: '.css'
 				}]
@@ -49,8 +51,7 @@ module.exports = function(grunt) {
 		},
 		inline: {
 			dist: {
-				src: 'src/index.html',
-				dest: 'index.html'
+				src: 'index.html'
 			}
 		},
 		copy: {
@@ -65,16 +66,22 @@ module.exports = function(grunt) {
 				src: '**/*',      
 				dest: 'img',
 				expand: true
+			},
+			index: {
+				cwd: 'src',
+				src: 'index.html',      
+				dest: '',
+				expand: true
 			}
 		},
 		watch: {
 			js: {
 				files: ['src/js/**/*.js'],
-				tasks: ['concat', 'uglify', 'inline'],
+				tasks: ['uglify'],
 			},
 			css: {
 				files: ['src/css/**/*.css'],
-				tasks: ['concat', 'cssmin', 'inline'],
+				tasks: ['cssmin'],
 			},
 			img: {
 				files: ['src/images/**/*'],
@@ -82,7 +89,7 @@ module.exports = function(grunt) {
 			},
 			release: {
 				files: ['src/index.html'],
-				tasks: ['inline']
+				tasks: ['copy:index', 'inline']
 			}
 		}
 	});
@@ -93,5 +100,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-inline');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.registerTask('default', ['concat', 'uglify', 'cssmin', 'imagemin', 'inline', 'watch']);
+	grunt.registerTask('default', ['uglify', 'cssmin', 'imagemin', 'copy:index', 'inline', 'watch']);
 };
