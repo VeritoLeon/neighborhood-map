@@ -125,6 +125,9 @@
 	.placeslist.fixed {
 		z-index: 0;
 		width: 30vw;
+		max-width: 250px;
+		position: static;
+		float: left;
 	}
 
 	.placebar-button, #place {
@@ -135,7 +138,7 @@
 		box-shadow: none;
 		margin-top: 45px;
 		padding: 0 1.5em;
-		height: 100vh;
+		height: calc(100% - 45px);
 	}
 
 	.placeslist > div a {

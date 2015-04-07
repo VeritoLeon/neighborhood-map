@@ -30,7 +30,6 @@ var ViewModel = function() {
 			,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, 'img/cafetaria.png')
 		]
 	);
-
 	self.openInfoWindow = function(obj) {
 		obj.infoWindow();
 	};
@@ -58,15 +57,33 @@ function initialize() {
 	
 	infowindow = new google.maps.InfoWindow();
 
-	ko.applyBindings(new ViewModel());
 
 	$('#map-canvas').removeClass('center');
 	$('.placeslist.fixed').removeClass('hidden');
 	$('#topbar').removeClass('hidden');
+
+	
+	ko.applyBindings(new ViewModel());
+
 }
 
 try {
 	google.maps.event.addDomListener(window, 'load', initialize);
 } catch (e) {
-  console.log('Google map wasn\'t loaded');
+  createErrorMessage('Oops. Google maps couldn\'t be reached. Verify your internet connection.', 'maps.google.com');
+}
+
+function createErrorMessage(message, serverUrl) {
+	var newDiv = document.createElement('div'); 
+	var newContent = document.createTextNode(message + ' '); 
+	var downForEveryone = document.createElement('a'); 
+	downForEveryone.setAttribute('href', 'http://www.isup.me/' + serverUrl);
+	var linkText = document.createTextNode('Maybe the servers are down?'); 
+	newDiv.appendChild(newContent);
+	downForEveryone.appendChild(linkText);
+	newDiv.appendChild(downForEveryone);
+	newDiv.className = 'alert-box warning';
+  // add the newly created element and its content into the DOM 
+	var messagesDiv = document.getElementById('messages'); 
+	messagesDiv.appendChild(newDiv);
 }
