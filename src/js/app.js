@@ -1,38 +1,71 @@
-var Location = function(title, description, latitude, longitude, icon) {
+var type = {
+	'food': {
+		'icon': 'img/pin-red-10.png'
+		,'marker': 'img/pin-red-10.png'
+	}
+};
+
+var Location = function(title, description, latitude, longitude, kind) {
 	var self = this;
 	self.title = ko.observable(title);
-	self.content = '<h2 class="info-title">' + title + '</h2>'
-					+ '<p class="info-description">' + description + '</p>';
+	self.content = '<div tabindex="1" href="#"><h2 class="info-title">' + title + '</h2>'
+					+ '<p class="info-description">' + description + '</p></div>';
 	self.latitude = ko.observable(latitude);
 	self.longitude = ko.observable(longitude);
-	self.icon = ko.observable(icon);
+	self.icon = ko.observable(kind.icon);
 	self.marker = new google.maps.Marker({ 
 		position: new google.maps.LatLng(self.latitude(), self.longitude()), 
 		map: map ,
-		icon: self.icon()
+		icon: self.icon(),
+		animation: google.maps.Animation.DROP,
+		title: self.title()
 	});
 	self.infoWindow = function() {
 			infowindow.setContent(self.content);
 		  	infowindow.open(map, self.marker);
-		  	$('#placeslist-switcher').attr('checked', false);
-	}
+	};
+
+	self.toggleBounce = function() {
+		if (self.marker.getAnimation() != null) {
+			self.marker.setAnimation(null);
+		} else {
+			self.marker.setAnimation(google.maps.Animation.BOUNCE);
+		}
+	};
+
 	google.maps.event.addListener(self.marker, 'click', self.infoWindow);
+
 };
 
 var ViewModel = function() {
 	var self = this;
 	self.locations = ko.observableArray(
 		[
-			new Location('Lockers', 'Sports restaurant and bar (Trying the "Michael Phelps" pizza is a must)', 27.493921, -109.974107, 'img/pizzaria.png')
-			,new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, 'img/cafetaria.png')
-			,new Location('Doña Magui', 'Homemade food', 27.490330, -109.972750, 'img/restaurant.png')
-			,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, 'img/cafetaria.png')
-			,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, 'img/cafetaria.png')
+			new Location('Lockers', 'Sports restaurant and bar (Trying the "Michael Phelps" pizza is a must)', 27.493921, -109.974107, type.food)
+			,new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, type.food)
+			,new Location('Doña Magui', 'Homemade food', 27.490330, -109.972750, type.food)
+			,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, type.food)
+			,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, type.food)
 		]
 	);
+	self.currentLocation = ko.observable(self.locations()[0]);
+	self.setCurrentLocation = function(obj) {
+		for(var loc in self.locations()) {
+			if(self.locations()[loc].title() === obj.title()) {
+
+				obj != self.currentLocation()? self.currentLocation().marker.setAnimation(null) : self.currentLocation();
+				
+				obj.marker.setAnimation(google.maps.Animation.BOUNCE);
+				return self.currentLocation(obj); 
+			}
+		}
+	}
 	self.openInfoWindow = function(obj) {
 		obj.infoWindow();
+		self.setCurrentLocation(obj);
 	};
+
+	// google.maps.event.addListener(parent.infowindow, 'content_changed', self.setCurrentLocation(obj));
 };
 
 var map, infowindow;
