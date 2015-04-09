@@ -82,6 +82,10 @@ var ViewModel = function() {
 			self.setCurrentLocation(location);
 		}
 	});
+
+	google.maps.event.addListener(parent.infowindow, 'closeclick', function(e) {
+		self.currentLocation().marker.setAnimation(null);
+	});
 };
 
 var map, infowindow;
