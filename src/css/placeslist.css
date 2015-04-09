@@ -21,7 +21,7 @@
 	color: rgba(0, 0, 0, 0.74902);
 	background:#fafafa;
 	transition: margin 300ms ease-in-out;
-	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
 }
  
 .placeslist,
@@ -31,18 +31,18 @@
  
 .placeslist {
 	z-index: 1;
-	font-family: Arial, Helvetica, Verdana, Sans-serif;
 	color: #000;
 	cursor: default;
 	max-height: 90%;
+  	margin: 0 0.5em;
 }
 
  .placeslist > div {
 	margin-top: -150%;
 	padding: 0 64px;
 	font-size: 12px;
-	background-image: url("../img/map-bg-3.png");
-	background-image: linear-gradient( rgba(0, 0, 0, 0.5),rgba(121, 114, 109, 0.78) ), url("../img/map-bg-3.png");
+	/*background-image: url("../img/map-bg-3.png");
+	background-image: linear-gradient( rgba(0, 0, 0, 0.5),rgba(121, 114, 109, 0.78) ), url("../img/map-bg-3.png");*/
 }
  
 .placeslist > div > div {
@@ -98,17 +98,17 @@
 }
 
 .location-title {	
-	font-size: 2rem;
-	font-weight: 700;
-	color: #FAEBD7;
-	display: flex;
-	flex-direction: column-reverse;
+	color: #333;
+  font: 400 2rem/64px 'Roboto';
+  /* text-transform: uppercase; */
+/*	display: flex;
+	flex-direction: column-reverse;*/
 }
 
 .placeslist ul {
 	overflow: hidden;
 	overflow-y: auto;
-	max-height: 70%;
+	max-height: 70vh;	
 }
 
 .placeslist li {
@@ -116,18 +116,20 @@
 }
 
 .placeslist a {
-	color: #FFF;
-	font-size: 1.5em;
+	color: #666;
+  font-size: 1.5em;
+	font-family: 'Roboto' ,'Open Sans', 'Helvetica Nueue', Helvetica, Arial, Sans-serif;
 }
 
 @media only screen and (min-width: 40.063em) {
 
 	.placeslist.fixed {
-		z-index: 0;
+		z-index: 1;
 		width: 30vw;
 		max-width: 250px;
-		position: static;
-		float: left;
+		position: absolute;
+		/* float: left; */
+		margin: 0;
 	}
 
 	.placebar-button, #place {
@@ -135,8 +137,8 @@
 	}
 
 	.placeslist > div {
-		box-shadow: none;
-		margin-top: 45px;
+		box-shadow: 3px 0 4px rgba(0, 0, 0, 0.15);
+		margin-top: 40px;
 		padding: 0 1.5em;
 		height: calc(100% - 45px);
 	}

@@ -10,13 +10,14 @@ var Location = function(title, description, latitude, longitude, kind) {
 	self.title = ko.observable(title);
 	self.content = '<div tabindex="1" href="#"><h2 class="info-title">' + title + '</h2>'
 					+ '<p class="info-description">' + description + '</p></div>';
+	self.description = ko.observable(description);
 	self.latitude = ko.observable(latitude);
 	self.longitude = ko.observable(longitude);
 	self.icon = ko.observable(kind.icon);
 	self.marker = new google.maps.Marker({ 
 		position: new google.maps.LatLng(self.latitude(), self.longitude()), 
 		map: map ,
-		icon: self.icon(),
+		icon: kind.marker,
 		animation: google.maps.Animation.DROP,
 		title: self.title()
 	});
@@ -69,9 +70,13 @@ var ViewModel = function() {
 		}
 	}
 
-	self.openInfoWindow = function(obj) {
-		obj.infoWindow();
-		self.setCurrentLocation(obj);
+	self.openInfoWindow = function(location) {
+		var content = '<div tabindex="1" href="#"><h2 class="info-title">' + location.title() + '</h2>'
+					+ '<p class="info-description">' + location.description() + '</p></div>';
+		infowindow.setContent(content);
+	  	infowindow.open(map, location.marker);
+		self.setCurrentLocation(location);
+		$('#placeslist-switcher').attr('checked', false);
 	};
 
 	var currentAnchor = ko.observable(parent.infowindow.getAnchor());
@@ -80,6 +85,7 @@ var ViewModel = function() {
 		var location = self.getLocation(parent.infowindow.getAnchor().title);
 		if(location) {
 			self.setCurrentLocation(location);
+			map.panTo(self.currentLocation().marker.getPosition());
 		}
 	});
 
