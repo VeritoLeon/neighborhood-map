@@ -39,6 +39,7 @@ var Location = function(title, description, latitude, longitude, kind) {
 
 var ViewModel = function() {
 	var self = this;
+
 	self.locations = ko.observableArray(
 		[
 			new Location('Lockers', 'Sports restaurant and bar (Trying the "Michael Phelps" pizza is a must)', 27.493921, -109.974107, type.food)
@@ -48,27 +49,43 @@ var ViewModel = function() {
 			,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, type.food)
 		]
 	);
-	self.currentLocation = ko.observable(self.locations()[0]);
-	self.setCurrentLocation = function(obj) {
-		for(var loc in self.locations()) {
-			if(self.locations()[loc].title() === obj.title()) {
 
-				obj != self.currentLocation()? self.currentLocation().marker.setAnimation(null) : self.currentLocation();
-				
-				obj.marker.setAnimation(google.maps.Animation.BOUNCE);
-				return self.currentLocation(obj); 
+	self.currentLocation = ko.observable(self.locations()[0]);
+
+	self.setCurrentLocation = function(obj) {
+		if(obj = self.getLocation(obj.title())) {
+			obj != self.currentLocation()? self.currentLocation().marker.setAnimation(null) : self.currentLocation();
+			
+			obj.marker.setAnimation(google.maps.Animation.BOUNCE);
+			return self.currentLocation(obj); 
+		}
+	}
+
+	self.getLocation = function(title) {
+		for(var loc in self.locations()) {
+			if(self.locations()[loc].title() === title) {
+				return self.locations()[loc]; 
 			}
 		}
 	}
+
 	self.openInfoWindow = function(obj) {
 		obj.infoWindow();
 		self.setCurrentLocation(obj);
 	};
 
-	// google.maps.event.addListener(parent.infowindow, 'content_changed', self.setCurrentLocation(obj));
+	var currentAnchor = ko.observable(parent.infowindow.getAnchor());
+
+	google.maps.event.addListener(parent.infowindow, 'domready', function(e) {
+		var location = self.getLocation(parent.infowindow.getAnchor().title);
+		if(location) {
+			self.setCurrentLocation(location);
+		}
+	});
 };
 
 var map, infowindow;
+
 function initialize() {
 	var mapOptions = {
 		center: { lat: 27.4950000, lng: -109.969000},
@@ -87,8 +104,8 @@ function initialize() {
 	};
 	map = new google.maps.Map(document.getElementById('map-canvas'),
 		mapOptions);
-	
 	infowindow = new google.maps.InfoWindow();
+	
 
 
 	$('#map-canvas').removeClass('center');
@@ -97,7 +114,7 @@ function initialize() {
 
 	
 	ko.applyBindings(new ViewModel());
-
+	
 }
 
 try {
