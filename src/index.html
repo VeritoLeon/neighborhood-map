@@ -3,14 +3,12 @@
 		<title>Neighborhood Map</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/normalize.css?__inline=true"/>
 		<link rel="stylesheet" href="css/foundation.css?__inline=true"/>
 		<link rel="stylesheet" href="css/icons.css?__inline=true"/>
-		<link rel="stylesheet" href="css/normalize.css?__inline=true"/>
 		<link rel="stylesheet" href="css/infowindow.css?__inline=true"/>
 		<link rel="stylesheet" href="css/placeslist.css?__inline=true"/>
-		<link rel="stylesheet" href="css/awesomplete.css?__inline=true"/>
 		<link rel="stylesheet" href="css/style.css?__inline=true"/>
-		<script src="js/awesomplete.js"></script>
 	</head>
 	<body>
 		<div id="messages">
@@ -27,7 +25,7 @@
 			<div id="search-container" class="row collapse postfix small-centered">
 				<button id="details-button"  title="filter places"><i class="icon-filter"></i></button>
 				<div class="columns small-9 medium-4">
-					<input id="search-input" type="text" placeholder="Find places">
+					<input id="search-input" type="search" placeholder="Find places">
 				</div>
 				<div class="columns small-3 medium-2 end">
 					<a href="#" class="button postfix">Search</a>
@@ -44,15 +42,19 @@
 				<div>
 					<h1 class="location-title">Locations</h1>
 					<ul data-bind="foreach: locations">
-						<li><a data-bind="text: title, click: $parent.openInfoWindow" href="#"></a></li>
+						<li>
+							<a data-bind="click: $parent.openInfoWindow" href="#">
+								<span data-bind="text: title"></span>
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
 		<div id="map-canvas" class="center">
-				<div  class="google_map">
-					<img width="640" height="640" src="" alt="Map showing ITSON and Laguna del Nainari">
-				</div>
+			<div  class="google_map">
+				<img width="640" height="640" src="" alt="Map showing ITSON and Laguna del Nainari">
+			</div>
 		</div>
 		<script src="https://maps.googleapis.com/maps/api/js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

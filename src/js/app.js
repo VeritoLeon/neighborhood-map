@@ -1,7 +1,7 @@
 var type = {
 	'food': {
-		'icon': 'img/pin-red-10.png'
-		,'marker': 'img/pin-red-10.png'
+		'icon': 'img/food.svg'
+		,'marker': 'img/pin-red-10-small.svg'
 	}
 };
 
@@ -14,6 +14,13 @@ var Location = function(title, description, latitude, longitude, kind) {
 	self.latitude = ko.observable(latitude);
 	self.longitude = ko.observable(longitude);
 	self.icon = ko.observable(kind.icon);
+	// self.iconMarker = new google.maps.Marker({ 
+	// 	position: new google.maps.LatLng(self.latitude(), self.longitude()), 
+	// 	map: map ,
+	// 	icon: kind.icon,
+	// 	animation: google.maps.Animation.DROP,
+	// 	title: self.title()
+	// });
 	self.marker = new google.maps.Marker({ 
 		position: new google.maps.LatLng(self.latitude(), self.longitude()), 
 		map: map ,
@@ -21,6 +28,7 @@ var Location = function(title, description, latitude, longitude, kind) {
 		animation: google.maps.Animation.DROP,
 		title: self.title()
 	});
+
 	self.infoWindow = function() {
 			infowindow.setContent(self.content);
 		  	infowindow.open(map, self.marker);

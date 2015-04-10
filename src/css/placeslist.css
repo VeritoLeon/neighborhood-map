@@ -99,8 +99,8 @@
 
 .location-title {	
 	color: #333;
-  font: 400 2rem/64px 'Roboto';
-  /* text-transform: uppercase; */
+	font: 400 2rem/64px 'Roboto';
+/*	text-transform: uppercase; */
 /*	display: flex;
 	flex-direction: column-reverse;*/
 }
@@ -115,9 +115,16 @@
 	min-height: 48px;
 }
 
+.placeslist li hr {
+	background: #E6E6E6;
+	border: none;
+	height: 1px;
+	margin: 8px 0;
+}
+
 .placeslist a {
 	color: #666;
-  font-size: 1.5em;
+	font-size: 1.5em;
 	font-family: 'Roboto' ,'Open Sans', 'Helvetica Nueue', Helvetica, Arial, Sans-serif;
 }
 
@@ -128,7 +135,6 @@
 		width: 30vw;
 		max-width: 250px;
 		position: absolute;
-		/* float: left; */
 		margin: 0;
 	}
 
@@ -145,6 +151,7 @@
 
 	.placeslist > div a {
 		display: block;
+		text-align: start;
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		overflow: hidden;
