@@ -41,8 +41,6 @@
 	margin-top: -150%;
 	padding: 0 64px;
 	font-size: 12px;
-	/*background-image: url("../img/map-bg-3.png");
-	background-image: linear-gradient( rgba(0, 0, 0, 0.5),rgba(121, 114, 109, 0.78) ), url("../img/map-bg-3.png");*/
 }
  
 .placeslist > div > div {
@@ -100,9 +98,6 @@
 .location-title {	
 	color: #333;
 	font: 400 2rem/64px 'Roboto';
-/*	text-transform: uppercase; */
-/*	display: flex;
-	flex-direction: column-reverse;*/
 }
 
 .placeslist ul {
@@ -125,7 +120,7 @@
 .placeslist a {
 	color: #666;
 	font-size: 1.5em;
-	font-family: 'Roboto' ,'Open Sans', 'Helvetica Nueue', Helvetica, Arial, Sans-serif;
+	font-family: 'Roboto', 'Helvetica Nueue', Helvetica, Arial, Sans-serif;
 }
 
 @media only screen and (min-width: 40.063em) {

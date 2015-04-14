@@ -14,13 +14,6 @@ var Location = function(title, description, latitude, longitude, kind) {
 	self.latitude = ko.observable(latitude);
 	self.longitude = ko.observable(longitude);
 	self.icon = ko.observable(kind.icon);
-	// self.iconMarker = new google.maps.Marker({ 
-	// 	position: new google.maps.LatLng(self.latitude(), self.longitude()), 
-	// 	map: map ,
-	// 	icon: kind.icon,
-	// 	animation: google.maps.Animation.DROP,
-	// 	title: self.title()
-	// });
 	self.marker = new google.maps.Marker({ 
 		position: new google.maps.LatLng(self.latitude(), self.longitude()), 
 		map: map ,
@@ -84,7 +77,8 @@ var ViewModel = function() {
 		infowindow.setContent(content);
 	  	infowindow.open(map, location.marker);
 		self.setCurrentLocation(location);
-		$('#placeslist-switcher').attr('checked', false);
+		var listSwitcher = document.getElementById('placeslist-switcher');
+		listSwitcher.checked = false;
 	};
 
 	var currentAnchor = ko.observable(parent.infowindow.getAnchor());
@@ -120,16 +114,16 @@ function initialize() {
 				]
 			}
 	};
-	map = new google.maps.Map(document.getElementById('map-canvas'),
-		mapOptions);
-	infowindow = new google.maps.InfoWindow();
 	
 
-
-	$('#map-canvas').removeClass('center');
-	$('.placeslist.fixed').removeClass('hidden');
-	$('#topbar').removeClass('hidden');
-
+	var mapCanvas = document.getElementById('map-canvas');
+	mapCanvas.removeClassName('center');
+	var topbar = document.getElementById('topbar');
+	topbar.removeClassName('hidden');
+	var placeslist = document.getElementsByClassName('placeslist')[0];
+	placeslist.removeClassName('hidden');
+	map = new google.maps.Map(mapCanvas, mapOptions);
+	infowindow = new google.maps.InfoWindow();
 	
 	ko.applyBindings(new ViewModel());
 	
@@ -155,3 +149,14 @@ function createErrorMessage(message, serverUrl) {
 	var messagesDiv = document.getElementById('messages'); 
 	messagesDiv.appendChild(newDiv);
 }
+
+Element.prototype.removeClassName = function(name) {
+    if (this.hasClassName(name)) {
+        var c = this.className;
+        this.className = c.replace(new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)", "g"), "");
+    }
+};
+
+Element.prototype.hasClassName = function(name) {
+    return new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)").test(this.className);
+};
