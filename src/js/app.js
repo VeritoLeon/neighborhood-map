@@ -1,15 +1,37 @@
+var pin = {
+	// Get this from pin-red-10-small.svg
+	path: 'm5.7173 24.562c-6.148-10.931-6.5821-15.691-1.8615-20.412 4.3413-4.3413 10.181-4.3413 14.522 0 4.7683 4.7683 4.3293 9.6487-1.8444 20.501-2.7042 4.7537-5.1417 8.6382-5.4167 8.6322s-2.7048-3.9309-5.3995-8.722zm9.1995-9.4112c1.5469-1.5469 1.5469-6.0531 0-7.6s-6.0531-1.5469-7.6 0-1.5469 6.0531 0 7.6 6.0531 1.5469 7.6 0z',
+	fillOpacity: 1,
+	strokeWeight: 0,
+	scale: 1.25,
+	origin: new google.maps.Point(0,0),
+	anchor: new google.maps.Point(10, 33),
+	getInColor: function(color) {
+		var newPin = Object.create(pin);
+		newPin.fillColor = color;
+		return newPin;
+	}
+};
+
 var type = {
 	'food': {
 		'icon': 'img/food.svg'
-		,'marker': 'img/pin-red-10-small.svg'
+		,'marker': pin.getInColor('#dd4229')
+	}
+	,'entertainment': {
+		'marker': pin.getInColor('#3aa0ef')
+	}
+	,'nature': {
+		'marker': pin.getInColor('#20be8c')
+	}
+	, 'recreation': {
+		'marker': pin.getInColor('#f352a5')
 	}
 };
 
 var Location = function(title, description, latitude, longitude, kind) {
 	var self = this;
 	self.title = ko.observable(title);
-	self.content = '<div tabindex="1" href="#"><h2 class="info-title">' + title + '</h2>'
-					+ '<p class="info-description">' + description + '</p></div>';
 	self.description = ko.observable(description);
 	self.latitude = ko.observable(latitude);
 	self.longitude = ko.observable(longitude);
@@ -21,22 +43,6 @@ var Location = function(title, description, latitude, longitude, kind) {
 		animation: google.maps.Animation.DROP,
 		title: self.title()
 	});
-
-	self.infoWindow = function() {
-			infowindow.setContent(self.content);
-		  	infowindow.open(map, self.marker);
-	};
-
-	self.toggleBounce = function() {
-		if (self.marker.getAnimation() != null) {
-			self.marker.setAnimation(null);
-		} else {
-			self.marker.setAnimation(google.maps.Animation.BOUNCE);
-		}
-	};
-
-	google.maps.event.addListener(self.marker, 'click', self.infoWindow);
-
 };
 
 var ViewModel = function() {
@@ -44,13 +50,25 @@ var ViewModel = function() {
 
 	self.locations = ko.observableArray(
 		[
-			new Location('Lockers', 'Sports restaurant and bar (Trying the "Michael Phelps" pizza is a must)', 27.493921, -109.974107, type.food)
+			new Location('Lockers', 'Sports restaurant and bar (Trying the "Michael Phelps" pizza is a must)', 27.493913, -109.974022, type.food)
 			,new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, type.food)
 			,new Location('Doña Magui', 'Homemade food', 27.490330, -109.972750, type.food)
 			,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, type.food)
 			,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, type.food)
+			// ,new Location('Gusto Frio Mr. Brown', 'Ice cream shop', 27.492788, -109.961114, type.food)
+			,new Location('Laguna del Nainari', '', 27.497699, -109.969851, type.nature)
+			,new Location('Parque infantil', '', 27.493909, -109.966797, type.recreation)
+			,new Location('Tomás Oroz Gaytán Stadium', 'Baseball stadium', 27.492747, -109.954472, type.recreation)
 		]
 	);
+	
+	for(var loc in self.locations()) {
+		google.maps.event.addListener(self.locations()[loc].marker,'click', (function(_loc) {
+			return function() {
+				self.openInfoWindow(self.locations()[_loc]);
+			};
+		})(loc));
+	};
 
 	self.currentLocation = ko.observable(self.locations()[0]);
 
@@ -61,7 +79,7 @@ var ViewModel = function() {
 			obj.marker.setAnimation(google.maps.Animation.BOUNCE);
 			return self.currentLocation(obj); 
 		}
-	}
+	};
 
 	self.getLocation = function(title) {
 		for(var loc in self.locations()) {
@@ -69,13 +87,13 @@ var ViewModel = function() {
 				return self.locations()[loc]; 
 			}
 		}
-	}
+	};
 
 	self.openInfoWindow = function(location) {
 		var content = '<div tabindex="1" href="#"><h2 class="info-title">' + location.title() + '</h2>'
 					+ '<p class="info-description">' + location.description() + '</p></div>';
 		infowindow.setContent(content);
-	  	infowindow.open(map, location.marker);
+		infowindow.open(map, location.marker);
 		self.setCurrentLocation(location);
 		var listSwitcher = document.getElementById('placeslist-switcher');
 		listSwitcher.checked = false;
@@ -132,7 +150,7 @@ function initialize() {
 try {
 	google.maps.event.addDomListener(window, 'load', initialize);
 } catch (e) {
-  createErrorMessage('Oops. Google maps couldn\'t be reached. Verify your internet connection.', 'maps.google.com');
+	createErrorMessage('Oops. Google maps couldn\'t be reached. Verify your internet connection.', 'maps.google.com');
 }
 
 function createErrorMessage(message, serverUrl) {
@@ -145,18 +163,18 @@ function createErrorMessage(message, serverUrl) {
 	downForEveryone.appendChild(linkText);
 	newDiv.appendChild(downForEveryone);
 	newDiv.className = 'alert-box warning';
-  // add the newly created element and its content into the DOM 
+	// add the newly created element and its content into the DOM 
 	var messagesDiv = document.getElementById('messages'); 
 	messagesDiv.appendChild(newDiv);
 }
 
 Element.prototype.removeClassName = function(name) {
-    if (this.hasClassName(name)) {
-        var c = this.className;
-        this.className = c.replace(new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)", "g"), "");
-    }
+	if (this.hasClassName(name)) {
+		var c = this.className;
+		this.className = c.replace(new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)", "g"), "");
+	}
 };
 
 Element.prototype.hasClassName = function(name) {
-    return new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)").test(this.className);
+	return new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)").test(this.className);
 };
