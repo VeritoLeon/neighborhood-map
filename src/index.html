@@ -27,9 +27,9 @@
 				<button id="details-button"  title="filter places"><i class="icon-filter"></i></button>
 				<div class="columns small-9 medium-4">
 					<input class="awesomplete" id="search-input" type="search" placeholder="Find places" list="locations-list">
-					<datalist id="locations-list" data-bind="foreach: locations">
-						<option data-bind="text: title"></option>
-					</datalist>
+					<ul hidden id="locations-list" data-bind="foreach: locations">
+						<li data-bind="text: title"><hr></li>
+					</ul>
 				</div>
 				<div class="columns small-3 medium-2 end">
 					<a href="#" class="button postfix">Search</a>

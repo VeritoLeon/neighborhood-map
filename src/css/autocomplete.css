@@ -1,4 +1,4 @@
-.awesomplete ul {
+#locations-list {
 	line-height: 48px;
 	text-align: center;
 	color: rgba(0, 0, 0, 0.74902);
@@ -7,6 +7,11 @@
 	box-shadow: 0 3px 10px #8C8470;
 	overflow: hidden;
 	overflow-y: auto;
+}
+
+#locations-list li:not(:last-child) {
+	margin: 3px 0;
+	border-bottom: 1px solid #E6E6E6;
 }
 
 .awesomplete mark {
