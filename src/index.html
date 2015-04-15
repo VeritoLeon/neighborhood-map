@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="css/normalize.css?__inline=true"/>
 		<link rel="stylesheet" href="css/foundation.css?__inline=true"/>
 		<link rel="stylesheet" href="css/icons.css?__inline=true"/>
+		<link rel="stylesheet" href="css/autocomplete.css?__inline=true"/>
 		<link rel="stylesheet" href="css/infowindow.css?__inline=true"/>
 		<link rel="stylesheet" href="css/placeslist.css?__inline=true"/>
 		<link rel="stylesheet" href="css/style.css?__inline=true"/>
@@ -25,7 +26,10 @@
 			<div id="search-container" class="row collapse postfix small-centered">
 				<button id="details-button"  title="filter places"><i class="icon-filter"></i></button>
 				<div class="columns small-9 medium-4">
-					<input id="search-input" type="search" placeholder="Find places">
+					<input class="awesomplete" id="search-input" type="search" placeholder="Find places" list="locations-list">
+					<datalist id="locations-list" data-bind="foreach: locations">
+						<option data-bind="text: title"></option>
+					</datalist>
 				</div>
 				<div class="columns small-3 medium-2 end">
 					<a href="#" class="button postfix">Search</a>
@@ -60,6 +64,7 @@
 		<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
 		<script src="js/knockout-3.3.0.js"></script>
 		<!--script src="js/foundation.min.js"></script-->
+		<!--script src="js/awesomplete.min.js"></script-->
 		<script src="js/app.js?__inline=true"></script>
 	</body>
 </html>

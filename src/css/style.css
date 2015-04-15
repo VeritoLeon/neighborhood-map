@@ -30,6 +30,7 @@ body::-webkit-scrollbar-thumb {}
 #topbar {
 	background-color: #EEEADE;
 	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+	height: 46px;
 }
 
 #search-container {

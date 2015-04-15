@@ -1,0 +1,15 @@
+.awesomplete ul {
+	line-height: 48px;
+	text-align: center;
+	color: rgba(0, 0, 0, 0.74902);
+	background: #FAFAFA;
+	transition: margin 300ms ease-in-out;
+	box-shadow: 0 3px 10px #8C8470;
+	overflow: hidden;
+	overflow-y: auto;
+}
+
+.awesomplete mark {
+	font-weight: 800;
+	background: none;
+}
