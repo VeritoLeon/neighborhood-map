@@ -27,8 +27,12 @@
 				<button id="details-button"  title="filter places"><i class="icon-filter"></i></button>
 				<div class="columns small-9 medium-4">
 					<input class="awesomplete" id="search-input" type="search" placeholder="Find places" list="locations-list" data-bind="textInput:query, hasFocus: queryResultsShown">
-					<ul id="locations-list" data-bind="foreach: locations, visible: queryResultsShown">
-						<li data-bind="text: title"><hr></li>
+					<ul id="locations-list" data-bind="visible: queryResultsShown, foreach: locations">
+						<li>
+							<a data-bind="click: $parent.openInfoWindow" href="#">
+								<span data-bind="text: title"></span>
+							</a>
+						</li>
 					</ul>
 				</div>
 				<div class="columns small-3 medium-2 end">
