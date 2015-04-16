@@ -1,15 +1,27 @@
 #locations-list {
 	line-height: 48px;
-	text-align: center;
+	text-align: left;
 	color: rgba(0, 0, 0, 0.74902);
 	background: #FAFAFA;
-	transition: margin 300ms ease-in-out;
 	box-shadow: 0 3px 10px #8C8470;
 	overflow: hidden;
 	overflow-y: auto;
+	list-style: none;
 }
 
-#locations-list li:not(:last-child) {
+#locations-list li {
+	padding: 0 0.5em;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	width: 100%;
+}
+
+#locations-list li:nth-child(n+6) {
+	display: none;
+}
+
+#locations-list li:not(:nth-child(5)) {
 	margin: 3px 0;
 	border-bottom: 1px solid #E6E6E6;
 }

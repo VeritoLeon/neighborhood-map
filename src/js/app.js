@@ -47,22 +47,22 @@ var Location = function(title, description, latitude, longitude, kind) {
 };
 
 var ViewModel = function() {
-	var self = this;
+	initialLocations  = [
+		new Location('Lockers', 'Sports restaurant and bar (Trying the "Michael Phelps" pizza is a must)', 27.493913, -109.974022, type.food)
+		,new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, type.food)
+		,new Location('Doña Magui', 'Homemade food', 27.490330, -109.972750, type.food)
+		,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, type.food)
+		,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, type.food)
+		// ,new Location('Gusto Frio Mr. Brown', 'Ice cream shop', 27.492788, -109.961114, type.food)
+		,new Location('Laguna del Nainari', '', 27.497699, -109.969851, type.nature)
+		,new Location('Parque infantil', '', 27.493909, -109.966797, type.recreation)
+		,new Location('Tomás Oroz Gaytán Stadium', 'Baseball stadium', 27.492747, -109.954472, type.recreation)
+	];
 
-	self.locations = ko.observableArray(
-		[
-			new Location('Lockers', 'Sports restaurant and bar (Trying the "Michael Phelps" pizza is a must)', 27.493913, -109.974022, type.food)
-			,new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, type.food)
-			,new Location('Doña Magui', 'Homemade food', 27.490330, -109.972750, type.food)
-			,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, type.food)
-			,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, type.food)
-			// ,new Location('Gusto Frio Mr. Brown', 'Ice cream shop', 27.492788, -109.961114, type.food)
-			,new Location('Laguna del Nainari', '', 27.497699, -109.969851, type.nature)
-			,new Location('Parque infantil', '', 27.493909, -109.966797, type.recreation)
-			,new Location('Tomás Oroz Gaytán Stadium', 'Baseball stadium', 27.492747, -109.954472, type.recreation)
-		]
-	);
-	
+	var self = this;
+	self.query = ko.observable('');
+	self.locations = ko.observableArray(initialLocations);
+
 	for(var loc in self.locations()) {
 		google.maps.event.addListener(self.locations()[loc].marker,'click', (function(_loc) {
 			return function() {
@@ -115,7 +115,7 @@ var ViewModel = function() {
 	});
 };
 
-var map, infowindow;
+var map, infowindow, initialLocations;
 
 function initialize() {
 	var mapOptions = {
