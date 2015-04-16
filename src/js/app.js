@@ -2,11 +2,12 @@ var pin = {
 	// Get this from pin-red-10-small.svg
 	path: 'm5.7173 24.562c-6.148-10.931-6.5821-15.691-1.8615-20.412 4.3413-4.3413 10.181-4.3413 14.522 0 4.7683 4.7683 4.3293 9.6487-1.8444 20.501-2.7042 4.7537-5.1417 8.6382-5.4167 8.6322s-2.7048-3.9309-5.3995-8.722zm9.1995-9.4112c1.5469-1.5469 1.5469-6.0531 0-7.6s-6.0531-1.5469-7.6 0-1.5469 6.0531 0 7.6 6.0531 1.5469 7.6 0z',
 	fillOpacity: 1,
-	strokeWeight: 0,
+	strokeWeight: 1,
+	strokeColor: '#fff',
 	scale: 1.25,
 	origin: new google.maps.Point(0,0),
 	anchor: new google.maps.Point(10, 33),
-	getInColor: function(color) {
+	setColor: function(color) {
 		var newPin = Object.create(pin);
 		newPin.fillColor = color;
 		return newPin;
@@ -16,16 +17,16 @@ var pin = {
 var type = {
 	'food': {
 		'icon': 'img/food.svg'
-		,'marker': pin.getInColor('#dd4229')
+		,'marker': pin.setColor('#dd4229')
 	}
 	,'entertainment': {
-		'marker': pin.getInColor('#3aa0ef')
+		'marker': pin.setColor('#3aa0ef')
 	}
 	,'nature': {
-		'marker': pin.getInColor('#20be8c')
+		'marker': pin.setColor('#20be8c')
 	}
 	, 'recreation': {
-		'marker': pin.getInColor('#f352a5')
+		'marker': pin.setColor('#f352a5')
 	}
 };
 
@@ -56,12 +57,15 @@ var ViewModel = function() {
 		// ,new Location('Gusto Frio Mr. Brown', 'Ice cream shop', 27.492788, -109.961114, type.food)
 		,new Location('Laguna del Nainari', '', 27.497699, -109.969851, type.nature)
 		,new Location('Parque infantil', '', 27.493909, -109.966797, type.recreation)
-		,new Location('Tomás Oroz Gaytán Stadium', 'Baseball stadium', 27.492747, -109.954472, type.recreation)
+		,new Location('Tomas Oroz Gaytan Stadium', 'Baseball stadium', 27.492747, -109.954472, type.recreation)
 	];
 
 	var self = this;
 	self.query = ko.observable('');
-	self.locations = ko.observableArray(initialLocations);
+	self.queryResultsShown = ko.observable(false),
+	self.locations = ko.observableArray(initialLocations.slice());
+	self.currentLocation = ko.observable(self.locations()[0]);
+	self.currentAnchor = ko.observable(parent.infowindow.getAnchor());
 
 	for(var loc in self.locations()) {
 		google.maps.event.addListener(self.locations()[loc].marker,'click', (function(_loc) {
@@ -71,13 +75,13 @@ var ViewModel = function() {
 		})(loc));
 	};
 
-	self.currentLocation = ko.observable(self.locations()[0]);
 
 	self.setCurrentLocation = function(obj) {
 		if(obj = self.getLocation(obj.title())) {
 			obj != self.currentLocation()? self.currentLocation().marker.setAnimation(null) : self.currentLocation();
 			
 			obj.marker.setAnimation(google.maps.Animation.BOUNCE);
+			map.panTo(obj.marker.getPosition());
 			return self.currentLocation(obj); 
 		}
 	};
@@ -100,13 +104,22 @@ var ViewModel = function() {
 		listSwitcher.checked = false;
 	};
 
-	var currentAnchor = ko.observable(parent.infowindow.getAnchor());
+	self.search = function(value) {
+		self.locations.removeAll();
+		var locs = [];
+		for(var x in parent.initialLocations) {
+			var currentLocation = parent.initialLocations[x];
+			if(valueMatches(value, currentLocation.title())) {
+				locs.push(currentLocation);
+			}
+		}
+		self.locations(locs);
+	};
 
 	google.maps.event.addListener(parent.infowindow, 'domready', function(e) {
 		var location = self.getLocation(parent.infowindow.getAnchor().title);
 		if(location) {
 			self.setCurrentLocation(location);
-			map.panTo(self.currentLocation().marker.getPosition());
 		}
 	});
 
@@ -130,8 +143,16 @@ function initialize() {
 			mapTypeIds: [
 				google.maps.MapTypeId.ROADMAP,
 				google.maps.MapTypeId.TERRAIN
+			]
+		},
+		styles: [
+			{
+				"elementType": "labels.icon",
+				"stylers": [
+					{ "visibility": "off" }
 				]
 			}
+		]
 	};
 	
 
@@ -143,9 +164,9 @@ function initialize() {
 	placeslist.removeClassName('hidden');
 	map = new google.maps.Map(mapCanvas, mapOptions);
 	infowindow = new google.maps.InfoWindow();
-	
-	ko.applyBindings(new ViewModel());
-	
+	var viewModel = new ViewModel();
+	ko.applyBindings(viewModel);
+	viewModel.query.subscribe(viewModel.search);
 }
 
 try {
@@ -154,7 +175,7 @@ try {
 	createErrorMessage('Oops. Google maps couldn\'t be reached. Verify your internet connection.', 'maps.google.com');
 }
 
-function createErrorMessage(message, serverUrl) {
+createErrorMessage = function(message, serverUrl) {
 	var newDiv = document.createElement('div'); 
 	var newContent = document.createTextNode(message + ' '); 
 	var downForEveryone = document.createElement('a'); 
@@ -167,7 +188,17 @@ function createErrorMessage(message, serverUrl) {
 	// add the newly created element and its content into the DOM 
 	var messagesDiv = document.getElementById('messages'); 
 	messagesDiv.appendChild(newDiv);
-}
+};
+
+// Helper got from Lea Verou's awesomplete
+regExpEscape = function (s) {
+	return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
+};
+
+valueMatches = function (inputItem, testItem) {
+	var CASE_INSENSITIVE_MATCHING = 'i';
+	return RegExp(regExpEscape(inputItem.trim()), CASE_INSENSITIVE_MATCHING).test(testItem);
+};
 
 Element.prototype.removeClassName = function(name) {
 	if (this.hasClassName(name)) {
@@ -179,4 +210,3 @@ Element.prototype.removeClassName = function(name) {
 Element.prototype.hasClassName = function(name) {
 	return new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)").test(this.className);
 };
-

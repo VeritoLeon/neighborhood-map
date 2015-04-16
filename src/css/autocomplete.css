@@ -21,7 +21,7 @@
 	display: none;
 }
 
-#locations-list li:not(:nth-child(5)) {
+#locations-list li:not(:nth-child(5)):not(:last-child) {
 	margin: 3px 0;
 	border-bottom: 1px solid #E6E6E6;
 }
@@ -29,4 +29,10 @@
 .awesomplete mark {
 	font-weight: 800;
 	background: none;
+}
+
+@media only screen and (min-width: 40.063em) {
+	#locations-list {
+		visibility: hidden;
+	}
 }
