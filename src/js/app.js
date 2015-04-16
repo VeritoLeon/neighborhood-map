@@ -74,6 +74,10 @@ var ViewModel = function() {
 			};
 		})(loc));
 	};
+	
+	self.showResults = function() {
+		self.queryResultsShown(true);
+	};
 
 
 	self.setCurrentLocation = function(obj) {
@@ -102,6 +106,8 @@ var ViewModel = function() {
 		self.setCurrentLocation(location);
 		var listSwitcher = document.getElementById('placeslist-switcher');
 		listSwitcher.checked = false;
+		self.queryResultsShown(false);
+		self.query(location.title());
 	};
 
 	self.search = function(value) {
@@ -125,6 +131,7 @@ var ViewModel = function() {
 
 	google.maps.event.addListener(parent.infowindow, 'closeclick', function(e) {
 		self.currentLocation().marker.setAnimation(null);
+		self.query('');
 	});
 };
 

@@ -26,11 +26,10 @@
 			<div id="search-container" class="row collapse postfix small-centered">
 				<button id="details-button"  title="filter places"><i class="icon-filter"></i></button>
 				<div class="columns small-9 medium-4">
-					<input class="awesomplete" id="search-input" type="search" placeholder="Find places" list="locations-list" data-bind="textInput:query, hasFocus: queryResultsShown">
+					<input class="awesomplete" id="search-input" type="search" placeholder="Find places" list="locations-list" data-bind="textInput:query, click: showResults">
 					<ul id="locations-list" data-bind="visible: queryResultsShown, foreach: locations">
 						<li>
-							<a data-bind="click: $parent.openInfoWindow" href="#">
-								<span data-bind="text: title"></span>
+							<a data-bind="click: $parent.openInfoWindow, text: title" href="#">
 							</a>
 						</li>
 					</ul>
