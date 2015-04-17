@@ -118,6 +118,11 @@ var ViewModel = function() {
 		self.locations(locs);
 	};
 
+	self.selectMarker = function() {
+		self.openInfoWindow(self.locations()[0]);
+		self.query('');
+	};
+
 	self.hideAllMarkers = function() {
 		var locs = self.locations();
 		for(var x in self.locations()) {
