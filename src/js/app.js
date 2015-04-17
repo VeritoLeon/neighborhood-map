@@ -40,7 +40,7 @@ var Location = function(title, description, latitude, longitude, kind) {
 	self.icon = ko.observable(kind.icon);
 	self.marker = new google.maps.Marker({ 
 		position: new google.maps.LatLng(self.latitude(), self.longitude()), 
-		map: map ,
+		map: map,
 		icon: kind.marker,
 		animation: google.maps.Animation.DROP,
 		title: self.title()
@@ -107,19 +107,31 @@ var ViewModel = function() {
 		var listSwitcher = document.getElementById('placeslist-switcher');
 		listSwitcher.checked = false;
 		self.queryResultsShown(false);
-		self.query(location.title());
 	};
 
 	self.search = function(value) {
+		self.hideAllMarkers();
 		self.locations.removeAll();
 		var locs = [];
 		for(var x in parent.initialLocations) {
 			var currentLocation = parent.initialLocations[x];
 			if(valueMatches(value, currentLocation.title())) {
+				self.showMarker(currentLocation);
 				locs.push(currentLocation);
 			}
 		}
 		self.locations(locs);
+	};
+
+	self.hideAllMarkers = function() {
+		var locs = self.locations();
+		for(var x in self.locations()) {
+			locs[x].marker.setMap(null);
+		}
+	};
+
+	self.showMarker = function(location) {
+		location.marker.setMap(map);
 	};
 
 	google.maps.event.addListener(parent.infowindow, 'domready', function(e) {
@@ -131,7 +143,6 @@ var ViewModel = function() {
 
 	google.maps.event.addListener(parent.infowindow, 'closeclick', function(e) {
 		self.currentLocation().marker.setAnimation(null);
-		self.query('');
 	});
 };
 
