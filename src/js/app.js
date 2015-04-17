@@ -45,6 +45,9 @@ var Location = function(title, description, latitude, longitude, kind) {
 		animation: google.maps.Animation.DROP,
 		title: self.title()
 	});
+	google.maps.event.addListener(self.marker,'click', function() {
+		parent.viewModel.openInfoWindow(self);
+	});
 };
 
 var ViewModel = function() {
@@ -66,14 +69,6 @@ var ViewModel = function() {
 	self.locations = ko.observableArray(initialLocations.slice());
 	self.currentLocation = ko.observable(self.locations()[0]);
 	self.currentAnchor = ko.observable(parent.infowindow.getAnchor());
-
-	for(var loc in self.locations()) {
-		google.maps.event.addListener(self.locations()[loc].marker,'click', (function(_loc) {
-			return function() {
-				self.openInfoWindow(self.locations()[_loc]);
-			};
-		})(loc));
-	};
 	
 	self.showResults = function() {
 		self.queryResultsShown(true);
@@ -146,7 +141,7 @@ var ViewModel = function() {
 	});
 };
 
-var map, infowindow, initialLocations;
+var map, infowindow, initialLocations, viewModel;
 
 function initialize() {
 	var mapOptions = {
@@ -182,7 +177,7 @@ function initialize() {
 	placeslist.removeClassName('hidden');
 	map = new google.maps.Map(mapCanvas, mapOptions);
 	infowindow = new google.maps.InfoWindow();
-	var viewModel = new ViewModel();
+	viewModel = new ViewModel();
 	ko.applyBindings(viewModel);
 	viewModel.query.subscribe(viewModel.search);
 }
