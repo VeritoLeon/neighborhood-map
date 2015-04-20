@@ -69,6 +69,7 @@ var ViewModel = function() {
 	self.locations = ko.observableArray(initialLocations.slice());
 	self.currentLocation = ko.observable(self.locations()[0]);
 	self.currentAnchor = ko.observable(parent.infowindow.getAnchor());
+	self.filter = ko.observable('');
 	
 	self.showResults = function() {
 		self.queryResultsShown(true);
@@ -93,6 +94,27 @@ var ViewModel = function() {
 		}
 	};
 
+	self.showLocationsByKind = function(kind) {
+		self.filter(kind);
+		self.search(self.query());
+	};
+
+	self.showAllLocations = function() {
+		self.showLocationsByKind('');
+	};
+
+	self.showFoodLocations = function() {
+		self.showLocationsByKind(type.food);
+	};
+
+	self.showRecreationLocations = function() {
+		self.showLocationsByKind(type.recreation);
+	};
+
+	self.showOutdoorsLocations = function() {
+		self.showLocationsByKind(type.nature);
+	};
+
 	self.openInfoWindow = function(location) {
 		var content = '<div tabindex="1" href="#"><h2 class="info-title">' + location.title() + '</h2>'
 					+ '<p class="info-description">' + location.description() + '</p></div>';
@@ -110,7 +132,8 @@ var ViewModel = function() {
 		var locs = [];
 		for(var x in parent.initialLocations) {
 			var currentLocation = parent.initialLocations[x];
-			if(valueMatches(value, currentLocation.title())) {
+			if(valueMatches(value, currentLocation.title()) &&
+				(currentLocation.kind() === self.filter() || !self.filter())) {
 				self.showMarker(currentLocation);
 				locs.push(currentLocation);
 			}

@@ -23,21 +23,29 @@
 			</noscript>
 		</div>
 		<nav id="topbar" class="fixed hidden">
-			<div id="search-container" class="row fullWidth collapse postfix small-centered">
+			<div id="search-container" class="row full-width collapse postfix small-centered">
 				<input id="filter" title="filter places" type="checkbox">
 				<label id="details-button" for="filter" class="icon-filter"></label>
 				<div class="columns small-9 medium-4">
-					<input class="awesomplete" id="search-input" type="search" placeholder="Find places" list="locations-list" data-bind="textInput:query, click: showResults">
+					<input id="search-input" type="search" placeholder="Find places" list="locations-list" data-bind="textInput:query, click: showResults">
 				</div>
 				<div class="columns small-3 medium-2">
 					<a href="#" class="button postfix" data-bind="click:selectMarker">Search</a>
 				</div>
 				<dl id="filter-menu" class="columns sub-nav medium-5" role="menu" title="Filter Menu List">
 					<dt>Show:</dt>
-					<dd class="active" role="menuitem"><a href="#">All</a></dd>
-					<dd role="menuitem"><a href="#"><i class="icon-food"></i><span>Food</span></a></dd>
-					<dd role="menuitem"><a href="#"><i class="icon-theatre"></i><span>Recreation</span></a></dd>
-					<dd role="menuitem"><a href="#"><i class="icon-nature"></i><span>Outdoors</span></a></dd>
+					<dd role="menuitem" data-bind="css: { active: filter() === '' }">
+						<a data-bind="click:showAllLocations" href="#">All</a>
+					</dd>
+					<dd role="menuitem" data-bind="css: { active: filter() === type.food }">
+						<a data-bind="click:showFoodLocations" href="#"><i class="icon-food"></i><span>Food</span></a>
+					</dd>
+					<dd role="menuitem" data-bind="css: { active: filter() === type.recreation }">
+						<a data-bind="click:showRecreationLocations" href="#"><i class="icon-theatre"></i><span>Recreation</span></a>
+					</dd>
+					<dd role="menuitem" data-bind="css: { active: filter() === type.nature }">
+						<a data-bind="click:showOutdoorsLocations" href="#"><i class="icon-nature"></i><span>Outdoors</span></a>
+					</dd>
 				</dl>
 			</div>
 		</nav>	
@@ -61,7 +69,7 @@
 			</div>
 		</div>
 		<div id="map-canvas" class="center">
-			<div  class="google_map">
+			<div  class="google-map">
 				<img width="640" height="640" src="" alt="Map showing ITSON and Laguna del Nainari">
 			</div>
 		</div>

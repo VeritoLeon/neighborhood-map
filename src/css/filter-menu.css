@@ -4,7 +4,7 @@
 
 #details-button {
 	background-color: rgba(0, 0, 0, 0);
-	padding: 0.5rem;
+	padding-top: 0.7rem;
 	width: 2.3125rem;
 	height: 2.3125rem;
 	position: absolute;
@@ -52,6 +52,7 @@
 }
 @media only screen and (min-width: 40.063em) {
 	#filter-menu {
+		float: right;
 		display: block;
 		width: auto;
 		max-width: 50%;
