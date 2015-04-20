@@ -119,8 +119,10 @@ var ViewModel = function() {
 	};
 
 	self.selectMarker = function() {
-		self.openInfoWindow(self.locations()[0]);
-		self.query('');
+		if(self.locations().length) {
+			self.openInfoWindow(self.locations()[0]);
+			self.query('');
+		}
 	};
 
 	self.hideAllMarkers = function() {

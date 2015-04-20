@@ -8,6 +8,7 @@
 		<link rel="stylesheet" href="css/icons.css?__inline=true"/>
 		<link rel="stylesheet" href="css/infowindow.css?__inline=true"/>
 		<link rel="stylesheet" href="css/placeslist.css?__inline=true"/>
+		<link rel="stylesheet" href="css/filter-menu.css?__inline=true"/>
 		<link rel="stylesheet" href="css/style.css?__inline=true"/>
 	</head>
 	<body>
@@ -22,14 +23,22 @@
 			</noscript>
 		</div>
 		<nav id="topbar" class="fixed hidden">
-			<div id="search-container" class="row collapse postfix small-centered">
-				<button id="details-button"  title="filter places"><i class="icon-filter"></i></button>
+			<div id="search-container" class="row fullWidth collapse postfix small-centered">
+				<input id="filter" title="filter places" type="checkbox">
+				<label id="details-button" for="filter" class="icon-filter"></label>
 				<div class="columns small-9 medium-4">
 					<input class="awesomplete" id="search-input" type="search" placeholder="Find places" list="locations-list" data-bind="textInput:query, click: showResults">
 				</div>
-				<div class="columns small-3 medium-2 end">
+				<div class="columns small-3 medium-2">
 					<a href="#" class="button postfix" data-bind="click:selectMarker">Search</a>
 				</div>
+				<dl id="filter-menu" class="columns sub-nav medium-5" role="menu" title="Filter Menu List">
+					<dt>Show:</dt>
+					<dd class="active" role="menuitem"><a href="#">All</a></dd>
+					<dd role="menuitem"><a href="#"><i class="icon-food"></i><span>Food</span></a></dd>
+					<dd role="menuitem"><a href="#"><i class="icon-theatre"></i><span>Recreation</span></a></dd>
+					<dd role="menuitem"><a href="#"><i class="icon-nature"></i><span>Outdoors</span></a></dd>
+				</dl>
 			</div>
 		</nav>	
 		<div class="hidden placeslist fixed">

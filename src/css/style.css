@@ -5,6 +5,13 @@ body {
 
 body::-webkit-scrollbar-thumb {}
 
+.fullWidth {
+   width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+   max-width: initial;
+}
+
 #messages {
 	padding: 0;
 	margin: 0;
@@ -59,23 +66,6 @@ input[type="search"]::-webkit-search-decoration {
 
 div.awesomplete {
   display: block;
-}
-
-#details-button {
-	background-color: rgba(0, 0, 0, 0);
-	padding: 0.5rem;
-	width: 2.3125rem;
-	height: 2.3125rem;
-	position: absolute;
-	z-index: 2;
-	left: 2;
-	color: #C8C8C8;
-}
-
-#details-button:focus,
-#details-button:hover {
-	color: #000;	
-	outline-color: rgba(0, 0, 0, 0);
 }
 
 #map-canvas { 
