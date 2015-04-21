@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Neighborhood Map</title>
@@ -34,16 +35,16 @@
 				</div>
 				<dl id="filter-menu" class="columns sub-nav medium-5" role="menu" title="Filter Menu List">
 					<dt>Show:</dt>
-					<dd role="menuitem" data-bind="css: { active: filter() === '' }">
+					<dd role="menuitem" data-bind="css: isFilterAll">
 						<a data-bind="click:showAllLocations" href="#">All</a>
 					</dd>
-					<dd role="menuitem" data-bind="css: { active: filter() === type.food }">
+					<dd role="menuitem" data-bind="css: isFilterFood">
 						<a data-bind="click:showFoodLocations" href="#"><i class="icon-food"></i><span>Food</span></a>
 					</dd>
-					<dd role="menuitem" data-bind="css: { active: filter() === type.recreation }">
+					<dd role="menuitem" data-bind="css: isFilterRecreation">
 						<a data-bind="click:showRecreationLocations" href="#"><i class="icon-theatre"></i><span>Recreation</span></a>
 					</dd>
-					<dd role="menuitem" data-bind="css: { active: filter() === type.nature }">
+					<dd role="menuitem" data-bind="css: isFilterOutdoors">
 						<a data-bind="click:showOutdoorsLocations" href="#"><i class="icon-nature"></i><span>Outdoors</span></a>
 					</dd>
 				</dl>
