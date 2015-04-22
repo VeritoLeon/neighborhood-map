@@ -16,13 +16,14 @@
 		<div id="messages">
 			<noscript>
 				<div class="alert-box warning">
-						This site needs JavaScript for full functionality.
+						We need JavaScript to display the map.
 						Here are the <a href="http://www.enable-javascript.com/" target="_blank">instructions on how to enable JavaScript</a>.
 				</div>
 			</noscript>
 		</div>
 		<nav id="topbar" class="fixed hidden">
 			<div id="search-container" class="row full-width collapse postfix small-centered">
+				<!-- Search START -->
 				<input id="filter" title="filter places" type="checkbox">
 				<label id="details-button" for="filter" class="icon-filter"></label>
 				<div class="columns small-9 medium-4 large-3">
@@ -31,6 +32,9 @@
 				<div class="columns small-3 medium-2 large-1">
 					<a href="#" class="button postfix" data-bind="click:selectMarker">Search</a>
 				</div>
+				<!-- Search END -->
+
+				<!-- Filter menu START -->
 				<dl id="filter-menu" class="columns sub-nav medium-5 large-7" role="menu" title="Filter Menu List">
 					<dt>Show:</dt>
 					<dd role="menuitem" data-bind="css: isFilterAll">
@@ -46,8 +50,10 @@
 						<a data-bind="click:showOutdoorsLocations" href="#"><i class="icon-nature"></i><span>Outdoors</span></a>
 					</dd>
 				</dl>
+				<!-- Filter menu END -->
 			</div>
 		</nav>	
+		<!-- Locations list START -->
 		<div class="hidden placeslist fixed">
 			<input title="show places list" type="checkbox" id="placeslist-switcher" data-bind="checked: queryResultsShown"/>
 			<label id="place" class="placebar-button" for="placeslist-switcher">
@@ -67,11 +73,14 @@
 				</div>
 			</div>
 		</div>
+		<!-- Locations list END -->
+		<!-- Map START -->
 		<div id="map-canvas" class="center">
 			<div  class="google-map">
 				<img width="640" height="640" src="" alt="Map showing ITSON and Laguna del Nainari">
 			</div>
 		</div>
+		<!-- Map END -->
 		<script src="js/knockout-3.3.0.js"></script>
 		<script src="js/app.js?__inline=true"></script>
 	</body>
