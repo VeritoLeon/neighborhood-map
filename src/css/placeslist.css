@@ -6,6 +6,7 @@
 .placebar-button,
 .placebar-button span {
 	display: block;
+	transform-style: preserve-3d;
 }
  
 .placeslist,
@@ -20,7 +21,7 @@
 	text-align: center;
 	color: rgba(0, 0, 0, 0.74902);
 	background:#fafafa;
-	transition: margin 300ms ease-in-out;
+	transition: transform 300ms ease-in-out;
 	box-shadow: 0 3px 10px #8C8470;
 }
  
@@ -33,12 +34,13 @@
 	z-index: 1;
 	color: #000;
 	cursor: default;
+	height: 0;
 	max-height: 90%;
   	margin: 0 0.5em;
 }
 
  .placeslist > div {
-	margin-top: -150%;
+	transform: translateY(-150%);
 	padding: 0 64px;
 	font-size: 12px;
 }
@@ -81,18 +83,19 @@
 	opacity: 1;
 	transition: opacity 300ms 300ms ease-in-out;
 	position: fixed;
+	transform: translateZ(1em);
 }
  
 .placeslist input:not(:checked) ~ .placebar-button span:last-child {
-	margin-top: -51px;
+	transform: translateY(-51px);
 }
  
 .placeslist input:checked ~ .placebar-button span:last-child {
-	margin-top: -100px;
+	transform: translateY(-100px);
 }
  
 .placeslist input:checked ~  div {
-	margin-top: 2.7rem;
+	transform: translateY(2.7rem);
 }
 
 .location-title {	
@@ -128,6 +131,7 @@
 	.placeslist.fixed {
 		z-index: 1;
 		width: 30vw;
+		height: auto;
 		max-width: 250px;
 		position: absolute;
 		margin: 0;
@@ -139,7 +143,7 @@
 
 	.placeslist > div {
 		box-shadow: 3px 0 4px rgba(0, 0, 0, 0.15);
-		margin-top: 40px;
+		transform: translateY(40px);
 		padding: 0 1.5em;
 		height: calc(100% - 45px);
 	}
