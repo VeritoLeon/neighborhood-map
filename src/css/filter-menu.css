@@ -29,7 +29,7 @@
 	justify-content: space-around;
 	background: #FAFAFA;
 	box-shadow: 0 3px 20px #8C8470;
-	transition: margin 300ms ease-in-out;
+	transition: transform 300ms ease-in-out;
 	z-index: 2;
 }
 
@@ -44,11 +44,11 @@
 
 @media only screen and (max-width: 40.062em) {
 	#filter:not(:checked) ~ #filter-menu {
-		margin-top: -200%;
+		transform: translateY(-200%);
 	}
 
 	#filter(:checked) ~ #filter-menu {
-		margin-top: 0%;
+		transform: translateY(0%);
 	}
 }
 
@@ -61,7 +61,7 @@
 		height: auto;
 		background: none;
 		box-shadow: none;
-		margin-top: 0;
+		transform: translateY(0);
 	}
 
 	#filter-menu dt,
