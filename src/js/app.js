@@ -43,9 +43,9 @@ function initialize() {
 		styles: [
 			// Hides the default clickable location icons on the map.
 			{
-				"elementType": "labels.icon",
-				"stylers": [
-					{ "visibility": "off" }
+				elementType: 'labels.icon',
+				stylers: [
+					{ visibility: 'off' }
 				]
 			}
 		]
@@ -357,7 +357,7 @@ function createErrorMessage(message, serverUrl) {
  * @return String   literal string
  */
 function regExpEscape(s) {
-	return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
+	return s.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
 /**
@@ -378,7 +378,7 @@ function valueMatches(inputItem, testItem) {
 Element.prototype.removeClassName = function(name) {
 	if (this.hasClassName(name)) {
 		var c = this.className;
-		this.className = c.replace(new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)", "g"), "");
+		this.className = c.replace(new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)', 'g'), '');
 	}
 };
 
@@ -388,5 +388,5 @@ Element.prototype.removeClassName = function(name) {
  * @return Boolean      true if the element has that class
  */
 Element.prototype.hasClassName = function(name) {
-	return new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)").test(this.className);
+	return new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)').test(this.className);
 };
