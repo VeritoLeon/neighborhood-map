@@ -25,13 +25,13 @@
 			<div id="search-container" class="row full-width collapse postfix small-centered">
 				<input id="filter" title="filter places" type="checkbox">
 				<label id="details-button" for="filter" class="icon-filter"></label>
-				<div class="columns small-9 medium-4">
+				<div class="columns small-9 medium-4 large-3">
 					<input id="search-input" type="search" placeholder="Find places" list="locations-list" data-bind="textInput:query, click: showResults">
 				</div>
-				<div class="columns small-3 medium-2">
+				<div class="columns small-3 medium-2 large-1">
 					<a href="#" class="button postfix" data-bind="click:selectMarker">Search</a>
 				</div>
-				<dl id="filter-menu" class="columns sub-nav medium-5" role="menu" title="Filter Menu List">
+				<dl id="filter-menu" class="columns sub-nav medium-5 large-7" role="menu" title="Filter Menu List">
 					<dt>Show:</dt>
 					<dd role="menuitem" data-bind="css: isFilterAll">
 						<a data-bind="click:showAllLocations" href="#">All</a>
@@ -72,7 +72,6 @@
 				<img width="640" height="640" src="" alt="Map showing ITSON and Laguna del Nainari">
 			</div>
 		</div>
-		<!--script src="https://maps.googleapis.com/maps/api/js"></script-->
 		<script src="js/knockout-3.3.0.js"></script>
 		<script src="js/app.js?__inline=true"></script>
 	</body>

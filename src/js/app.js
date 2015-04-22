@@ -248,6 +248,9 @@ var ViewModel = function() {
 		self.currentLocation().marker.setAnimation(null);
 	});
 };
+
+// Helpers
+
 function createErrorMessage(message, serverUrl) {
 	var newDiv = document.createElement('div'); 
 	var newContent = document.createTextNode(message + ' '); 
