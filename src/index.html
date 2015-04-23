@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="css/infowindow.css?__inline=true"/>
 		<link rel="stylesheet" href="css/placeslist.css?__inline=true"/>
 		<link rel="stylesheet" href="css/filter-menu.css?__inline=true"/>
+		<!-- <link rel="stylesheet" href="css/locationDetails.css?__inline=true"/> -->
 		<link rel="stylesheet" href="css/style.css?__inline=true"/>
 	</head>
 	<body>
@@ -25,7 +26,7 @@
 			<div id="search-container" class="row full-width collapse postfix small-centered">
 				<!-- Search START -->
 				<input id="filter" title="filter places" type="checkbox">
-				<label id="details-button" for="filter" class="icon-filter"></label>
+				<label id="filter-button" for="filter" class="icon-filter"></label>
 				<div class="columns small-9 medium-4 large-3">
 					<input id="search-input" type="search" placeholder="Find places" list="locations-list" data-bind="textInput:query, click: showResults">
 				</div>
@@ -81,6 +82,8 @@
 			</div>
 		</div>
 		<!-- Map END -->
+		<article id="details">
+		</article>
 		<script src="js/knockout-3.3.0.js"></script>
 		<script src="js/app.js?__inline=true"></script>
 	</body>

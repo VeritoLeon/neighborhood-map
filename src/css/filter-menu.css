@@ -2,7 +2,7 @@
 	display: none;
 }
 
-#details-button {
+#filter-button {
 	background-color: rgba(0, 0, 0, 0);
 	padding-top: 0.5rem;
 	width: 2.3125rem;
@@ -14,8 +14,8 @@
 	margin: 0;
 }
 
-#details-button:focus,
-#details-button:hover {
+#filter-button:focus,
+#filter-button:hover {
 	color: #000;	
 	outline-color: rgba(0, 0, 0, 0);
 }
@@ -53,6 +53,10 @@
 }
 
 @media only screen and (min-width: 40.063em) {
+	#filter-button {
+		display: none;
+	}
+	
 	#filter-menu {
 		float: right;
 		display: block;
