@@ -108,7 +108,8 @@ function initialize() {
 		,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, type.food)
 		,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, type.food)
 		// ,new Location('Gusto Frio Mr. Brown', 'Ice cream shop', 27.492788, -109.961114, type.food)
-		,new Location('Laguna del Nainari', '', 27.497699, -109.969851, type.nature)
+		,new Location('Laguna del Nainari', '', 27.497699, -109.969851, type.nature, {'wikipediaId': '2254604', 'foursquareId': '4cf561ec71538cfa6bdcae2e'})
+			// http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=500&format=json&pageids=2254604
 		,new Location('Parque infantil Ostimuri', '', 27.493909, -109.966797, type.recreation)
 		,new Location('Tomas Oroz Gaytan Stadium', 'Baseball stadium', 27.492747, -109.954472, type.recreation)
 	];
@@ -128,7 +129,7 @@ function initialize() {
  * @param number longitude   Longitude is specified in degrees within the range [-180, 180]
  * @param type   kind        Location's category. Set in the form type.[category]
  */
-var Location = function(title, description, latitude, longitude, kind) {
+var Location = function(title, description, latitude, longitude, kind, thirdParty) {
 	var self = this;
 	self.title = ko.observable(title);
 	self.description = ko.observable(description);
