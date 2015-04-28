@@ -83,7 +83,7 @@
 	}
 
 	.tabs-content > .content {
-		display: initial;
+		display: block;
 		flex-grow: 1;
 		height: 200px;
 	}

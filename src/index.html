@@ -12,14 +12,14 @@
 		<link rel="stylesheet" href="css/filterMenu.css?__inline=true"/>
 		<link rel="stylesheet" href="css/locationDetails.css?__inline=true"/>
 		<link rel="stylesheet" href="css/style.css?__inline=true"/>
-		<script src="js/modernizr.js"></script>
+		<script async src="js/modernizr.js" async></script>
 	</head>
 	<body>
 		<div id="messages">
 			<noscript>
 				<div class="alert-box warning">
-						We need JavaScript to display the map.
-						Here are the <a href="http://www.enable-javascript.com/" target="_blank">instructions on how to enable JavaScript</a>.
+					We need JavaScript to display the map.
+					Here are the <a href="http://www.enable-javascript.com/" target="_blank">instructions on how to enable JavaScript</a>.
 				</div>
 			</noscript>
 		</div>
@@ -66,11 +66,7 @@
 				<div>
 					<h1 class="location-title">Locations</h1>
 					<ul data-bind="foreach: locations">
-						<li>
-							<a data-bind="click: $parent.openInfoWindow" href="#">
-								<span data-bind="text: title"></span>
-							</a>
-						</li>
+						<li><a data-bind="click: $parent.openInfoWindow" href="#"><span data-bind="text: title"></span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -113,7 +109,7 @@
 			</div>
 		</article>
 		<!-- Details END -->
-		<script src="js/knockout-3.3.0.js"></script>
+		<script async src="js/knockout-3.3.0.js"></script>
 		<script src="js/app.js?__inline=true"></script>
 	</body>
 </html>
