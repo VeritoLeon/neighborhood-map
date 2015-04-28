@@ -1,4 +1,4 @@
-var map, infowindow, initialLocations, viewModel, pin, type;
+var map, infowindow, initialLocations, viewModel, detailsViewModel, pin, type;
 
 // the loadScript function is the first thing we want to execute
 // as soon as the window is ready.
@@ -95,7 +95,6 @@ function initialize() {
 	// Here we restyle our application to accomodate to how it'll look
 	// once we add the map
 	var mapCanvas = document.getElementById('map-canvas');
-	mapCanvas.removeClassName('center');
 	var topbar = document.getElementById('topbar');
 	topbar.removeClassName('hidden');
 	var placeslist = document.getElementsByClassName('placeslist')[0];
@@ -105,6 +104,19 @@ function initialize() {
 	// We also create the element that will display our locations information.
 	map = new google.maps.Map(mapCanvas, mapOptions);
 	infowindow = new google.maps.InfoWindow();
+
+	// All the locations that will be put in the map
+	initialLocations  = [
+		new Location('Lockers', 'Sports restaurant and bar (Trying the "Michael Phelps" pizza is a must)', 27.493913, -109.974022, type.food)
+		,new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, type.food)
+		,new Location('Doña Magui', 'Homemade food', 27.490329, -109.972748, type.food)
+		,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, type.food)
+		,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, type.food)
+		// ,new Location('Gusto Frio Mr. Brown', 'Ice cream shop', 27.492788, -109.961114, type.food)
+		,new Location('Laguna del Nainari', '', 27.497699, -109.969851, type.nature)
+		,new Location('Parque infantil Ostimuri', '', 27.493909, -109.966797, type.recreation)
+		,new Location('Tomas Oroz Gaytan Stadium', 'Baseball stadium', 27.492747, -109.954472, type.recreation)
+	];
 
 	// And we bind to our view model
 	viewModel = new ViewModel();
@@ -147,26 +159,14 @@ var Location = function(title, description, latitude, longitude, kind) {
  * Controls the behavior and logic of our view
  */
 var ViewModel = function() {
-
-	// All the locations that will be put in the map
-	initialLocations  = [
-		new Location('Lockers', 'Sports restaurant and bar (Trying the "Michael Phelps" pizza is a must)', 27.493913, -109.974022, type.food)
-		,new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, type.food)
-		,new Location('Doña Magui', 'Homemade food', 27.490330, -109.972750, type.food)
-		,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, type.food)
-		,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, type.food)
-		// ,new Location('Gusto Frio Mr. Brown', 'Ice cream shop', 27.492788, -109.961114, type.food)
-		,new Location('Laguna del Nainari', '', 27.497699, -109.969851, type.nature)
-		,new Location('Parque infantil Ostimuri', '', 27.493909, -109.966797, type.recreation)
-		,new Location('Tomas Oroz Gaytan Stadium', 'Baseball stadium', 27.492747, -109.954472, type.recreation)
-	];
-
 	var self = this;
 	self.query = ko.observable(''); // text input in the search box
 	self.queryResultsShown = ko.observable(false), // whether the locations list should be displayed
 	self.locations = ko.observableArray(initialLocations.slice()); // filtered locations
 	self.currentLocation = ko.observable(self.locations()[0]);
 	self.filter = ko.observable(''); // what filter is active
+	self.showDetails = ko.observable(false); // whether the current location's details should be displayed
+	self.activeDetails = ko.observable('info'); // active details tab (in small screens)
 	
 	/**
 	 * Toogles queryResultsShown
@@ -247,6 +247,53 @@ var ViewModel = function() {
 		return self.filter() === expectedFilter ? 'active' : '';
 	};
 
+	// Adds the 'hidden' class if showDetails is changed
+	self.hideDetails = ko.pureComputed(function() {
+		return self.showDetails() ? '' : 'hidden';
+	}, self);
+
+	// These functions recognize details tabs as active
+	self.setActiveInfo = function() {
+		return self.setActiveDetails('info');
+	};
+
+	self.setActiveComments = function() {
+		return self.setActiveDetails('comments');
+	};
+
+	self.setActiveTweets = function() {
+		return self.setActiveDetails('tweets');
+	};
+
+	self.setActivePhotos = function() {
+		return self.setActiveDetails('photos');
+	};
+
+	self.setActiveDetails = function(detailsTitle) {
+		self.activeDetails(detailsTitle);
+	};
+
+	// These computed variables add the 'active' class to each tab if active
+	self.isActiveInfo = ko.pureComputed(function() {
+		return self.areDetailsActive('info');
+	}, self);
+
+	self.isActiveComments = ko.pureComputed(function() {
+		return self.areDetailsActive('comments');
+	}, self);
+
+	self.isActiveTweets = ko.pureComputed(function() {
+		return self.areDetailsActive('tweets');
+	}, self);
+
+	self.isActivePhotos = ko.pureComputed(function() {
+		return self.areDetailsActive('photos');
+	}, self);
+	self.areDetailsActive = function(expected) {
+		return self.activeDetails() === expected ? 'active' : '';
+	};
+
+
 	/**
 	 * Opens the info window in the given location's marker
 	 * and sets it as the current location.
@@ -261,6 +308,7 @@ var ViewModel = function() {
 		var listSwitcher = document.getElementById('placeslist-switcher');
 		listSwitcher.checked = false;
 		self.queryResultsShown(false);
+		self.showDetails(true);
 	};
 
 	/**
@@ -321,6 +369,7 @@ var ViewModel = function() {
 	// Stops the maker's bouncing when the information window is closed
 	google.maps.event.addListener(parent.infowindow, 'closeclick', function(e) {
 		self.currentLocation().marker.setAnimation(null);
+		self.showDetails(false);
 	});
 };
 
@@ -345,6 +394,7 @@ function createErrorMessage(message, serverUrl) {
 	}
 	newDiv.appendChild(downForEveryone);
 	newDiv.className = 'alert-box warning';
+	newDiv.setAttribute('data-alert', '');
 	// add the newly created element and its content into the DOM 
 	var messagesDiv = document.getElementById('messages'); 
 	messagesDiv.appendChild(newDiv);

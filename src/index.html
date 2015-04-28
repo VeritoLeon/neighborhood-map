@@ -7,11 +7,12 @@
 		<link rel="stylesheet" href="css/normalize.css?__inline=true"/>
 		<link rel="stylesheet" href="css/foundation.css?__inline=true"/>
 		<link rel="stylesheet" href="css/icons.css?__inline=true"/>
-		<link rel="stylesheet" href="css/infowindow.css?__inline=true"/>
-		<link rel="stylesheet" href="css/placeslist.css?__inline=true"/>
-		<link rel="stylesheet" href="css/filter-menu.css?__inline=true"/>
-		<!-- <link rel="stylesheet" href="css/locationDetails.css?__inline=true"/> -->
+		<link rel="stylesheet" href="css/infoWindow.css?__inline=true"/>
+		<link rel="stylesheet" href="css/placesList.css?__inline=true"/>
+		<link rel="stylesheet" href="css/filterMenu.css?__inline=true"/>
+		<link rel="stylesheet" href="css/locationDetails.css?__inline=true"/>
 		<link rel="stylesheet" href="css/style.css?__inline=true"/>
+		<script src="js/modernizr.js"></script>
 	</head>
 	<body>
 		<div id="messages">
@@ -76,14 +77,42 @@
 		</div>
 		<!-- Locations list END -->
 		<!-- Map START -->
-		<div id="map-canvas" class="center">
-			<div  class="google-map">
-				<img width="640" height="640" src="" alt="Map showing ITSON and Laguna del Nainari">
-			</div>
+		<div id="map-canvas">
 		</div>
 		<!-- Map END -->
-		<article id="details">
+		<!-- Details START -->
+		<article id="details" data-bind="css: hideDetails" class="hidden">
+			<ul class="tabs" data-tab role="tablist">
+				<li class="tab-title" role="presentational" data-bind="css: isActiveInfo">
+					<a href="#" role="tab" tabindex="0" data-bind="click:setActiveInfo"><i class="icon-info"></i></a>
+				</li>
+				<li class="tab-title" role="presentational" data-bind="css: isActiveComments">
+					<a href="#" role="tab" tabindex="0" data-bind="click:setActiveComments"><i class="icon-comment"></i></a>
+				</li>
+				<li class="tab-title" role="presentational" data-bind="css: isActiveTweets">
+					<a href="#" role="tab" tabindex="0" data-bind="click:setActiveTweets"><i class="icon-twitter"></i></a>
+				</li>
+				<li class="tab-title" role="presentational" data-bind="css: isActivePhotos">
+					<a href="#" role="tab" tabindex="0" data-bind="click:setActivePhotos"><i class="icon-camera"></i></a>
+				</li>
+			</ul>
+			<div class="tabs-content">
+				<section role="tabpanel" aria-hidden="false" class="content" id="info" data-bind="css: isActiveInfo">
+					<p>Náinari Lake is an artificial lake of 2 km of diameter created in a zone of small lagoons in the west side of Ciudad Obregon. The lake houses many species of aquatic wildlife and attracts many different varieties of duck and birds</p>
+					<span class="source icon-wikipedia">Wikipedia</span>
+				</section>
+				<section role="tabpanel" aria-hidden="true" class="content" id="comments" data-bind="css: isActiveComments">
+					comments go here
+				</section>
+				<section role="tabpanel" aria-hidden="true" class="content" id="tweets" data-bind="css: isActiveTweets">
+					tweets go here
+				</section>
+				<section role="tabpanel" aria-hidden="true" class="content" id="photos" data-bind="css: isActivePhotos">
+					<img src="https://irs0.4sqi.net/img/general/width960/27EmI7kajZdQ-pN_EK0I8f6CVeddPY37I0gmiSdWj_0.jpg">
+				</section>
+			</div>
 		</article>
+		<!-- Details END -->
 		<script src="js/knockout-3.3.0.js"></script>
 		<script src="js/app.js?__inline=true"></script>
 	</body>
