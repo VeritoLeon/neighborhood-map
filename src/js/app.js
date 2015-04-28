@@ -40,6 +40,7 @@ function initialize() {
 		panControl: false,
 		streetViewControl: false,
 		zoomControl: false,
+		mapTypeControl: false,
 		styles: [
 			// Hides the default clickable location icons on the map.
 			{
