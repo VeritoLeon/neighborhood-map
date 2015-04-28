@@ -9,20 +9,14 @@ window.onload = loadScript;
  * If sucessful, it callbacks the initialize function.
  */
 function loadScript() {
-	var script = document.createElement('script'),
-	callbackFunctionName = 'initialize';
-	script.type = 'text/javascript';
-	script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp' +
-		'&signed_in=false&callback=' + callbackFunctionName;
-	script.onerror = function(event) {
+	function onErrorCallback(event) {
 		if (navigator.onLine) {
 			createErrorMessage('We\'re having trouble reaching Google maps. Maybe a firewall is blocking them.', 'www.maps.googleapis.com');
 		} else {
 			createErrorMessage('You seem to be offline. Check your internet connection and reload the page.');
 		}
 	}
-	
-	document.body.appendChild(script);
+	getJSONP('https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=false', initialize.name, onErrorCallback);
 }
 
 /**
@@ -32,7 +26,7 @@ function loadScript() {
 function initialize() {
 	/**
 	 * Will specify how we want to customize our map
-	 * @type google.maps.MapOptions
+	 * @type google.maps.MapOptions (https://developers.google.com/maps/documentation/javascript/reference#MapOptions)
 	 */
 	var mapOptions = {
 		center: { lat: 27.4950000, lng: -109.969000},
@@ -54,7 +48,7 @@ function initialize() {
 	
 	/**
 	 * This sets is the appearance of our markers to a custom pin
-	 * @type google.maps.Symbol
+	 * @type google.maps.Symbol (https://developers.google.com/maps/documentation/javascript/reference#Symbol)
 	 */
 	pin = {
 		// Get this from pin-red-10-small.svg
@@ -142,6 +136,9 @@ var Location = function(title, description, latitude, longitude, kind) {
 	self.longitude = ko.observable(longitude);
 	self.kind = ko.observable(kind);
 	self.icon = ko.observable(kind.icon);
+	/**
+	 * @type google.maps.Marker (https://developers.google.com/maps/documentation/javascript/reference#Marker)
+	 */
 	self.marker = new google.maps.Marker({ 
 		position: new google.maps.LatLng(self.latitude(), self.longitude()), 
 		map: map,
@@ -420,6 +417,70 @@ function regExpEscape(s) {
 function valueMatches(inputItem, testItem) {
 	var CASE_INSENSITIVE_MATCHING = 'i';
 	return RegExp(regExpEscape(inputItem.trim()), CASE_INSENSITIVE_MATCHING).test(testItem);
+}
+
+/**
+ * Send an asynchronous request that returns a JSON
+ * @param  String url            
+ * @param  function onSuccessCallback
+ * @param  function onErrorCallback
+ */
+function getJSON(url, onSuccessCallback, onErrorCallback) {
+	var request = new XMLHttpRequest();
+	request.open('GET', url, true);
+	request.onload = function() {
+		if (request.status >= 200 && request.status < 400) {
+			var data = JSON.parse(request.responseText);
+			onSuccessCallback(data);
+		} else {
+			onErrorCallback(request.status);
+		}
+	};
+
+	request.onerror = onErrorCallback(event);
+
+	request.send();
+}
+
+/**
+ * Send an asynchronous request
+ * @param  String url            
+ * @param  function onSuccessCallback
+ * @param  function onErrorCallback
+ */
+function ajax(url, onSuccessCallback, onErrorCallback) {
+	var request = new XMLHttpRequest();
+	request.open('GET', url, true);
+
+	request.onload = function() {
+		if (request.status >= 200 && request.status < 400) {
+			var resp = request.responseText;
+			onSuccessCallback(resp);
+		} else {
+			onErrorCallback(request.status);
+		}
+	};
+
+	request.onerror = onErrorCallback;
+
+	request.send();
+}
+
+/**
+ * Send an asynchronous cross-domain request that returns a JSON
+ * @param  String url
+ * @param  String onSuccessCallbackName
+ * @param  function onErrorCallback
+ */
+function getJSONP(url, onSuccessCallbackName, onErrorCallback) {
+	var script = document.createElement('script');
+	script.type = 'text/javascript';
+	script.src = url + '&callback=' + onSuccessCallbackName;
+	script.onerror = onErrorCallback;
+	script.onload = function () {
+        this.remove();
+    };
+	document.body.appendChild(script);
 }
 
 /**
