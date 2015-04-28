@@ -74,6 +74,19 @@ module.exports = function(grunt) {
 				expand: true
 			}
 		},
+		pleeease: {
+			custom: {
+				options: {
+					autoprefixer: {'browsers': ['last 4 versions']},
+					filters: {'oldIE': true},
+					rem: ['12px'],
+					minifier: true,
+				},
+				files: {
+					'css/': 'src/css/*.css'
+				}
+			}
+		},
 		watch: {
 			js: {
 				files: ['src/js/**/*.js'],
@@ -100,5 +113,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-inline');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.registerTask('default', ['uglify', 'cssmin', 'imagemin', 'copy:index', 'inline', 'watch']);
+	grunt.loadNpmTasks('grunt-pleeease');
+	grunt.registerTask('default', ['uglify', 'pleeease', 'imagemin', 'copy:index', 'inline', 'watch']);
 };
