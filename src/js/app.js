@@ -102,16 +102,15 @@ function initialize() {
 
 	// All the locations that will be put in the map
 	initialLocations  = [
-		new Location('Lockers', 'Sports restaurant and bar (Trying the "Michael Phelps" pizza is a must)', 27.493913, -109.974022, type.food)
-		,new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, type.food)
-		,new Location('Doña Magui', 'Homemade food', 27.490329, -109.972748, type.food)
-		,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, type.food)
-		,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, type.food)
-		// ,new Location('Gusto Frio Mr. Brown', 'Ice cream shop', 27.492788, -109.961114, type.food)
-		,new Location('Laguna del Nainari', '', 27.497699, -109.969851, type.nature, {'wikipediaId': '2254604', 'foursquareId': '4cf561ec71538cfa6bdcae2e'})
-			// http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=500&format=json&pageids=2254604
-		,new Location('Parque infantil Ostimuri', '', 27.493909, -109.966797, type.recreation)
-		,new Location('Tomas Oroz Gaytan Stadium', 'Baseball stadium', 27.492747, -109.954472, type.recreation)
+		new Location('Lockers', 'Sports restaurant and bar', 27.493913, -109.974022, type.food, {})
+		,new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, type.food, {})
+		,new Location('Doña Magui', 'Homemade food', 27.490329, -109.972748, type.food, {})
+		,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, type.food, {})
+		,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, type.food, {})
+		// ,new Location('Gusto Frio Mr. Brown', 'Ice cream shop', 27.492788, -109.961114, type.food, {})
+		,new Location('Laguna del Nainari', 'Lagoon known as Ciudad Obregon\'s bride', 27.497699, -109.969851, type.nature, {'wikipediaId': '2254604', 'foursquareId': '4cf561ec71538cfa6bdcae2e'})
+		,new Location('Parque infantil Ostimuri', 'City\'s largest park', 27.493909, -109.966797, type.recreation, {})
+		,new Location('Tomas Oroz Gaytan Stadium', 'Baseball stadium', 27.492747, -109.954472, type.recreation, {})
 	];
 
 	// And we bind to our view model
@@ -137,6 +136,9 @@ var Location = function(title, description, latitude, longitude, kind, thirdPart
 	self.longitude = ko.observable(longitude);
 	self.kind = ko.observable(kind);
 	self.icon = ko.observable(kind.icon);
+	self.wikipediaId = ko.observable(thirdParty.wikipediaId);
+	self.foursquareId = ko.observable(thirdParty.foursquareId);
+	self.twitterHandle = ko.observable(thirdParty.twitterHandle);
 	/**
 	 * @type google.maps.Marker (https://developers.google.com/maps/documentation/javascript/reference#Marker)
 	 */
@@ -307,6 +309,7 @@ var ViewModel = function() {
 		var listSwitcher = document.getElementById('placeslist-switcher');
 		listSwitcher.checked = false;
 		self.queryResultsShown(false);
+		self.loadDetails(location);
 		self.showDetails(true);
 	};
 
@@ -355,6 +358,33 @@ var ViewModel = function() {
 	 */
 	self.showMarker = function(location) {
 		location.marker.setMap(map);
+	};
+
+	/**
+	 * Loads all the detail sections
+	 * @param  Location location
+	 */
+	self.loadDetails = function(location) {
+		self.loadInfo(location);
+		self.loadComments(location);
+		self.loadPhotos(location);
+		self.loadTweets(location);
+	};
+
+	self.loadInfo = function(location) {
+		var url = location.wikipediaId ? 'http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=500&format=json&pageids=' + location.wikipediaId : '';
+	};
+
+	self.loadComments = function(location) {
+
+	};
+
+	self.loadPhotos = function(location) {
+
+	};
+
+	self.loadTweets = function(location) {
+
 	};
 
 	// Sets the info window's marker as the current location when opened
