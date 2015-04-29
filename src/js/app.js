@@ -16,7 +16,7 @@ function loadScript() {
 			createErrorMessage('You seem to be offline. Check your internet connection and reload the page.');
 		}
 	}
-	getJSONP('https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=false', initialize.name, onErrorCallback);
+	getJSONP('https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=false', initialize, onErrorCallback);
 }
 
 /**
@@ -372,9 +372,11 @@ var ViewModel = function() {
 	};
 
 	self.loadInfo = function(location) {
-		if(location.wikipediaId()) {
-			getWikipediaExtract(location.wikipediaId());
-		} 
+
+		var url = location.wikipediaId() ? 
+			'http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=500&format=json&pageids=' + location.wikipediaId() 
+			: '';
+		getJSONP(url, function(data) {console.log(data);}, function(evt) {console.log('error');});
 
 	};
 
@@ -403,17 +405,6 @@ var ViewModel = function() {
 		self.showDetails(false);
 	});
 };
-
-function getWikipediaExtract(wikipediaId) {
-	var url = wikipediaId ? 
-			'http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=500&format=json&pageids=' + wikipediaId 
-			: '';
-		getJSONP(url, getInfoDetailsContent.name, function(evt) {console.log('error');});
-}
-
-function getInfoDetailsContent(rawContent) {
-	return rawContent;
-}
 
 //
 //  HELPERS
@@ -513,17 +504,18 @@ function ajax(url, onSuccessCallback, onErrorCallback) {
 /**
  * Send an asynchronous cross-domain request that returns a JSON
  * @param  String url
- * @param  String onSuccessCallbackName
+ * @param  function onSuccessCallback
  * @param  function onErrorCallback
  */
-function getJSONP(url, onSuccessCallbackName, onErrorCallback) {
-	var script = document.createElement('script');
-	script.type = 'text/javascript';
-	script.src = url + '&callback=' + onSuccessCallbackName;
-	script.onerror = onErrorCallback;
-	script.onload = function () {
-        this.remove();
+function getJSONP(url, onSuccessCallback, onErrorCallback) {
+	var script = document.createElement('script'), callbackName = 'jsonp_callback_';
+	window[callbackName] = function(data) {
+        delete window[callbackName];
+        document.body.removeChild(script);
+        onSuccessCallback(data);
     };
+    script.src = url + (url.indexOf( '?' ) + 1 ? '&' : '?') + 'callback=' + callbackName;
+	script.onerror = onErrorCallback;
 	document.body.appendChild(script);
 }
 
