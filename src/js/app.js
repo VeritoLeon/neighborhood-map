@@ -168,6 +168,10 @@ var ViewModel = function() {
 	self.filter = ko.observable(''); // what filter is active
 	self.showDetails = ko.observable(false); // whether the current location's details should be displayed
 	self.activeDetails = ko.observable('info'); // active details tab (in small screens)
+	self.descriptionDOM = ko.observable();
+	self.commentsDOM = ko.observable();
+	self.photosDOM = ko.observable();
+	self.tweetsDOM = ko.observable();
 	
 	/**
 	 * Toogles queryResultsShown
@@ -372,11 +376,22 @@ var ViewModel = function() {
 	};
 
 	self.loadInfo = function(location) {
+		function backupLoad () {
+			self.descriptionDOM(location.description());
+		}
 
-		var url = location.wikipediaId() ? 
-			'http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=500&format=json&pageids=' + location.wikipediaId() 
-			: '';
-		getJSONP(url, function(data) {console.log(data);}, function(evt) {console.log('error');});
+		function getWikipediaDescription(data) {
+			var innerHtml = data.query.pages[location.wikipediaId()].extract;
+			var sourceHtml = '<a class="source icon-wikipedia" href="https://en.wikipedia.org/wiki?curid=' + location.wikipediaId() + '"> Courtesy of Wikipedia</a>';
+			self.descriptionDOM(innerHtml + sourceHtml);
+		}
+
+		if(location.wikipediaId()) {
+			var url = 'http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=250&format=json&pageids=' + location.wikipediaId();
+			getJSONP(url, getWikipediaDescription, backupLoad);
+		} else {
+			backupLoad();
+		}
 
 	};
 
@@ -517,6 +532,12 @@ function getJSONP(url, onSuccessCallback, onErrorCallback) {
     script.src = url + (url.indexOf( '?' ) + 1 ? '&' : '?') + 'callback=' + callbackName;
 	script.onerror = onErrorCallback;
 	document.body.appendChild(script);
+}
+
+function htmlDecode(input){
+  var e = document.createElement('div');
+  e.innerHTML = input;
+  return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
 }
 
 /**
