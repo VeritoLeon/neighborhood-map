@@ -366,17 +366,19 @@ var ViewModel = function() {
 	 */
 	self.loadDetails = function(location) {
 		self.loadInfo(location);
-		self.loadComments(location);
-		self.loadPhotos(location);
-		self.loadTweets(location);
+		// self.loadComments(location);
+		// self.loadPhotos(location);
+		// self.loadTweets(location);
 	};
 
 	self.loadInfo = function(location) {
-		var url = location.wikipediaId ? 'http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=500&format=json&pageids=' + location.wikipediaId : '';
+		if(location.wikipediaId()) {
+			getWikipediaExtract(location.wikipediaId());
+		} 
+
 	};
 
 	self.loadComments = function(location) {
-
 	};
 
 	self.loadPhotos = function(location) {
@@ -401,6 +403,17 @@ var ViewModel = function() {
 		self.showDetails(false);
 	});
 };
+
+function getWikipediaExtract(wikipediaId) {
+	var url = wikipediaId ? 
+			'http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=500&format=json&pageids=' + wikipediaId 
+			: '';
+		getJSONP(url, getInfoDetailsContent.name, function(evt) {console.log('error');});
+}
+
+function getInfoDetailsContent(rawContent) {
+	return rawContent;
+}
 
 //
 //  HELPERS
