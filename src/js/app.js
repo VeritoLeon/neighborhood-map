@@ -138,8 +138,7 @@ var Location = function(title, description, latitude, longitude, kind, thirdPart
 	self.foursquareId = ko.observable(thirdParty.foursquareId);
 	self.twitterHandle = ko.observable(thirdParty.twitterHandle);
 	self.info = ko.observable();
-	self.photos = ko.observable();
-	self.comments = ko.observable();
+	self.foursquareInfo = ko.observable();
 	self.tweets = ko.observable();
 	/**
 	 * @type google.maps.Marker (https://developers.google.com/maps/documentation/javascript/reference#Marker)
@@ -367,7 +366,7 @@ var ViewModel = function() {
 			var sourceHtml = '<a class="source icon-wikipedia" href="https://en.wikipedia.org/wiki?curid=' + location.wikipediaId() + '"> Courtesy of Wikipedia</a>';
 			self.descriptionDOM(innerHtml + sourceHtml);
 		}
-		
+
 		if(location.info()) {
 			getWikipediaDescription(location.info());
 		} else if(location.wikipediaId()) {
@@ -383,7 +382,7 @@ var ViewModel = function() {
 	};
 
 	self.loadPhotos = function(location) {
-
+		//get src as prefix + size(e.g. 152x152) + suffix
 	};
 
 	self.loadTweets = function(location) {
