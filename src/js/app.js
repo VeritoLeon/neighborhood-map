@@ -102,14 +102,14 @@ function initialize() {
 
 	// All the locations that will be put in the map
 	initialLocations  = [
-		new Location('Lockers', 'Sports restaurant and bar located in Arena Itson', 27.493913, -109.974022, type.food, {})
-		,new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, type.food, {})
-		,new Location('Doña Magui', 'Homemade food', 27.490329, -109.972748, type.food, {})
-		,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, type.food, {})
-		,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, type.food, {})
-		// ,new Location('Gusto Frio Mr. Brown', 'Ice cream shop', 27.492788, -109.961114, type.food, {})
+		new Location('Lockers', 'Sports restaurant and bar located in Arena Itson', 27.493913, -109.974022, type.food, {"foursquareId": "5254ea73498ebbc7b795c436"})
+		,new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, type.food, {"foursquareId": "4c8178dfd4e23704f0485e88"})
+		,new Location('Doña Magui', 'Homemade food', 27.490329, -109.972748, type.food, {"foursquareId": "5064bc59e4b053bfe4b7885f"})
+		,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, type.food, {"foursquareId": "4cb87c3ef50e224bd00ae7fb"})
+		,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, type.food, {"foursquareId": "4eb340be0aaf1abede5d0706"})
+		// ,new Location('Gusto Frio Mr. Brown', 'Ice cream shop', 27.492788, -109.961114, type.food, {"foursquareId": "4ce5cad3678aa093ca97d8ea"})
 		,new Location('Laguna del Nainari', 'Lagoon known as Ciudad Obregon\'s bride', 27.497699, -109.969851, type.nature, {'wikipediaId': '2254604', 'foursquareId': '4cf561ec71538cfa6bdcae2e'})
-		,new Location('Parque infantil Ostimuri', 'City\'s largest park', 27.493909, -109.966797, type.recreation, {})
+		,new Location('Parque infantil Ostimuri', 'City\'s largest park', 27.493909, -109.966797, type.recreation, {"foursquareId": "4cc46dc701fb236a19d1abba"})
 		,new Location('Tomas Oroz Gaytan Stadium', 'Baseball stadium', 27.492747, -109.954472, type.recreation, {'wikipediaId': '4771088'})
 	];
 
@@ -380,6 +380,8 @@ var ViewModel = function() {
 	};
 
 	self.loadComments = function(location) {
+		// https://api.foursquare.com/v2/venues/explore?near=Ciudad Obregon&query=laguna del nainari&venuePhotos=1&intent=match&client_id=EPFA1HIBXSJXCJM4V3CSQZ3WA2D4ZZ0E3TJ5BP0QXGYODOBZ&client_secret=05JENVJTNP2SHJCYBZM1KI3XTH4ZXI3OWBQWA1PC3NCVUADD&v=20150504
+		// (Then, iterate over the result to match the location ID)
 	};
 
 	self.loadPhotos = function(location) {
