@@ -116,8 +116,6 @@ function initialize() {
 	// And we bind to our view model
 	viewModel = new ViewModel();
 	ko.applyBindings(viewModel);
-	// This triggers the 'search' function each time 'query' changes
-	viewModel.query.subscribe(viewModel.search);
 }
 
 /**
@@ -139,6 +137,9 @@ var Location = function(title, description, latitude, longitude, kind, thirdPart
 	self.wikipediaId = ko.observable(thirdParty.wikipediaId);
 	self.foursquareId = ko.observable(thirdParty.foursquareId);
 	self.twitterHandle = ko.observable(thirdParty.twitterHandle);
+	self.info = ko.observable();
+	self.foursquareInfo = ko.observable();
+	self.tweets = ko.observable();
 	/**
 	 * @type google.maps.Marker (https://developers.google.com/maps/documentation/javascript/reference#Marker)
 	 */
@@ -163,7 +164,7 @@ var ViewModel = function() {
 	var self = this;
 	self.query = ko.observable(''); // text input in the search box
 	self.queryResultsShown = ko.observable(false), // whether the locations list should be displayed
-	self.locations = ko.observableArray(initialLocations.slice()); // filtered locations
+	self.locations = ko.observableArray(initialLocations);
 	self.currentLocation = ko.observable(self.locations()[0]);
 	self.filter = ko.observable(''); // what filter is active
 	self.showDetails = ko.observable(false); // whether the current location's details should be displayed
@@ -227,7 +228,6 @@ var ViewModel = function() {
 
 	self.showLocationsByKind = function(kind) {
 		self.filter(kind);
-		self.search(self.query());
 	};
 
 
@@ -318,23 +318,21 @@ var ViewModel = function() {
 	};
 
 	/**
-	 * Filters the locations to the ones whose title contains the value
-	 * @param  String value Text to find in the title
+	 * Filters the locations to the ones who match the filter
+	 * and whose title matches the query
 	 */
-	self.search = function(value) {
-		self.hideAllMarkers();
-		self.locations.removeAll();
-		var locs = [];
-		for (var x in parent.initialLocations) {
-			var currentLocation = parent.initialLocations[x];
-			if (valueMatches(value, currentLocation.title()) &&
-				(currentLocation.kind() === self.filter() || !self.filter())) {
-				self.showMarker(currentLocation);
-				locs.push(currentLocation);
-			}
-		}
-		self.locations(locs);
-	};
+	self.filterLocations = ko.computed(function() {
+		return ko.utils.arrayFilter(self.locations(), function (location) {
+                if (valueMatches(self.query(), location.title()) &&
+                		(self.filter() == location.kind() || !self.filter())) {
+                	location.marker.setMap(map);
+                	return true;
+                } else {
+                	location.marker.setMap(null);
+                	return false;
+                }
+            });
+	});
 
 	/**
 	 * Selects the first location of the locations array
@@ -344,24 +342,6 @@ var ViewModel = function() {
 			self.openInfoWindow(self.locations()[0]);
 			self.query('');
 		}
-	};
-
-	/**
-	 * Hides all the markers from the map
-	 */
-	self.hideAllMarkers = function() {
-		var locs = self.locations();
-		for (var x in self.locations()) {
-			locs[x].marker.setMap(null);
-		}
-	};
-
-	/**
-	 * Adds the location's marker to the map
-	 * @param  Location location
-	 */
-	self.showMarker = function(location) {
-		location.marker.setMap(map);
 	};
 
 	/**
@@ -381,12 +361,15 @@ var ViewModel = function() {
 		}
 
 		function getWikipediaDescription(data) {
+			location.info(data);
 			var innerHtml = data.query.pages[location.wikipediaId()].extract;
 			var sourceHtml = '<a class="source icon-wikipedia" href="https://en.wikipedia.org/wiki?curid=' + location.wikipediaId() + '"> Courtesy of Wikipedia</a>';
 			self.descriptionDOM(innerHtml + sourceHtml);
 		}
 
-		if(location.wikipediaId()) {
+		if(location.info()) {
+			getWikipediaDescription(location.info());
+		} else if(location.wikipediaId()) {
 			var url = 'http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=250&format=json&pageids=' + location.wikipediaId();
 			getJSONP(url, getWikipediaDescription, backupLoad);
 		} else {
@@ -399,7 +382,7 @@ var ViewModel = function() {
 	};
 
 	self.loadPhotos = function(location) {
-
+		//get src as prefix + size(e.g. 152x152) + suffix
 	};
 
 	self.loadTweets = function(location) {
