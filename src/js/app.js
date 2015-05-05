@@ -170,7 +170,7 @@ var ViewModel = function() {
 	self.showDetails = ko.observable(false); // whether the current location's details should be displayed
 	self.activeDetails = ko.observable('info'); // active details tab (in small screens)
 	self.showInfo = ko.observable(true);
-	self.showComments = ko.observable(false);
+	self.showComments = ko.observable(true);
 	self.showPhoto = ko.observable(false);
 	self.showTweets = ko.observable(false);
 	self.showAnyDetail = ko.pureComputed(function() { // are any of the details sections shown?
@@ -358,13 +358,13 @@ var ViewModel = function() {
 	 */
 	self.loadDetails = function(location) {
 		self.loadInfo(location);
-		// self.loadComments(location);
+		self.loadComments(location);
 		// self.loadPhotos(location);
 		// self.loadTweets(location);
 	};
 
 	self.loadInfo = function(location) {
-		function backupLoad() {
+		function onErrorCallback() {
 			self.showInfo(false);
 		}
 
@@ -380,16 +380,41 @@ var ViewModel = function() {
 			getWikipediaDescription(location.info());
 		} else if(location.wikipediaId()) {
 			var url = 'http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=250&format=json&pageids=' + location.wikipediaId();
-			getJSONP(url, getWikipediaDescription, backupLoad);
+			getJSONP(url, getWikipediaDescription, onErrorCallback);
 		} else {
-			backupLoad();
+			onErrorCallback();
 		}
 
 	};
 
 	self.loadComments = function(location) {
+		function onErrorCallback() {
+			self.showComments(false);
+		}
+
+		function getFoursquareTips(data) {
+			self.showComments(true);
+			location.foursquareInfo(data);
+			// (Then, iterate over the result to match the location ID)
+			var queryResults = data.response.groups[0].items;
+			for (var i = queryResults.length - 1; i >= 0; i--) {
+				if(queryResults[i].venue.id === location.foursquareId()) {
+					console.log(queryResults[i].tips);
+					var innerHtml = '<p>"' + queryResults[i].tips[0].text + '"</p>';
+					var sourceHtml = '<a class="source icon-foursquare" href="https://foursquare.com/v/' + location.foursquareId() + '"> Read more on Foursquare</a>';
+					self.commentsDOM(innerHtml + sourceHtml);
+				}
+			};
+		} 
 		// https://api.foursquare.com/v2/venues/explore?near=Ciudad Obregon&query=laguna del nainari&venuePhotos=1&intent=match&client_id=EPFA1HIBXSJXCJM4V3CSQZ3WA2D4ZZ0E3TJ5BP0QXGYODOBZ&client_secret=05JENVJTNP2SHJCYBZM1KI3XTH4ZXI3OWBQWA1PC3NCVUADD&v=20150504
-		// (Then, iterate over the result to match the location ID)
+		if(location.foursquareInfo()) {
+			getFoursquareTips(location.foursquareInfo());
+		} else if(location.foursquareId()) {
+			var url = 'https://api.foursquare.com/v2/venues/explore?near=Ciudad Obregon&query=' + location.title() + '&intent=match&client_id=EPFA1HIBXSJXCJM4V3CSQZ3WA2D4ZZ0E3TJ5BP0QXGYODOBZ&client_secret=05JENVJTNP2SHJCYBZM1KI3XTH4ZXI3OWBQWA1PC3NCVUADD&v=20150504';
+			getJSON(url, getFoursquareTips, onErrorCallback);
+		} else {
+			onErrorCallback();
+		}
 	};
 
 	self.loadPhotos = function(location) {
