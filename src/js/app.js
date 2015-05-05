@@ -173,7 +173,9 @@ var ViewModel = function() {
 	self.showComments = ko.observable(false);
 	self.showPhoto = ko.observable(false);
 	self.showTweets = ko.observable(false);
-	self.showAnyDetail = ko.pureComputed(function(){ return self.showTweets() || self.showPhoto() || self.showComments() || self.showInfo()});
+	self.showAnyDetail = ko.pureComputed(function() { // are any of the details sections shown?
+		return self.showTweets() || self.showPhoto() || self.showComments() || self.showInfo();
+	});
 	self.descriptionDOM = ko.observable();
 	self.commentsDOM = ko.observable();
 	self.photosDOM = ko.observable();
