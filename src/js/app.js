@@ -169,6 +169,11 @@ var ViewModel = function() {
 	self.filter = ko.observable(''); // what filter is active
 	self.showDetails = ko.observable(false); // whether the current location's details should be displayed
 	self.activeDetails = ko.observable('info'); // active details tab (in small screens)
+	self.showInfo = ko.observable(true);
+	self.showComments = ko.observable(false);
+	self.showPhoto = ko.observable(false);
+	self.showTweets = ko.observable(false);
+	self.showAnyDetail = ko.pureComputed(function(){ return self.showTweets() || self.showPhoto() || self.showComments() || self.showInfo()});
 	self.descriptionDOM = ko.observable();
 	self.commentsDOM = ko.observable();
 	self.photosDOM = ko.observable();
@@ -254,7 +259,7 @@ var ViewModel = function() {
 
 	// Adds the 'hidden' class if showDetails is changed
 	self.hideDetails = ko.pureComputed(function() {
-		return self.showDetails() ? '' : 'hidden';
+		return self.showDetails() && self.showAnyDetail() ? '' : 'hidden';
 	}, self);
 
 	// These functions recognize details tabs as active
@@ -357,11 +362,12 @@ var ViewModel = function() {
 	};
 
 	self.loadInfo = function(location) {
-		function backupLoad () {
-			self.descriptionDOM(location.description());
+		function backupLoad() {
+			self.showInfo(false);
 		}
 
 		function getWikipediaDescription(data) {
+			self.showInfo(true);
 			location.info(data);
 			var innerHtml = data.query.pages[location.wikipediaId()].extract;
 			var sourceHtml = '<a class="source icon-wikipedia" href="https://en.wikipedia.org/wiki?curid=' + location.wikipediaId() + '"> Courtesy of Wikipedia</a>';

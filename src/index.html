@@ -79,30 +79,30 @@
 		<!-- Details START -->
 		<article id="details" data-bind="css: hideDetails" class="hidden">
 			<ul class="tabs" data-tab role="tablist">
-				<li class="tab-title" role="presentational" data-bind="css: isActiveInfo">
+				<li class="tab-title" role="presentational" data-bind="css: isActiveInfo, visible: showInfo">
 					<a href="#" role="tab" tabindex="0" data-bind="click:setActiveInfo"><i class="icon-info"></i></a>
 				</li>
-				<li class="tab-title" role="presentational" data-bind="css: isActiveComments">
+				<li class="tab-title" role="presentational" data-bind="css: isActiveComments, visible: showComments">
 					<a href="#" role="tab" tabindex="0" data-bind="click:setActiveComments"><i class="icon-comment"></i></a>
 				</li>
-				<li class="tab-title" role="presentational" data-bind="css: isActiveTweets">
+				<li class="tab-title" role="presentational" data-bind="css: isActiveTweets, visible: showTweets">
 					<a href="#" role="tab" tabindex="0" data-bind="click:setActiveTweets"><i class="icon-twitter"></i></a>
 				</li>
-				<li class="tab-title" role="presentational" data-bind="css: isActivePhotos">
+				<li class="tab-title" role="presentational" data-bind="css: isActivePhotos, visible: showPhoto">
 					<a href="#" role="tab" tabindex="0" data-bind="click:setActivePhotos"><i class="icon-camera"></i></a>
 				</li>
 			</ul>
 			<div class="tabs-content">
-				<section role="tabpanel" aria-hidden="false" class="content" id="info" data-bind="css: isActiveInfo, html: descriptionDOM">
+				<section role="tabpanel" aria-hidden="false" class="content" id="info" data-bind="css: isActiveInfo, visible: showInfo, html: descriptionDOM">
 					<span class="source icon-wikipedia">Wikipedia</span>
 				</section>
-				<section role="tabpanel" aria-hidden="true" class="content" id="comments" data-bind="css: isActiveComments">
+				<section role="tabpanel" aria-hidden="true" class="content" id="comments" data-bind="css: isActiveComments, visible: showComments">
 					comments go here
 				</section>
-				<section role="tabpanel" aria-hidden="true" class="content" id="tweets" data-bind="css: isActiveTweets">
+				<section role="tabpanel" aria-hidden="true" class="content" id="tweets" data-bind="css: isActiveTweets, visible: showTweets">
 					tweets go here
 				</section>
-				<section role="tabpanel" aria-hidden="true" class="content" id="photos" data-bind="css: isActivePhotos">
+				<section role="tabpanel" aria-hidden="true" class="content" id="photos" data-bind="css: isActivePhotos, visible: showPhoto">
 					<img src="https://irs0.4sqi.net/img/general/width960/27EmI7kajZdQ-pN_EK0I8f6CVeddPY37I0gmiSdWj_0.jpg">
 				</section>
 			</div>
