@@ -173,14 +173,11 @@ var ViewModel = function() {
 	self.showComments = ko.observable(true);
 	self.showPhoto = ko.observable(false);
 	self.showTweets = ko.observable(false);
-	self.showAnyDetail = ko.pureComputed(function() { // are any of the details sections shown?
-		return self.showTweets() || self.showPhoto() || self.showComments() || self.showInfo();
-	});
 	self.descriptionDOM = ko.observable();
 	self.commentsDOM = ko.observable();
 	self.photosDOM = ko.observable();
 	self.tweetsDOM = ko.observable();
-	
+
 	/**
 	 * Toogles queryResultsShown
 	 */
@@ -285,6 +282,18 @@ var ViewModel = function() {
 		self.activeDetails(detailsTitle);
 	};
 
+	self.defaultActive = ko.pureComputed(function() { // are any of the details sections shown?
+		if (self.showInfo()) {
+			self.setActiveInfo();
+		} else if (self.showComments()) {
+			self.setActiveComments();
+		} else if (self.showTweets()) {
+			self.setActiveTweets();
+		} else if (self.showPhoto()) {
+			self.setActivePhotos();
+		}
+	});
+
 	// These computed variables add the 'active' class to each tab if active
 	self.isActiveInfo = ko.pureComputed(function() {
 		return self.areDetailsActive('info');
@@ -301,10 +310,14 @@ var ViewModel = function() {
 	self.isActivePhotos = ko.pureComputed(function() {
 		return self.areDetailsActive('photos');
 	}, self);
+
 	self.areDetailsActive = function(expected) {
 		return self.activeDetails() === expected ? 'active' : '';
 	};
-
+	
+	self.showAnyDetail = ko.pureComputed(function() { // are any of the details sections shown?
+		return self.showTweets() || self.showPhoto() || self.showComments() || self.showInfo();
+	});
 
 	/**
 	 * Opens the info window in the given location's marker
@@ -321,7 +334,6 @@ var ViewModel = function() {
 		listSwitcher.checked = false;
 		self.queryResultsShown(false);
 		self.loadDetails(location);
-		self.setActiveInfo();
 		self.showDetails(true);
 	};
 
@@ -361,6 +373,7 @@ var ViewModel = function() {
 		self.loadComments(location);
 		// self.loadPhotos(location);
 		// self.loadTweets(location);
+		self.defaultActive();
 	};
 
 	self.loadInfo = function(location) {
@@ -395,11 +408,10 @@ var ViewModel = function() {
 		function getFoursquareTips(data) {
 			self.showComments(true);
 			location.foursquareInfo(data);
-			// (Then, iterate over the result to match the location ID)
 			var queryResults = data.response.groups[0].items;
+			// (Then, iterate over the result to match the location ID)
 			for (var i = queryResults.length - 1; i >= 0; i--) {
 				if(queryResults[i].venue.id === location.foursquareId()) {
-					console.log(queryResults[i].tips);
 					var innerHtml = '<p>"' + queryResults[i].tips[0].text + '"</p>';
 					var sourceHtml = '<a class="source icon-foursquare" href="https://foursquare.com/v/' + location.foursquareId() + '"> Read more on Foursquare</a>';
 					self.commentsDOM(innerHtml + sourceHtml);
