@@ -26,7 +26,6 @@
 		<nav id="topbar" class="fixed hidden">
 			<div id="search-container" class="row full-width collapse postfix small-centered">
 				<!-- Search START -->
-				<input id="filter" title="filter places" type="checkbox">
 				<label id="filter-button" for="filter" class="icon-filter"></label>
 				<div class="columns small-9 medium-4 large-3">
 					<input id="search-input" type="search" placeholder="Find places" list="locations-list" data-bind="textInput:query, click: showResults">
@@ -37,6 +36,7 @@
 				<!-- Search END -->
 
 				<!-- Filter menu START -->
+				<input id="filter" title="filter places" type="checkbox" data-bind="checked: filterShown">
 				<dl id="filter-menu" class="columns sub-nav medium-5 large-7" role="menu" title="Filter Menu List">
 					<dt>Show:</dt>
 					<dd role="menuitem" data-bind="css: isFilterAll">
