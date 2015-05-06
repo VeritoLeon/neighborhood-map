@@ -139,7 +139,6 @@ var Location = function(title, description, latitude, longitude, kind, thirdPart
 	self.twitterHandle = ko.observable(thirdParty.twitterHandle);
 	self.info = ko.observable();
 	self.foursquareInfo = ko.observable();
-	self.tweets = ko.observable();
 	/**
 	 * @type google.maps.Marker (https://developers.google.com/maps/documentation/javascript/reference#Marker)
 	 */
@@ -173,11 +172,9 @@ var ViewModel = function() {
 	self.showInfo = ko.observable(false);
 	self.showComments = ko.observable(false);
 	self.showPhoto = ko.observable(false);
-	self.showTweets = ko.observable(false);
 	self.descriptionDOM = ko.observable();
 	self.commentsDOM = ko.observable();
 	self.photosDOM = ko.observable();
-	self.tweetsDOM = ko.observable();
 
 	/**
 	 * Toogles queryResultsShown
@@ -272,10 +269,6 @@ var ViewModel = function() {
 		return self.setActiveDetails('comments');
 	};
 
-	self.setActiveTweets = function() {
-		return self.setActiveDetails('tweets');
-	};
-
 	self.setActivePhotos = function() {
 		return self.setActiveDetails('photos');
 	};
@@ -284,13 +277,11 @@ var ViewModel = function() {
 		self.activeDetails(detailsTitle);
 	};
 
-	self.defaultActive = ko.pureComputed(function() { // are any of the details sections shown?
+	self.defaultActive = ko.computed(function() { // are any of the details sections shown?
 		if (self.showInfo()) {
 			return self.setActiveInfo();
 		} else if (self.showComments()) {
 			return self.setActiveComments();
-		} else if (self.showTweets()) {
-			return self.setActiveTweets();
 		} else if (self.showPhoto()) {
 			return self.setActivePhotos();
 		} else {
@@ -307,10 +298,6 @@ var ViewModel = function() {
 		return self.areDetailsActive('comments');
 	}, self);
 
-	self.isActiveTweets = ko.pureComputed(function() {
-		return self.areDetailsActive('tweets');
-	}, self);
-
 	self.isActivePhotos = ko.pureComputed(function() {
 		return self.areDetailsActive('photos');
 	}, self);
@@ -320,7 +307,7 @@ var ViewModel = function() {
 	};
 	
 	self.showAnyDetail = ko.pureComputed(function() { // are any of the details sections shown?
-		return self.showTweets() || self.showPhoto() || self.showComments() || self.showInfo();
+		return self.showPhoto() || self.showComments() || self.showInfo();
 	});
 
 	/**
@@ -336,7 +323,6 @@ var ViewModel = function() {
 		self.setCurrentLocation(location);
 		self.queryResultsShown(false);
 		self.loadDetails(location);
-		self.defaultActive();
 		self.showDetails(true);
 		self.defaultActive();
 	};
@@ -376,7 +362,6 @@ var ViewModel = function() {
 		self.loadInfo(location);
 		self.loadComments(location);
 		// self.loadPhotos(location);
-		// self.loadTweets(location);
 	};
 
 	self.loadInfo = function(location) {
@@ -447,10 +432,6 @@ var ViewModel = function() {
 
 	self.loadPhotos = function(location) {
 		//get src as prefix + size(e.g. 152x152) + suffix
-	};
-
-	self.loadTweets = function(location) {
-
 	};
 
 	// Sets the info window's marker as the current location when opened
