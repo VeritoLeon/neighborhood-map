@@ -29,11 +29,15 @@
 }
 
 .tabs .tab-title.active > a {
-	background: #FAFAFA;
+	background: #E8DDBD;
 }
 
 .tabs .tab-title > a:hover {
-  background-color: #E8DDBD;
+	background: #EEEACF;
+}
+
+.tabs .tab-title.active > a:hover {
+	background: #E8DDAE;
 }
 
 .tabs-content {
