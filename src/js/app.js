@@ -234,7 +234,7 @@ var ViewModel = function() {
 	};
 
 
-	// These computed variables add the 'active' class to each filter if active
+	// These add the 'active' class to each filter if active
 	self.isFilterAll = ko.pureComputed(function() {
 		return self.isFilterActive('');
 	}, self);
@@ -277,19 +277,22 @@ var ViewModel = function() {
 		self.activeDetails(detailsTitle);
 	};
 
-	self.defaultActive = ko.computed(function() { // are any of the details sections shown?
+	/**
+	 * Sets an active section whenever their "show[Detail]" observable updates
+	 */
+	self.defaultActive = ko.computed(function() {
 		if (self.showInfo()) {
-			return self.setActiveInfo();
+			self.setActiveInfo();
 		} else if (self.showComments()) {
-			return self.setActiveComments();
+			self.setActiveComments();
 		} else if (self.showPhoto()) {
-			return self.setActivePhotos();
+			self.setActivePhotos();
 		} else {
-			return self.activeDetails('');
+			self.activeDetails('');
 		}
 	});
 
-	// These computed variables add the 'active' class to each tab if active
+	// These add the 'active' class to each tab if active
 	self.isActiveInfo = ko.pureComputed(function() {
 		return self.areDetailsActive('info');
 	}, self);
@@ -324,7 +327,6 @@ var ViewModel = function() {
 		self.queryResultsShown(false);
 		self.loadDetails(location);
 		self.showDetails(true);
-		self.defaultActive();
 	};
 
 	/**
@@ -364,6 +366,10 @@ var ViewModel = function() {
 		// self.loadPhotos(location);
 	};
 
+	/**
+	 * Loads the location's information if successful
+	 * @param  Location location
+	 */
 	self.loadInfo = function(location) {
 		function onErrorCallback() {
 			self.showInfo(false);
@@ -388,6 +394,10 @@ var ViewModel = function() {
 
 	};
 
+	/**
+	 * Loads a comment associated with the location if successful
+	 * @param  Location location
+	 */
 	self.loadComments = function(location) {
 		function onErrorCallback() {
 			self.showComments(false);
