@@ -336,7 +336,9 @@ var ViewModel = function() {
 		self.setCurrentLocation(location);
 		self.queryResultsShown(false);
 		self.loadDetails(location);
+		self.defaultActive();
 		self.showDetails(true);
+		self.defaultActive();
 	};
 
 	/**
@@ -375,7 +377,6 @@ var ViewModel = function() {
 		self.loadComments(location);
 		// self.loadPhotos(location);
 		// self.loadTweets(location);
-		self.defaultActive();
 	};
 
 	self.loadInfo = function(location) {
