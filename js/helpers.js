@@ -4,21 +4,21 @@
  * @param  String serverUrl Url to check if it is down
  */
 function createErrorMessage(message, serverUrl) {
-	var newDiv = document.createElement('div'); 
-	var newContent = document.createTextNode(message + ' '); 
-	var downForEveryone = document.createElement('a'); 
-	downForEveryone.setAttribute('href', 'http://www.isup.me/' + serverUrl);
-	var linkText = document.createTextNode('Maybe their servers are down?'); 
-	newDiv.appendChild(newContent);
-	if (serverUrl) {
-		downForEveryone.appendChild(linkText);
-	}
-	newDiv.appendChild(downForEveryone);
-	newDiv.className = 'alert-box warning';
-	newDiv.setAttribute('data-alert', '');
-	// add the newly created element and its content into the DOM 
-	var messagesDiv = document.getElementById('messages'); 
-	messagesDiv.appendChild(newDiv);
+    var newDiv = document.createElement('div'); 
+    var newContent = document.createTextNode(message + ' '); 
+    var downForEveryone = document.createElement('a'); 
+    downForEveryone.setAttribute('href', 'http://www.isup.me/' + serverUrl);
+    var linkText = document.createTextNode('Maybe their servers are down?'); 
+    newDiv.appendChild(newContent);
+    if (serverUrl) {
+        downForEveryone.appendChild(linkText);
+    }
+    newDiv.appendChild(downForEveryone);
+    newDiv.className = 'alert-box warning';
+    newDiv.setAttribute('data-alert', '');
+    // add the newly created element and its content into the DOM 
+    var messagesDiv = document.getElementById('messages'); 
+    messagesDiv.appendChild(newDiv);
 }
 
 /**
@@ -28,7 +28,7 @@ function createErrorMessage(message, serverUrl) {
  * @return String   literal string
  */
 function regExpEscape(s) {
-	return s.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
+    return s.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
 /**
@@ -38,8 +38,8 @@ function regExpEscape(s) {
  * @return Boolean           if one is contained in the other
  */
 function valueMatches(inputItem, testItem) {
-	var CASE_INSENSITIVE_MATCHING = 'i';
-	return RegExp(regExpEscape(inputItem.trim()), CASE_INSENSITIVE_MATCHING).test(testItem);
+    var CASE_INSENSITIVE_MATCHING = 'i';
+    return RegExp(regExpEscape(inputItem.trim()), CASE_INSENSITIVE_MATCHING).test(testItem);
 }
 
 /**
@@ -49,19 +49,19 @@ function valueMatches(inputItem, testItem) {
  * @param  function onErrorCallback
  */
 function getJSON(url, onSuccessCallback, onErrorCallback) {
-	var request = new XMLHttpRequest();
-	request.open('GET', url, true);
-	request.onload = function() {
-		if (request.status >= 200 && request.status < 400) {
-			var data = JSON.parse(request.responseText);
-			onSuccessCallback(data);
-		} else {
-			onErrorCallback(request.status);
-		}
-	};
-	request.onerror = onErrorCallback;
+    var request = new XMLHttpRequest();
+    request.open('GET', url, true);
+    request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+            var data = JSON.parse(request.responseText);
+            onSuccessCallback(data);
+        } else {
+            onErrorCallback(request.status);
+        }
+    };
+    request.onerror = onErrorCallback;
 
-	request.send();
+    request.send();
 }
 
 /**
@@ -71,21 +71,21 @@ function getJSON(url, onSuccessCallback, onErrorCallback) {
  * @param  function onErrorCallback
  */
 function ajax(url, onSuccessCallback, onErrorCallback) {
-	var request = new XMLHttpRequest();
-	request.open('GET', url, true);
+    var request = new XMLHttpRequest();
+    request.open('GET', url, true);
 
-	request.onload = function() {
-		if (request.status >= 200 && request.status < 400) {
-			var resp = request.responseText;
-			onSuccessCallback(resp);
-		} else {
-			onErrorCallback(request.status);
-		}
-	};
+    request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+            var resp = request.responseText;
+            onSuccessCallback(resp);
+        } else {
+            onErrorCallback(request.status);
+        }
+    };
 
-	request.onerror = onErrorCallback;
+    request.onerror = onErrorCallback;
 
-	request.send();
+    request.send();
 }
 
 /**
@@ -95,15 +95,15 @@ function ajax(url, onSuccessCallback, onErrorCallback) {
  * @param  function onErrorCallback
  */
 function getJSONP(url, onSuccessCallback, onErrorCallback) {
-	var script = document.createElement('script'), callbackName = 'jsonp_callback_';
-	window[callbackName] = function(data) {
+    var script = document.createElement('script'), callbackName = 'jsonp_callback_';
+    window[callbackName] = function(data) {
         delete window[callbackName];
         document.body.removeChild(script);
         onSuccessCallback(data);
     };
     script.src = url + (url.indexOf( '?' ) + 1 ? '&' : '?') + 'callback=' + callbackName;
-	script.onerror = onErrorCallback;
-	document.body.appendChild(script);
+    script.onerror = onErrorCallback;
+    document.body.appendChild(script);
 }
 
 function htmlDecode(input){
@@ -117,10 +117,10 @@ function htmlDecode(input){
  * @param  String name class's name
  */
 Element.prototype.removeClassName = function(name) {
-	if (this.hasClassName(name)) {
-		var c = this.className;
-		this.className = c.replace(new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)', 'g'), '');
-	}
+    if (this.hasClassName(name)) {
+        var c = this.className;
+        this.className = c.replace(new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)', 'g'), '');
+    }
 };
 
 /**
@@ -129,5 +129,5 @@ Element.prototype.removeClassName = function(name) {
  * @return Boolean      true if the element has that class
  */
 Element.prototype.hasClassName = function(name) {
-	return new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)').test(this.className);
+    return new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)').test(this.className);
 };
