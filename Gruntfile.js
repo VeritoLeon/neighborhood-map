@@ -2,29 +2,29 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		concat: {
 			js: {
-				src: ['src/js/app/*.js'],
-				dest: 'src/js/scripts.js',
+				src: ['js/app/*.js'],
+				dest: 'js/scripts.js',
 			},
 			vendorjs: {
-				src: ['src/js/lib/*.js'],
-				dest: 'src/js/vendors.js',
+				src: ['js/lib/*.js'],
+				dest: 'js/vendors.js',
 			},
 			css: {
-				src: ['src/css/app/*.css'],
-				dest: 'src/css/styles.css',
+				src: ['css/app/*.css'],
+				dest: 'css/styles.css',
 			},
 			vendorcss: {
-				src: ['src/css/lib/*.css'],
-				dest: 'src/css/vendors.css',
+				src: ['css/lib/*.css'],
+				dest: 'css/vendors.css',
 			},
 		},
 		uglify: {
 			 target: {
 			 	files: [{
 			 		expand: true,
-					cwd: 'src/js',
+					cwd: 'js',
 					src: '**/*.js',
-					dest: 'js'
+					dest: 'dist/js'
 				}]
 			 }
 		},
@@ -32,9 +32,9 @@ module.exports = function(grunt) {
 			target: {
 				files: [{
 					expand: true,
-					cwd: 'src/css',
+					cwd: 'css',
 					src: ['*.css'],
-					dest: 'css',
+					dest: 'dist/css',
 					ext: '.css'
 				}]
 			}
@@ -43,34 +43,34 @@ module.exports = function(grunt) {
 			dynamic: {
 				files: [{
 					expand: true,
-					cwd: 'src/images',
+					cwd: 'images',
 					src: ['**/*.{png,jpg,gif,svg}'],
-					dest: 'images'
+					dest: 'dist/images'
 				}]
 			}
 		},
 		inline: {
 			dist: {
-				src: 'index.html'
+				src: 'dist/index.html'
 			}
 		},
 		copy: {
 			fonts: {
-				cwd: 'src/font',
+				cwd: 'font',
 				src: '**/*',      
-				dest: 'font',
+				dest: 'dist/font',
 				expand: true
 			},
 			images: {
-				cwd: 'src/img',
+				cwd: 'img',
 				src: '**/*',      
-				dest: 'img',
+				dest: 'dist/img',
 				expand: true
 			},
 			index: {
-				cwd: 'src',
+				cwd: '',
 				src: 'index.html',      
-				dest: '',
+				dest: 'dist',
 				expand: true
 			}
 		},
@@ -83,25 +83,25 @@ module.exports = function(grunt) {
 					minifier: true,
 				},
 				files: {
-					'css/': 'src/css/*.css'
+					'dist/css/': 'css/*.css'
 				}
 			}
 		},
 		watch: {
 			js: {
-				files: ['src/js/**/*.js'],
+				files: ['js/**/*.js'],
 				tasks: ['uglify'],
 			},
 			css: {
-				files: ['src/css/**/*.css'],
+				files: ['css/**/*.css'],
 				tasks: ['cssmin'],
 			},
 			img: {
-				files: ['src/images/**/*'],
+				files: ['images/**/*'],
 				tasks: ['imagemin'],
 			},
 			release: {
-				files: ['src/index.html'],
+				files: ['index.html'],
 				tasks: ['copy:index', 'inline']
 			}
 		}

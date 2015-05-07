@@ -1,1 +1,593 @@
-function loadScript(){function a(){navigator.onLine?createErrorMessage("We're having trouble reaching Google maps. Maybe a firewall is blocking them.","www.maps.googleapis.com"):createErrorMessage("You seem to be offline. Check your internet connection and reload the page.")}getJSONP("https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=false",initialize.name,a)}function initialize(){var a={center:{lat:27.495,lng:-109.969},zoom:16,panControl:!1,streetViewControl:!1,zoomControl:!1,mapTypeControl:!1,styles:[{elementType:"labels.icon",stylers:[{visibility:"off"}]}]};pin={path:"m5.7173 24.562c-6.148-10.931-6.5821-15.691-1.8615-20.412 4.3413-4.3413 10.181-4.3413 14.522 0 4.7683 4.7683 4.3293 9.6487-1.8444 20.501-2.7042 4.7537-5.1417 8.6382-5.4167 8.6322s-2.7048-3.9309-5.3995-8.722zm9.1995-9.4112c1.5469-1.5469 1.5469-6.0531 0-7.6s-6.0531-1.5469-7.6 0-1.5469 6.0531 0 7.6 6.0531 1.5469 7.6 0z",fillOpacity:1,strokeWeight:1,strokeColor:"#fff",scale:1.25,origin:new google.maps.Point(0,0),anchor:new google.maps.Point(10,33),setColor:function(a){var b=Object.create(pin);return b.fillColor=a,b}},type={food:{icon:"img/food.svg",marker:pin.setColor("#dd4229")},entertainment:{marker:pin.setColor("#3aa0ef")},nature:{marker:pin.setColor("#20be8c")},recreation:{marker:pin.setColor("#f352a5")}};var b=document.getElementById("map-canvas"),c=document.getElementById("topbar");c.removeClassName("hidden");var d=document.getElementsByClassName("placeslist")[0];d.removeClassName("hidden"),map=new google.maps.Map(b,a),infowindow=new google.maps.InfoWindow,initialLocations=[new Location("Lockers","Sports restaurant and bar",27.493913,-109.974022,type.food,{}),new Location("Kiawa","University's restaurant",27.49356,-109.972613,type.food,{}),new Location("Doña Magui","Homemade food",27.490329,-109.972748,type.food,{}),new Location("Comedor ITSON","University's restaurant",27.491831,-109.970547,type.food,{}),new Location("Cafeteria ITSON","University's restaurant",27.492045,-109.969547,type.food,{}),new Location("Laguna del Nainari","Lagoon known as Ciudad Obregon's bride",27.497699,-109.969851,type.nature,{wikipediaId:"2254604",foursquareId:"4cf561ec71538cfa6bdcae2e"}),new Location("Parque infantil Ostimuri","City's largest park",27.493909,-109.966797,type.recreation,{}),new Location("Tomas Oroz Gaytan Stadium","Baseball stadium",27.492747,-109.954472,type.recreation,{})],viewModel=new ViewModel,ko.applyBindings(viewModel),viewModel.query.subscribe(viewModel.search)}function getWikipediaExtract(a){var b=a?"http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=500&format=json&pageids="+a:"";getJSONP(b,getInfoDetailsContent.name,function(){console.log("error")})}function getInfoDetailsContent(a){return a}function createErrorMessage(a,b){var c=document.createElement("div"),d=document.createTextNode(a+" "),e=document.createElement("a");e.setAttribute("href","http://www.isup.me/"+b);var f=document.createTextNode("Maybe their servers are down?");c.appendChild(d),b&&e.appendChild(f),c.appendChild(e),c.className="alert-box warning",c.setAttribute("data-alert","");var g=document.getElementById("messages");g.appendChild(c)}function regExpEscape(a){return a.replace(/[-\\^$*+?.()|[\]{}]/g,"\\$&")}function valueMatches(a,b){var c="i";return RegExp(regExpEscape(a.trim()),c).test(b)}function getJSON(a,b,c){var d=new XMLHttpRequest;d.open("GET",a,!0),d.onload=function(){if(d.status>=200&&d.status<400){var a=JSON.parse(d.responseText);b(a)}else c(d.status)},d.onerror=c(event),d.send()}function ajax(a,b,c){var d=new XMLHttpRequest;d.open("GET",a,!0),d.onload=function(){if(d.status>=200&&d.status<400){var a=d.responseText;b(a)}else c(d.status)},d.onerror=c,d.send()}function getJSONP(a,b,c){var d=document.createElement("script");d.type="text/javascript",d.src=a+"&callback="+b,d.onerror=c,d.onload=function(){this.remove()},document.body.appendChild(d)}var map,infowindow,initialLocations,viewModel,detailsViewModel,pin,type;window.onload=loadScript;var Location=function(a,b,c,d,e,f){var g=this;g.title=ko.observable(a),g.description=ko.observable(b),g.latitude=ko.observable(c),g.longitude=ko.observable(d),g.kind=ko.observable(e),g.icon=ko.observable(e.icon),g.wikipediaId=ko.observable(f.wikipediaId),g.foursquareId=ko.observable(f.foursquareId),g.twitterHandle=ko.observable(f.twitterHandle),g.marker=new google.maps.Marker({position:new google.maps.LatLng(g.latitude(),g.longitude()),map:map,icon:e.marker,animation:google.maps.Animation.DROP,title:g.title()}),google.maps.event.addListener(g.marker,"click",function(){parent.viewModel.openInfoWindow(g)})},ViewModel=function(){var a=this;a.query=ko.observable(""),a.queryResultsShown=ko.observable(!1),a.locations=ko.observableArray(initialLocations.slice()),a.currentLocation=ko.observable(a.locations()[0]),a.filter=ko.observable(""),a.showDetails=ko.observable(!1),a.activeDetails=ko.observable("info"),a.showResults=function(){a.queryResultsShown(!0)},a.setCurrentLocation=function(b){return(b=a.getLocation(b.title()))?(b!=a.currentLocation()?a.currentLocation().marker.setAnimation(null):a.currentLocation(),b.marker.setAnimation(google.maps.Animation.BOUNCE),map.panTo(b.marker.getPosition()),a.currentLocation(b)):void 0},a.getLocation=function(b){for(var c in a.locations())if(a.locations()[c].title()===b)return a.locations()[c]},a.showAllLocations=function(){a.showLocationsByKind("")},a.showFoodLocations=function(){a.showLocationsByKind(type.food)},a.showRecreationLocations=function(){a.showLocationsByKind(type.recreation)},a.showOutdoorsLocations=function(){a.showLocationsByKind(type.nature)},a.showLocationsByKind=function(b){a.filter(b),a.search(a.query())},a.isFilterAll=ko.pureComputed(function(){return a.isFilterActive("")},a),a.isFilterFood=ko.pureComputed(function(){return a.isFilterActive(type.food)},a),a.isFilterRecreation=ko.pureComputed(function(){return a.isFilterActive(type.recreation)},a),a.isFilterOutdoors=ko.pureComputed(function(){return a.isFilterActive(type.nature)},a),a.isFilterActive=function(b){return a.filter()===b?"active":""},a.hideDetails=ko.pureComputed(function(){return a.showDetails()?"":"hidden"},a),a.setActiveInfo=function(){return a.setActiveDetails("info")},a.setActiveComments=function(){return a.setActiveDetails("comments")},a.setActiveTweets=function(){return a.setActiveDetails("tweets")},a.setActivePhotos=function(){return a.setActiveDetails("photos")},a.setActiveDetails=function(b){a.activeDetails(b)},a.isActiveInfo=ko.pureComputed(function(){return a.areDetailsActive("info")},a),a.isActiveComments=ko.pureComputed(function(){return a.areDetailsActive("comments")},a),a.isActiveTweets=ko.pureComputed(function(){return a.areDetailsActive("tweets")},a),a.isActivePhotos=ko.pureComputed(function(){return a.areDetailsActive("photos")},a),a.areDetailsActive=function(b){return a.activeDetails()===b?"active":""},a.openInfoWindow=function(b){var c='<div tabindex="1" href="#"><h2 class="info-title">'+b.title()+'</h2><p class="info-description">'+b.description()+"</p></div>";infowindow.setContent(c),infowindow.open(map,b.marker),a.setCurrentLocation(b);var d=document.getElementById("placeslist-switcher");d.checked=!1,a.queryResultsShown(!1),a.loadDetails(b),a.showDetails(!0)},a.search=function(b){a.hideAllMarkers(),a.locations.removeAll();var c=[];for(var d in parent.initialLocations){var e=parent.initialLocations[d];!valueMatches(b,e.title())||e.kind()!==a.filter()&&a.filter()||(a.showMarker(e),c.push(e))}a.locations(c)},a.selectMarker=function(){a.locations().length&&(a.openInfoWindow(a.locations()[0]),a.query(""))},a.hideAllMarkers=function(){var b=a.locations();for(var c in a.locations())b[c].marker.setMap(null)},a.showMarker=function(a){a.marker.setMap(map)},a.loadDetails=function(b){a.loadInfo(b)},a.loadInfo=function(a){a.wikipediaId()&&getWikipediaExtract(a.wikipediaId())},a.loadComments=function(){},a.loadPhotos=function(){},a.loadTweets=function(){},google.maps.event.addListener(parent.infowindow,"domready",function(){var b=a.getLocation(parent.infowindow.getAnchor().title);b&&a.setCurrentLocation(b)}),google.maps.event.addListener(parent.infowindow,"closeclick",function(){a.currentLocation().marker.setAnimation(null),a.showDetails(!1)})};Element.prototype.removeClassName=function(a){if(this.hasClassName(a)){var b=this.className;this.className=b.replace(new RegExp("(?:^|\\s+)"+a+"(?:\\s+|$)","g"),"")}},Element.prototype.hasClassName=function(a){return new RegExp("(?:^|\\s+)"+a+"(?:\\s+|$)").test(this.className)};
+var map, infowindow, initialLocations, viewModel, detailsViewModel, pin, type;
+
+// the loadScript function is the first thing we want to execute
+// as soon as the window is ready.
+window.onload = loadScript;
+
+/**
+ * Adds the google maps API script to the DOM and loads it.
+ * If sucessful, it callbacks the initialize function.
+ */
+function loadScript() {
+	function onErrorCallback(event) {
+		if (navigator.onLine) {
+			createErrorMessage('We\'re having trouble reaching Google maps. Maybe a firewall is blocking it.', 'www.maps.googleapis.com');
+		} else {
+			createErrorMessage('You seem to be offline. Check your internet connection and reload the page.');
+		}
+	}
+	getJSONP('https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=false', initialize, onErrorCallback);
+}
+
+/**
+ * Initializes objects, makes elements needed by the app visible
+ * and creates map, map components and view model.
+ */
+function initialize() {
+	/**
+	 * Will specify how we want to customize our map
+	 * @type google.maps.MapOptions (https://developers.google.com/maps/documentation/javascript/reference#MapOptions)
+	 */
+	var mapOptions = {
+		center: { lat: 27.4950000, lng: -109.969000},
+		zoom: 16,
+		panControl: false,
+		streetViewControl: false,
+		zoomControl: false,
+		mapTypeControl: false,
+		styles: [
+			// Hides the default clickable location icons on the map.
+			{
+				elementType: 'labels.icon',
+				stylers: [
+					{ visibility: 'off' }
+				]
+			}
+		]
+	};
+	
+	/**
+	 * This sets is the appearance of our markers to a custom pin
+	 * @type google.maps.Symbol (https://developers.google.com/maps/documentation/javascript/reference#Symbol)
+	 */
+	pin = {
+		// Get this from pin-red-10-small.svg
+		path: 'm5.7173 24.562c-6.148-10.931-6.5821-15.691-1.8615-20.412 4.3413-4.3413 10.181-4.3413 14.522 0 4.7683 4.7683 4.3293 9.6487-1.8444 20.501-2.7042 4.7537-5.1417 8.6382-5.4167 8.6322s-2.7048-3.9309-5.3995-8.722zm9.1995-9.4112c1.5469-1.5469 1.5469-6.0531 0-7.6s-6.0531-1.5469-7.6 0-1.5469 6.0531 0 7.6 6.0531 1.5469 7.6 0z',
+		fillOpacity: 1,
+		strokeWeight: 1,
+		strokeColor: '#fff',
+		scale: 1.25,
+		origin: new google.maps.Point(0,0),
+		anchor: new google.maps.Point(10, 33),
+		setColor: function(color) {
+			var newPin = Object.create(pin);
+			newPin.fillColor = color;
+			return newPin;
+		}
+	};
+
+	/**
+	 * This will tell us what kind of location we're dealing with
+	 * and give us the assets of that group
+	 * @type Object
+	 */
+	type = {
+		'food': {
+			'icon': 'img/food.svg'
+			,'marker': pin.setColor('#dd4229')
+		}
+		,'entertainment': {
+			'marker': pin.setColor('#3aa0ef')
+		}
+		,'nature': {
+			'marker': pin.setColor('#20be8c')
+		}
+		, 'recreation': {
+			'marker': pin.setColor('#f352a5')
+		}
+	};
+
+	// Here we restyle our application to accomodate to how it'll look
+	// once we add the map
+	var mapCanvas = document.getElementById('map-canvas');
+	// We create a map in the given DOM element, with the given settings.
+	// We also create the element that will display our locations information.
+	map = new google.maps.Map(mapCanvas, mapOptions);
+	infowindow = new google.maps.InfoWindow();
+
+	// All the locations that will be put in the map
+	initialLocations  = [
+		new Location('Lockers', 'Sports restaurant and bar located in Arena Itson', 27.493913, -109.974022, type.food, {'foursquareId': '5254ea73498ebbc7b795c436'})
+		,new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, type.food, {'foursquareId': '4c8178dfd4e23704f0485e88'})
+		,new Location('Doña Magui', 'Homemade food', 27.490329, -109.972748, type.food, {'foursquareId': '5064bc59e4b053bfe4b7885f'})
+		,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, type.food, {'foursquareId': '4cb87c3ef50e224bd00ae7fb'})
+		,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, type.food, {'foursquareId': '4eb340be0aaf1abede5d0706'})
+		// ,new Location('Gusto Frio Mr. Brown', 'Ice cream shop', 27.492788, -109.961114, type.food, {'foursquareId': '4ce5cad3678aa093ca97d8ea'})
+		,new Location('Laguna del Nainari', 'Lagoon known as Ciudad Obregon\'s bride', 27.497699, -109.969851, type.nature, {'wikipediaId': '2254604', 'foursquareId': '4cf561ec71538cfa6bdcae2e'})
+		,new Location('Parque infantil Ostimuri', 'City\'s largest park', 27.493909, -109.966797, type.recreation, {'foursquareId': '4cc46dc701fb236a19d1abba'})
+		,new Location('Tomas Oroz Gaytan Stadium', 'Baseball stadium', 27.492747, -109.954472, type.recreation, {'wikipediaId': '4771088', 'foursquareId': '4c1485fda9c220a1f3c6579d'})
+	];
+
+	// And we bind to our view model
+	viewModel = new ViewModel();
+	ko.applyBindings(viewModel);
+}
+
+/**
+ * Represents a place we want to show in our map
+ * @param String title       Name of the location
+ * @param String description Short description
+ * @param number latitude    Latitude is specified in degrees within the range [-90, 90]
+ * @param number longitude   Longitude is specified in degrees within the range [-180, 180]
+ * @param type   kind        Location's category. Set in the form type.[category]
+ */
+var Location = function(title, description, latitude, longitude, kind, thirdParty) {
+	var self = this;
+	self.title = ko.observable(title);
+	self.description = ko.observable(description);
+	self.latitude = ko.observable(latitude);
+	self.longitude = ko.observable(longitude);
+	self.kind = ko.observable(kind);
+	self.icon = ko.observable(kind.icon);
+	self.wikipediaId = ko.observable(thirdParty.wikipediaId);
+	self.foursquareId = ko.observable(thirdParty.foursquareId);
+	self.twitterHandle = ko.observable(thirdParty.twitterHandle);
+	self.info = ko.observable();
+	self.foursquareInfo = ko.observable();
+	/**
+	 * @type google.maps.Marker (https://developers.google.com/maps/documentation/javascript/reference#Marker)
+	 */
+	self.marker = new google.maps.Marker({ 
+		position: new google.maps.LatLng(self.latitude(), self.longitude()), 
+		map: map,
+		icon: kind.marker,
+		animation: google.maps.Animation.DROP,
+		title: self.title()
+	});
+
+	// When the location's marker is clicked, trigger openInfoWindow
+	google.maps.event.addListener(self.marker,'click', function() {
+		parent.viewModel.openInfoWindow(self);
+	});
+};
+
+/**
+ * Controls the behavior and logic of our view
+ */
+var ViewModel = function() {
+	var self = this;
+	self.query = ko.observable(''); // text input in the search box
+	self.queryResultsShown = ko.observable(false), // whether the locations list should be displayed
+	self.locations = ko.observableArray(initialLocations);
+	self.currentLocation = ko.observable(self.locations()[0]);
+	self.filter = ko.observable(''); // what filter is active
+	self.filterShown = ko.observable(false); // whether the filters list should be displayed
+	self.showDetails = ko.observable(false); // whether the current location's details should be displayed
+	self.activeDetails = ko.observable('info'); // active details tab (in small screens)
+	self.showInfo = ko.observable(false);
+	self.showComments = ko.observable(false);
+	self.showPhoto = ko.observable(false);
+	self.descriptionDOM = ko.observable();
+	self.commentsDOM = ko.observable();
+	self.photosDOM = ko.observable();
+
+	/**
+	 * Toogles queryResultsShown
+	 */
+	self.showResults = function() {
+		self.queryResultsShown(true);
+	};
+
+	/**
+	 * Sets the given location as the current location
+	 * @param Location obj currentLocation
+	 */
+	self.setCurrentLocation = function(obj) {
+		if (obj = self.getLocation(obj.title())) {
+			obj != self.currentLocation()? self.currentLocation().marker.setAnimation(null) : self.currentLocation();
+			
+			obj.marker.setAnimation(google.maps.Animation.BOUNCE);
+			map.panTo(obj.marker.getPosition());
+			return self.currentLocation(obj); 
+		}
+	};
+
+	/**
+	 * Returns the location with the given title
+	 * @param  String title   location's title
+	 * @return Location       location matching the title
+	 */
+	self.getLocation = function(title) {
+		for (var loc in self.locations()) {
+			if (self.locations()[loc].title() === title) {
+				return self.locations()[loc]; 
+			}
+		}
+	};
+
+	// These functions display only the locations on the list and map
+	// that match the filter
+	self.showAllLocations = function() {
+		self.showLocationsByKind('');
+	};
+
+	self.showFoodLocations = function() {
+		self.showLocationsByKind(type.food);
+	};
+
+	self.showRecreationLocations = function() {
+		self.showLocationsByKind(type.recreation);
+	};
+
+	self.showOutdoorsLocations = function() {
+		self.showLocationsByKind(type.nature);
+	};
+
+	self.showLocationsByKind = function(kind) {
+		self.filter(kind);
+		self.filterShown(false);
+	};
+
+
+	// These add the 'active' class to each filter if active
+	self.isFilterAll = ko.pureComputed(function() {
+		return self.isFilterActive('');
+	}, self);
+
+	self.isFilterFood = ko.pureComputed(function() {
+        return self.isFilterActive(type.food);
+    }, self);
+
+	self.isFilterRecreation = ko.pureComputed(function() {
+		return self.isFilterActive(type.recreation);
+	}, self);
+
+	self.isFilterOutdoors = ko.pureComputed(function() {
+		return self.isFilterActive(type.nature);
+	}, self);
+
+	self.isFilterActive = function(expectedFilter) {
+		return self.filter() === expectedFilter ? 'active' : '';
+	};
+
+	// Adds the 'hidden' class if showDetails is changed
+	self.hideDetails = ko.pureComputed(function() {
+		return self.showDetails() && self.showAnyDetail() ? '' : 'hidden';
+	}, self);
+
+	// These functions recognize details tabs as active
+	self.setActiveInfo = function() {
+		return self.setActiveDetails('info');
+	};
+
+	self.setActiveComments = function() {
+		return self.setActiveDetails('comments');
+	};
+
+	self.setActivePhotos = function() {
+		return self.setActiveDetails('photos');
+	};
+
+	self.setActiveDetails = function(detailsTitle) {
+		self.activeDetails(detailsTitle);
+	};
+
+	/**
+	 * Sets an active section whenever their "show[Detail]" observable updates
+	 */
+	self.defaultActive = ko.computed(function() {
+		if (self.showInfo()) {
+			self.setActiveInfo();
+		} else if (self.showComments()) {
+			self.setActiveComments();
+		} else if (self.showPhoto()) {
+			self.setActivePhotos();
+		} else {
+			self.activeDetails('');
+		}
+	});
+
+	// These add the 'active' class to each tab if active
+	self.isActiveInfo = ko.pureComputed(function() {
+		return self.areDetailsActive('info');
+	}, self);
+
+	self.isActiveComments = ko.pureComputed(function() {
+		return self.areDetailsActive('comments');
+	}, self);
+
+	self.isActivePhotos = ko.pureComputed(function() {
+		return self.areDetailsActive('photos');
+	}, self);
+
+	self.areDetailsActive = function(expected) {
+		return self.activeDetails() === expected ? 'active' : '';
+	};
+	
+	self.showAnyDetail = ko.pureComputed(function() { // are any of the details sections shown?
+		return self.showPhoto() || self.showComments() || self.showInfo();
+	});
+
+	/**
+	 * Opens the info window in the given location's marker
+	 * and sets it as the current location.
+	 * @param  Location location
+	 */
+	self.openInfoWindow = function(location) {
+		var content = '<div tabindex="1" href="#"><h2 class="info-title">' + location.title() + '</h2>'
+					+ '<p class="info-description">' + location.description() + '</p></div>';
+		infowindow.setContent(content);
+		infowindow.open(map, location.marker);
+		self.setCurrentLocation(location);
+		self.queryResultsShown(false);
+		self.loadDetails(location);
+		self.showDetails(true);
+	};
+
+	/**
+	 * Filters the locations to the ones who match the filter
+	 * and whose title matches the query
+	 */
+	self.filterLocations = ko.computed(function() {
+		return ko.utils.arrayFilter(self.locations(), function (location) {
+			if (valueMatches(self.query(), location.title()) &&
+					(self.filter() == location.kind() || !self.filter())) {
+				location.marker.setMap(map);
+				return true;
+			} else {
+				location.marker.setMap(null);
+				return false;
+			}
+		});
+	});
+
+	/**
+	 * Selects the first location of the locations array
+	 */
+	self.selectMarker = function() {
+		if (self.locations().length) {
+			self.openInfoWindow(self.locations()[0]);
+			self.query('');
+		}
+	};
+
+	/**
+	 * Loads all the detail sections
+	 * @param  Location location
+	 */
+	self.loadDetails = function(location) {
+		self.loadInfo(location);
+		self.loadComments(location);
+		// self.loadPhotos(location);
+	};
+
+	/**
+	 * Loads the location's information if successful
+	 * @param  Location location
+	 */
+	self.loadInfo = function(location) {
+		function onErrorCallback() {
+			self.showInfo(false);
+		}
+
+		function getWikipediaDescription(data) {
+			self.showInfo(true);
+			location.info(data);
+			var innerHtml = data.query.pages[location.wikipediaId()].extract,
+			sourceHtml = '<a class="source icon-wikipedia" href="https://en.wikipedia.org/wiki?curid=' + location.wikipediaId() + '"> Courtesy of Wikipedia</a>';
+			self.descriptionDOM(innerHtml + sourceHtml);
+		}
+
+		if (location.info()) {
+			getWikipediaDescription(location.info());
+		} else if (location.wikipediaId()) {
+			var url = 'http://en.wikipedia.org/w/api.php?action=query&prop=extracts&exchars=250&format=json&pageids=' + location.wikipediaId();
+			getJSONP(url, getWikipediaDescription, onErrorCallback);
+		} else {
+			onErrorCallback();
+		}
+
+	};
+
+	/**
+	 * Loads a comment associated with the location if successful
+	 * @param  Location location
+	 */
+	self.loadComments = function(location) {
+		function onErrorCallback() {
+			self.showComments(false);
+		}
+
+		function getFoursquareTips(data) {
+			location.foursquareInfo(data);
+			var queryResults = data.response.groups[0].items;
+			if (queryResults) {
+				// (Then, iterate over the result to match the location ID)
+				for (var i = 0, length = queryResults.length; i < length; i++) {
+					if (queryResults[i].venue.id === location.foursquareId()) {
+						return getTipFromVenueInfo(queryResults[i]);
+					}
+				}
+			} else {
+				onErrorCallback();
+			}
+		}
+
+		function getTipFromVenueInfo(data) {
+			var tip = data.tips;
+			if(tip) {
+				self.showComments(true);
+				var innerHtml = '<p>"' + tip[0].text + '"</p>',
+				sourceHtml = '<a class="source icon-foursquare" href="https://foursquare.com/v/' + location.foursquareId() + '"> Read more on Foursquare</a>';
+				self.commentsDOM(innerHtml + sourceHtml);
+			} else {
+				onErrorCallback();
+			}
+		}
+
+		if (location.foursquareInfo()) {
+			getFoursquareTips(location.foursquareInfo());
+		} else if (location.foursquareId()) {
+			var url = 'https://api.foursquare.com/v2/venues/explore?near=Ciudad Obregon&query=' + location.title() + '&intent=match&client_id=EPFA1HIBXSJXCJM4V3CSQZ3WA2D4ZZ0E3TJ5BP0QXGYODOBZ&client_secret=05JENVJTNP2SHJCYBZM1KI3XTH4ZXI3OWBQWA1PC3NCVUADD&v=20150504';
+			getJSON(url, getFoursquareTips, onErrorCallback);
+		} else {
+			onErrorCallback();
+		}
+	};
+
+	self.loadPhotos = function(location) {
+		//get src as prefix + size(e.g. 152x152) + suffix
+	};
+
+	// Sets the info window's marker as the current location when opened
+	google.maps.event.addListener(parent.infowindow, 'domready', function(e) {
+		var location = self.getLocation(parent.infowindow.getAnchor().title);
+		if (location) {
+			self.setCurrentLocation(location);
+		}
+	});
+
+	// Stops the maker's bouncing when the information window is closed
+	google.maps.event.addListener(parent.infowindow, 'closeclick', function(e) {
+		self.currentLocation().marker.setAnimation(null);
+		self.showDetails(false);
+	});
+};
+
+//
+//  HELPERS
+//  
+
+/**
+ * Creates a sticky warning message
+ * @param  String message   What the error message is going to say
+ * @param  String serverUrl Url to check if it is down
+ */
+function createErrorMessage(message, serverUrl) {
+	var newDiv = document.createElement('div'); 
+	var newContent = document.createTextNode(message + ' '); 
+	var downForEveryone = document.createElement('a'); 
+	downForEveryone.setAttribute('href', 'http://www.isup.me/' + serverUrl);
+	var linkText = document.createTextNode('Maybe their servers are down?'); 
+	newDiv.appendChild(newContent);
+	if (serverUrl) {
+		downForEveryone.appendChild(linkText);
+	}
+	newDiv.appendChild(downForEveryone);
+	newDiv.className = 'alert-box warning';
+	newDiv.setAttribute('data-alert', '');
+	// add the newly created element and its content into the DOM 
+	var messagesDiv = document.getElementById('messages'); 
+	messagesDiv.appendChild(newDiv);
+}
+
+/**
+ * Escapes the gives string to be treated as a literal string
+ * (got from Lea Verou's awesomplete)
+ * @param  String s
+ * @return String   literal string
+ */
+function regExpEscape(s) {
+	return s.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
+}
+
+/**
+ * Checks if inputItem is contained in testItem
+ * @param  String inputItem  the string to test
+ * @param  String testItem   string to test against
+ * @return Boolean           if one is contained in the other
+ */
+function valueMatches(inputItem, testItem) {
+	var CASE_INSENSITIVE_MATCHING = 'i';
+	return RegExp(regExpEscape(inputItem.trim()), CASE_INSENSITIVE_MATCHING).test(testItem);
+}
+
+/**
+ * Send an asynchronous request that returns a JSON
+ * @param  String url            
+ * @param  function onSuccessCallback
+ * @param  function onErrorCallback
+ */
+function getJSON(url, onSuccessCallback, onErrorCallback) {
+	var request = new XMLHttpRequest();
+	request.open('GET', url, true);
+	request.onload = function() {
+		if (request.status >= 200 && request.status < 400) {
+			var data = JSON.parse(request.responseText);
+			onSuccessCallback(data);
+		} else {
+			onErrorCallback(request.status);
+		}
+	};
+	request.onerror = onErrorCallback;
+
+	request.send();
+}
+
+/**
+ * Send an asynchronous request
+ * @param  String url            
+ * @param  function onSuccessCallback
+ * @param  function onErrorCallback
+ */
+function ajax(url, onSuccessCallback, onErrorCallback) {
+	var request = new XMLHttpRequest();
+	request.open('GET', url, true);
+
+	request.onload = function() {
+		if (request.status >= 200 && request.status < 400) {
+			var resp = request.responseText;
+			onSuccessCallback(resp);
+		} else {
+			onErrorCallback(request.status);
+		}
+	};
+
+	request.onerror = onErrorCallback;
+
+	request.send();
+}
+
+/**
+ * Send an asynchronous cross-domain request that returns a JSON
+ * @param  String url
+ * @param  function onSuccessCallback
+ * @param  function onErrorCallback
+ */
+function getJSONP(url, onSuccessCallback, onErrorCallback) {
+	var script = document.createElement('script'), callbackName = 'jsonp_callback_';
+	window[callbackName] = function(data) {
+        delete window[callbackName];
+        document.body.removeChild(script);
+        onSuccessCallback(data);
+    };
+    script.src = url + (url.indexOf( '?' ) + 1 ? '&' : '?') + 'callback=' + callbackName;
+	script.onerror = onErrorCallback;
+	document.body.appendChild(script);
+}
+
+function htmlDecode(input){
+  var e = document.createElement('div');
+  e.innerHTML = input;
+  return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+}
+
+/**
+ * Remove a class from an element
+ * @param  String name class's name
+ */
+Element.prototype.removeClassName = function(name) {
+	if (this.hasClassName(name)) {
+		var c = this.className;
+		this.className = c.replace(new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)', 'g'), '');
+	}
+};
+
+/**
+ * Returns whether the element has the given class
+ * @param  String  name class's name
+ * @return Boolean      true if the element has that class
+ */
+Element.prototype.hasClassName = function(name) {
+	return new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)').test(this.className);
+};
