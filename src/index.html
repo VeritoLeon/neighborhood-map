@@ -23,7 +23,7 @@
 				</div>
 			</noscript>
 		</div>
-		<nav id="topbar" class="fixed hidden">
+		<nav id="topbar" class="fixed hidden" data-bind="css: { hidden: false }">
 			<div id="search-container" class="row full-width collapse postfix small-centered">
 				<!-- Search START -->
 				<label id="filter-button" for="filter" class="icon-filter"></label>
@@ -56,7 +56,7 @@
 			</div>
 		</nav>	
 		<!-- Locations list START -->
-		<div class="hidden placeslist fixed">
+		<div class="hidden placeslist fixed" data-bind="css: { hidden: false }">
 			<input title="show places list" type="checkbox" id="placeslist-switcher" data-bind="checked: queryResultsShown"/>
 			<label id="place" class="placebar-button" for="placeslist-switcher">
 				<span><i class="icon-cancel"></i></span>
@@ -97,7 +97,6 @@
 					comments go here
 				</section>
 				<section role="tabpanel" class="content" id="photos" data-bind="css: isActivePhotos, visible: showPhoto">
-					<img src="https://irs0.4sqi.net/img/general/width960/27EmI7kajZdQ-pN_EK0I8f6CVeddPY37I0gmiSdWj_0.jpg">
 				</section>
 			</div>
 		</article>

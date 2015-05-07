@@ -90,11 +90,6 @@ function initialize() {
 	// Here we restyle our application to accomodate to how it'll look
 	// once we add the map
 	var mapCanvas = document.getElementById('map-canvas');
-	var topbar = document.getElementById('topbar');
-	topbar.removeClassName('hidden');
-	var placeslist = document.getElementsByClassName('placeslist')[0];
-	placeslist.removeClassName('hidden');
-
 	// We create a map in the given DOM element, with the given settings.
 	// We also create the element that will display our locations information.
 	map = new google.maps.Map(mapCanvas, mapOptions);
