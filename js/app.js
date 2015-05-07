@@ -318,8 +318,8 @@ window.onload = loadScript;
         infowindow.setContent(content);
         infowindow.open(map, location.marker);
         self.setCurrentLocation(location);
-        self.queryResultsShown(false);
         self.loadDetails(location);
+        self.queryResultsShown(false);
         self.showDetails(true);
     };
 
