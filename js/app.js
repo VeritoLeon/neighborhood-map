@@ -8,7 +8,7 @@ window.onload = loadScript;
  * Adds the google maps API script to the DOM and loads it.
  * If sucessful, it callbacks the initialize function.
  */
-function loadScript() {
+ function loadScript() {
     function onErrorCallback(event) {
         if (navigator.onLine) {
             createErrorMessage('We\'re having trouble reaching Google maps. Maybe a firewall is blocking it.', 'www.maps.googleapis.com');
@@ -23,12 +23,12 @@ function loadScript() {
  * Initializes objects, makes elements needed by the app visible
  * and creates map, map components and view model.
  */
-function initialize() {
+ function initialize() {
     /**
      * Will specify how we want to customize our map
      * @type google.maps.MapOptions (https://developers.google.com/maps/documentation/javascript/reference#MapOptions)
      */
-    var mapOptions = {
+     var mapOptions = {
         center: { lat: 27.4950000, lng: -109.969000},
         zoom: 16,
         panControl: false,
@@ -40,17 +40,17 @@ function initialize() {
             {
                 elementType: 'labels.icon',
                 stylers: [
-                    { visibility: 'off' }
+                { visibility: 'off' }
                 ]
             }
-        ]
-    };
-    
+            ]
+        };
+
     /**
      * This sets is the appearance of our markers to a custom pin
      * @type google.maps.Symbol (https://developers.google.com/maps/documentation/javascript/reference#Symbol)
      */
-    pin = {
+     pin = {
         // Get this from pin-red-10-small.svg
         path: 'm5.7173 24.562c-6.148-10.931-6.5821-15.691-1.8615-20.412 4.3413-4.3413 10.181-4.3413 14.522 0 4.7683 4.7683 4.3293 9.6487-1.8444 20.501-2.7042 4.7537-5.1417 8.6382-5.4167 8.6322s-2.7048-3.9309-5.3995-8.722zm9.1995-9.4112c1.5469-1.5469 1.5469-6.0531 0-7.6s-6.0531-1.5469-7.6 0-1.5469 6.0531 0 7.6 6.0531 1.5469 7.6 0z',
         fillOpacity: 1,
@@ -71,7 +71,7 @@ function initialize() {
      * and give us the assets of that group
      * @type Object
      */
-    type = {
+     type = {
         'food': {
             'icon': 'img/food.svg'
             ,'marker': pin.setColor('#dd4229')
@@ -97,16 +97,16 @@ function initialize() {
 
     // All the locations that will be put in the map
     initialLocations  = [
-        new Location('Lockers', 'Sports restaurant and bar located in Arena Itson', 27.493913, -109.974022, type.food, {'foursquareId': '5254ea73498ebbc7b795c436'})
-        ,new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, type.food, {'foursquareId': '4c8178dfd4e23704f0485e88'})
-        ,new Location('Doña Magui', 'Homemade food', 27.490329, -109.972748, type.food, {'foursquareId': '5064bc59e4b053bfe4b7885f'})
-        ,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, type.food, {'foursquareId': '4cb87c3ef50e224bd00ae7fb'})
-        ,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, type.food, {'foursquareId': '4eb340be0aaf1abede5d0706'})
+    new Location('Lockers', 'Sports restaurant and bar located in Arena Itson', 27.493913, -109.974022, type.food, {'foursquareId': '5254ea73498ebbc7b795c436'})
+    ,new Location('Kiawa', 'University\'s restaurant', 27.493560, -109.972613, type.food, {'foursquareId': '4c8178dfd4e23704f0485e88'})
+    ,new Location('Doña Magui', 'Homemade food', 27.490329, -109.972748, type.food, {'foursquareId': '5064bc59e4b053bfe4b7885f'})
+    ,new Location('Comedor ITSON', 'University\'s restaurant', 27.491831, -109.970547, type.food, {'foursquareId': '4cb87c3ef50e224bd00ae7fb'})
+    ,new Location('Cafeteria ITSON', 'University\'s restaurant', 27.492045, -109.969547, type.food, {'foursquareId': '4eb340be0aaf1abede5d0706'})
         // ,new Location('Gusto Frio Mr. Brown', 'Ice cream shop', 27.492788, -109.961114, type.food, {'foursquareId': '4ce5cad3678aa093ca97d8ea'})
         ,new Location('Laguna del Nainari', 'Lagoon known as Ciudad Obregon\'s bride', 27.497699, -109.969851, type.nature, {'wikipediaId': '2254604', 'foursquareId': '4cf561ec71538cfa6bdcae2e'})
         ,new Location('Parque infantil Ostimuri', 'City\'s largest park', 27.493909, -109.966797, type.recreation, {'foursquareId': '4cc46dc701fb236a19d1abba'})
         ,new Location('Tomas Oroz Gaytan Stadium', 'Baseball stadium', 27.492747, -109.954472, type.recreation, {'wikipediaId': '4771088', 'foursquareId': '4c1485fda9c220a1f3c6579d'})
-    ];
+        ];
 
     // And we bind to our view model
     viewModel = new ViewModel();
@@ -121,7 +121,7 @@ function initialize() {
  * @param number longitude   Longitude is specified in degrees within the range [-180, 180]
  * @param type   kind        Location's category. Set in the form type.[category]
  */
-var Location = function(title, description, latitude, longitude, kind, thirdParty) {
+ var Location = function(title, description, latitude, longitude, kind, thirdParty) {
     var self = this;
     self.title = ko.observable(title);
     self.description = ko.observable(description);
@@ -136,7 +136,7 @@ var Location = function(title, description, latitude, longitude, kind, thirdPart
     /**
      * @type google.maps.Marker (https://developers.google.com/maps/documentation/javascript/reference#Marker)
      */
-    self.marker = new google.maps.Marker({ 
+     self.marker = new google.maps.Marker({ 
         position: new google.maps.LatLng(self.latitude(), self.longitude()), 
         map: map,
         icon: kind.marker,
@@ -153,7 +153,7 @@ var Location = function(title, description, latitude, longitude, kind, thirdPart
 /**
  * Controls the behavior and logic of our view
  */
-var ViewModel = function() {
+ var ViewModel = function() {
     var self = this;
     self.query = ko.observable(''); // text input in the search box
     self.queryResultsShown = ko.observable(false), // whether the locations list should be displayed
@@ -173,7 +173,7 @@ var ViewModel = function() {
     /**
      * Toogles queryResultsShown
      */
-    self.showResults = function() {
+     self.showResults = function() {
         self.queryResultsShown(true);
     };
 
@@ -181,7 +181,7 @@ var ViewModel = function() {
      * Sets the given location as the current location
      * @param Location obj currentLocation
      */
-    self.setCurrentLocation = function(obj) {
+     self.setCurrentLocation = function(obj) {
         if (obj = self.getLocation(obj.title())) {
             obj != self.currentLocation()? self.currentLocation().marker.setAnimation(null) : self.currentLocation();
             
@@ -196,7 +196,7 @@ var ViewModel = function() {
      * @param  String title   location's title
      * @return Location       location matching the title
      */
-    self.getLocation = function(title) {
+     self.getLocation = function(title) {
         for (var loc in self.locations()) {
             if (self.locations()[loc].title() === title) {
                 return self.locations()[loc]; 
@@ -274,7 +274,7 @@ var ViewModel = function() {
     /**
      * Sets an active section whenever their "show[Detail]" observable updates
      */
-    self.defaultActive = ko.computed(function() {
+     self.defaultActive = ko.computed(function() {
         if (self.showInfo()) {
             self.setActiveInfo();
         } else if (self.showComments()) {
@@ -312,9 +312,9 @@ var ViewModel = function() {
      * and sets it as the current location.
      * @param  Location location
      */
-    self.openInfoWindow = function(location) {
+     self.openInfoWindow = function(location) {
         var content = '<div tabindex="1" href="#"><h2 class="info-title">' + location.title() + '</h2>'
-                    + '<p class="info-description">' + location.description() + '</p></div>';
+        + '<p class="info-description">' + location.description() + '</p></div>';
         infowindow.setContent(content);
         infowindow.open(map, location.marker);
         self.setCurrentLocation(location);
@@ -327,25 +327,25 @@ var ViewModel = function() {
      * Filters the locations to the ones who match the filter
      * and whose title matches the query
      */
-    self.filterLocations = ko.computed(function() {
+     self.filterLocations = ko.computed(function() {
         return ko.utils.arrayFilter(self.locations(), function (location) {
             if (valueMatches(self.query(), location.title()) &&
-                    (self.filter() == location.kind() || !self.filter())) {
+                (self.filter() == location.kind() || !self.filter())) {
                 location.marker.setMap(map);
-                return true;
-            } else {
-                location.marker.setMap(null);
-                return false;
-            }
-        });
+            return true;
+        } else {
+            location.marker.setMap(null);
+            return false;
+        }
+    });
     });
 
     /**
      * Selects the first location of the locations array
      */
-    self.selectMarker = function() {
+     self.selectMarker = function() {
         if (self.locations().length) {
-            self.openInfoWindow(self.locations()[0]);
+            self.openInfoWindow(self.filterLocations()[0]);
             self.query('');
         }
     };
@@ -354,17 +354,17 @@ var ViewModel = function() {
      * Loads all the detail sections
      * @param  Location location
      */
-    self.loadDetails = function(location) {
+     self.loadDetails = function(location) {
         self.loadInfo(location);
         self.loadComments(location);
-        // self.loadPhotos(location);
+        self.loadPhotos(location);
     };
 
     /**
      * Loads the location's information if successful
      * @param  Location location
      */
-    self.loadInfo = function(location) {
+     self.loadInfo = function(location) {
         function onErrorCallback() {
             self.showInfo(false);
         }
@@ -373,7 +373,7 @@ var ViewModel = function() {
             self.showInfo(true);
             location.info(data);
             var innerHtml = data.query.pages[location.wikipediaId()].extract,
-            sourceHtml = '<a class="source icon-wikipedia" href="https://en.wikipedia.org/wiki?curid=' + location.wikipediaId() + '"> Courtesy of Wikipedia</a>';
+            sourceHtml = '<a target="_blank" class="source icon-wikipedia" href="https://en.wikipedia.org/wiki?curid=' + location.wikipediaId() + '"> Courtesy of Wikipedia</a>';
             self.descriptionDOM(innerHtml + sourceHtml);
         }
 
@@ -392,7 +392,7 @@ var ViewModel = function() {
      * Loads a comment associated with the location if successful
      * @param  Location location
      */
-    self.loadComments = function(location) {
+     self.loadComments = function(location) {
         function onErrorCallback() {
             self.showComments(false);
         }
@@ -417,7 +417,7 @@ var ViewModel = function() {
             if(tip) {
                 self.showComments(true);
                 var innerHtml = '<p>"' + tip[0].text + '"</p>',
-                sourceHtml = '<a class="source icon-foursquare" href="https://foursquare.com/v/' + location.foursquareId() + '"> Read more on Foursquare</a>';
+                sourceHtml = '<a target="_blank" class="source icon-foursquare" href="https://foursquare.com/v/' + location.foursquareId() + '"> Read more on Foursquare</a>';
                 self.commentsDOM(innerHtml + sourceHtml);
             } else {
                 onErrorCallback();
@@ -427,7 +427,7 @@ var ViewModel = function() {
         if (location.foursquareInfo()) {
             getFoursquareTips(location.foursquareInfo());
         } else if (location.foursquareId()) {
-            var url = 'https://api.foursquare.com/v2/venues/explore?near=Ciudad Obregon&query=' + location.title() + '&intent=match&client_id=EPFA1HIBXSJXCJM4V3CSQZ3WA2D4ZZ0E3TJ5BP0QXGYODOBZ&client_secret=05JENVJTNP2SHJCYBZM1KI3XTH4ZXI3OWBQWA1PC3NCVUADD&v=20150504';
+            var url = 'https://api.foursquare.com/v2/venues/explore?near=Ciudad Obregon&venuePhotos=1&query=' + location.title() + '&intent=match&client_id=EPFA1HIBXSJXCJM4V3CSQZ3WA2D4ZZ0E3TJ5BP0QXGYODOBZ&client_secret=05JENVJTNP2SHJCYBZM1KI3XTH4ZXI3OWBQWA1PC3NCVUADD&v=20150504';
             getJSON(url, getFoursquareTips, onErrorCallback);
         } else {
             onErrorCallback();
@@ -435,7 +435,51 @@ var ViewModel = function() {
     };
 
     self.loadPhotos = function(location) {
-        //get src as prefix + size(e.g. 152x152) + suffix
+         function onErrorCallback() {
+            self.showPhoto(false);
+        }
+
+        function getFoursquarePhoto(data) {
+            location.foursquareInfo(data);
+            var queryResults = data.response.groups[0].items;
+            if (queryResults) {
+                // (Then, iterate over the result to match the location ID)
+                for (var i = 0, length = queryResults.length; i < length; i++) {
+                    if (queryResults[i].venue.id === location.foursquareId()) {
+                        return getPhotoFromVenueInfo(queryResults[i]);
+                    }
+                }
+            } else {
+                onErrorCallback();
+            }
+        }
+
+        function getPhotoFromVenueInfo(data) {
+            try {
+                var venuePhoto = data.venue.photos.groups[0].items[0],
+                photoId = venuePhoto.id,
+                prefix = venuePhoto.prefix,
+                suffix = venuePhoto.suffix,
+                size = "200x200",
+                src = prefix + size + suffix,
+                sourceUrl = 'https://foursquare.com/v/' + location.foursquareId() + '?openPhotoId=' + photoId,
+                innerHtml = '<a target="_blank" href="' + sourceUrl + '"><img class="source" alt="" src="' + src +'"></a>',
+                sourceHtml = '<br><a target="_blank" class="source icon-foursquare" href="' + sourceUrl + '"> See more on Foursquare</a>';
+                self.photosDOM(innerHtml + sourceHtml);
+                self.showPhoto(true);
+            } catch (e) {
+                onErrorCallback();
+            }
+        }
+
+        if (location.foursquareInfo()) {
+            getFoursquarePhoto(location.foursquareInfo());
+        } else if (location.foursquareId()) {
+            var url = 'https://api.foursquare.com/v2/venues/explore?near=Ciudad Obregon&venuePhotos=1&query=' + location.title() + '&intent=match&client_id=EPFA1HIBXSJXCJM4V3CSQZ3WA2D4ZZ0E3TJ5BP0QXGYODOBZ&client_secret=05JENVJTNP2SHJCYBZM1KI3XTH4ZXI3OWBQWA1PC3NCVUADD&v=20150504';
+            getJSON(url, getFoursquarePhoto, onErrorCallback);
+        } else {
+            onErrorCallback();
+        }
     };
 
     // Sets the info window's marker as the current location when opened
