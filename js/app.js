@@ -16,7 +16,8 @@ window.onload = loadGoogleMapsScript;
             createErrorMessage('You seem to be offline. Check your internet connection and reload the page.');
         }
     }
-    getJSONP('https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=false', initialize, onErrorCallback);
+    var apiKey = 'AIzaSyDOIIq9bea-J40LPlMFFbyMMPCWSiRac9I';
+    getJSONP('https://maps.googleapis.com/maps/api/js?v=3.exp&key=' + apiKey, initialize, onErrorCallback);
 }
 
 /**
