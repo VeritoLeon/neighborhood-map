@@ -1,5 +1,5 @@
 # Neighborhood-map
-<img src="img/logo.svg" alt="">
+<img src="img/logo.png" alt="">
 
 It says "neighborhood map", but this map actually shows the area surrounding my old university instead. I spent a lot of time around these places, so I decided it was more appropiate. My city, Ciudad Obregon, is not big but I quite like it here. Hope you do too.
 
