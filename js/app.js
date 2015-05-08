@@ -1,14 +1,14 @@
 var map, infowindow, initialLocations, viewModel, detailsViewModel, pin, type;
 
-// the loadScript function is the first thing we want to execute
+// the loadGoogleMapsScript function is the first thing we want to execute
 // as soon as the window is ready.
-window.onload = loadScript;
+window.onload = loadGoogleMapsScript;
 
 /**
  * Adds the google maps API script to the DOM and loads it.
  * If sucessful, it callbacks the initialize function.
  */
- function loadScript() {
+ function loadGoogleMapsScript() {
     function onErrorCallback(event) {
         if (navigator.onLine) {
             createErrorMessage('We\'re having trouble reaching Google maps. Maybe a firewall is blocking it.', 'www.maps.googleapis.com');
@@ -73,7 +73,6 @@ window.onload = loadScript;
      */
      type = {
         'food': {
-            'icon': 'img/food.svg'
             ,'marker': pin.setColor('#dd4229')
         }
         ,'entertainment': {
@@ -124,6 +123,7 @@ window.onload = loadScript;
  * @param number latitude    Latitude is specified in degrees within the range [-90, 90]
  * @param number longitude   Longitude is specified in degrees within the range [-180, 180]
  * @param type   kind        Location's category. Set in the form type.[category]
+ * @param Object thirdParty  The Id's associated to the location (for the call to third party APIs)
  */
  var Location = function(title, description, latitude, longitude, kind, thirdParty) {
     var self = this;
