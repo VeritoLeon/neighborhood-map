@@ -9,17 +9,23 @@ This is my fifth project towards my Front-end Nanodegree.
 How do I see it in action?
 -------------------------------------
 You can either check it at
->http://veritoleon.github.io/neighborhood-map
+```
+http://veritoleon.github.io/neighborhood-map
+```
 
 Or you can clone this repository by running the following command
->git clone https://github.com/VeritoLeon/neighborhood-map
+```
+git clone https://github.com/VeritoLeon/neighborhood-map
+```
 
 Open [index.html](index.html) in the root folder with your browser or [dist/index.html](dist/index.html) for the production ready app.
 
 Can I tweak it?
 -------------------------------------
 Sure! You'll need to install [Node.js](https://nodejs.org) and [Grunt](http://gruntjs.com/getting-started). Then, just clone this repository and install the dependencies from the command line with 
->npm install
+```
+npm install
+```
 
 I do not recommend modifying the contents of [dist](dist), because these will be modified each time you run grunt.
 
