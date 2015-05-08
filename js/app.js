@@ -98,7 +98,6 @@ window.onload = loadGoogleMapsScript;
     // All the locations that will be put in the map
     initialLocations  = [
     new Location('Lockers', 'Sports restaurant and bar located in Arena Itson', 27.493913, -109.974022, type.food, {'foursquareId': '5254ea73498ebbc7b795c436'})
-    ,new Location('Arena ITSON', 'Arena that holds cultural, sports and academyc events', 27.493730, -109.974260, type.recreation, {'foursquareId': '4fa9d9f9e4b04de174340ffc'})
     ,new Location('Parque Casa Blanca', 'Casa Blanca\'s park', 27.488502, -109.980858, type.outdoors, {'foursquareId': '4fa9d9f9e4b04de174340ffc'})
     ,new Location('Extensión de la Cultura', 'University\'s culture building', 27.491421, -109.972339, type.recreation, {'foursquareId': '4cc5c26738aaa09367b51a62'})
     ,new Location('Piscina Olímpica ITSON', 'Olympic pool', 27.493510, -109.973391, type.outdoors, {'foursquareId': '4dd3c51f1f6e5374d6e0ebce'})
