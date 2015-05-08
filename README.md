@@ -13,8 +13,10 @@ You can either check it at
 
 Or you can clone this repository by running the following command
 >git clone https://github.com/VeritoLeon/neighborhood-map
+
 Then, install the dependencies with 
 >npm install
+
 Open _index.html_ in the root folder with your browser or _dist/index.html_ for the production ready app.
 
 References
