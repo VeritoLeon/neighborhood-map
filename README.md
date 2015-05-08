@@ -14,10 +14,14 @@ You can either check it at
 Or you can clone this repository by running the following command
 >git clone https://github.com/VeritoLeon/neighborhood-map
 
-Then, install the dependencies with 
+Open [index.html](index.html) in the root folder with your browser or [dist/index.html](dist/index.html) for the production ready app.
+
+Can I tweak it?
+-------------------------------------
+Sure! You'll need to install [Node.js](https://nodejs.org) and [Grunt](http://gruntjs.com/getting-started). Then, just clone this repository and install the dependencies from the command line with 
 >npm install
 
-Open _index.html_ in the root folder with your browser or _dist/index.html_ for the production ready app.
+I do not recommend modifying the contents of [dist](dist), because these will be modified each time you run grunt.
 
 References
 -------------------------------------
