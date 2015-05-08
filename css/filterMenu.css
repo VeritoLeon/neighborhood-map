@@ -1,8 +1,8 @@
-#filter {
+.filter {
     display: none;
 }
 
-#filter-button {
+.filter-button {
     background-color: rgba(0, 0, 0, 0);
     padding-top: 0.5rem;
     width: 2.3125rem;
@@ -14,14 +14,14 @@
     margin: 0;
 }
 
-#filter-button:focus,
-#filter-button:hover {
+.filter-button:focus,
+.filter-button:hover {
     color: #000;    
     outline-color: rgba(0, 0, 0, 0);
 }
 
 
-#filter-menu {
+.filter-menu {
     width: 94vw;    
     height: 80vh;
     display: flex;
@@ -33,41 +33,41 @@
     z-index: 2;
 }
 
-#filter-menu dt,
-#filter-menu dd a{
+.filter-menu dt,
+.filter-menu dd a{
     font-size: 1rem;
 }
 
-#filter-menu i {
+.filter-menu i {
     display: none;
 }
 
 @media only screen and (max-width: 40.063em) {
-    #filter:not(:checked) ~ #filter-menu {
+    .filter:not(:checked) ~ .filter-menu {
         transform: translateY(-200%);
     }
 
-    #filter(:checked) ~ #filter-menu {
+    .filter(:checked) ~ .filter-menu {
         transform: translateY(0%);
     }
 }
 
 @media only screen and (min-width: 642px) and (max-width: 688px) {
-    #filter-menu dd {
+    .filter-menu dd {
         margin-left: 0;
     }
 
-    #filter-menu dt + dd {
+    .filter-menu dt + dd {
         margin-left: 1em;
     }
 }
 
 @media only screen and (min-width: 40.063em) {
-    #filter-button {
+    .filter-button {
         display: none;
     }
     
-    #filter-menu {
+    .filter-menu {
         float: right;
         display: block;
         width: auto;
@@ -77,22 +77,22 @@
         transform: translateY(0);
     }
 
-    #filter-menu dt,
-    #filter-menu dd{
+    .filter-menu dt,
+    .filter-menu dd{
         font-size: 0.875rem;
     }
 
-    #filter-menu i {
+    .filter-menu i {
         display: inline;
     }
 
-    #filter-menu span {
+    .filter-menu span {
         display: none;
     }
 }
 
 @media only screen and (min-width: 1025px) {
-    #filter-menu span {
+    .filter-menu span {
         display: inline;
     }
 }

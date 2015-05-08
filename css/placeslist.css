@@ -54,12 +54,12 @@
 }
  
 .placebar-button,
-#place {
+.place {
     float: right;
     margin: 2.7rem 1em 0 0;
 }
  
-#place .icon-location:before {
+.place .icon-location:before {
   position: absolute;
   top: 0.5em;
   right: 0.3em;
@@ -154,7 +154,7 @@
         margin: 0;
     }
 
-    .placebar-button, #place {
+    .placebar-button, .place {
         display: none;
     }
 

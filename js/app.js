@@ -17,7 +17,7 @@ window.onload = loadGoogleMapsScript;
         }
     }
     var apiKey = 'AIzaSyDOIIq9bea-J40LPlMFFbyMMPCWSiRac9I';
-    getJSONP('https://maps.googleapis.com/maps/api/js?v=3.exp&key=' + apiKey, initialize, onErrorCallback);
+    getJSONP('https://maps.googleapis.com/maps/api/js?v=3.exp&key1=' + apiKey, initialize, onErrorCallback);
 }
 
 /**

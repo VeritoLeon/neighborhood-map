@@ -1,4 +1,4 @@
-#details {
+.details {
     z-index: 0;
     position: fixed;
     bottom: 0;
@@ -10,7 +10,7 @@
     box-shadow:  0 3px 10px rgba(145, 145, 145, 0.7);
 }
 
-#details.hidden {
+.details.hidden {
     transform: translateX(500%);
 }
 
@@ -62,19 +62,25 @@
     max-width: 90%;
 }
 
-.content#photos {
+.content.photos {
     text-align: center;
 }
 
-.content#photos img {
+.content.photos img {
     max-height: 100%;
     max-width: 100%;
     margin-bottom: 1.25rem;
 }
 
+@media only screen and (min-width: 642px) {
+    .details {
+        z-index: 1;
+    } 
+}
+
 /*As a sidebar*/
 @media only screen and (min-width: 850px) {
-    #details {
+    .details {
         width: 30vw;
         min-width: 300px;
         height: calc(100vh - 45px);
