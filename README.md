@@ -27,6 +27,7 @@ Sure! You'll need to install [Node.js](https://nodejs.org) and [Grunt](http://gr
 ```
 npm install
 ```
+The heart of the application is [app.js](js/app.js), so it's probable you'll want to modify it. Check the documentation on [more info on app.js](js/AppJsInfo.md) if you need it explained further.
 
 I do not recommend modifying the contents of [dist](dist), because these will be modified each time you run grunt.
 
