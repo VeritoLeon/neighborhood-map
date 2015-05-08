@@ -19,7 +19,7 @@ Inside **initialize**, the main things you might want to modify are:
 * _mapOptions_: Customize the map according to the [MapOptions reference](https://developers.google.com/maps/documentation/javascript/reference#MapOptions)
 * _pin_: Sets the appearance of the map's markers. Learn more at the [Symbol reference](https://developers.google.com/maps/documentation/javascript/reference#Symbol)
 * _type_: These are the available categories of the map locations. Use this one to customize groups.
-* _initialLocations_: Here you indicate all the locations that will be displayed in the map. Check [the Location section](#Location) to learn more about the parameters.
+* _initialLocations_: Here you indicate all the locations that will be displayed in the map. Check [the location section](#Location) to learn more about the parameters.
 
 ### Location
 For each Location object you will need to specify (in this order):
