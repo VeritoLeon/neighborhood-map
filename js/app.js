@@ -1,3 +1,5 @@
+'use strict;'
+
 var map, infowindow, initialLocations, viewModel, detailsViewModel, pin, type;
 
 // the loadGoogleMapsScript function is the first thing we want to execute
@@ -8,7 +10,7 @@ window.onload = loadGoogleMapsScript;
  * Adds the google maps API script to the DOM and loads it.
  * If sucessful, it callbacks the initialize function.
  */
- function loadGoogleMapsScript() {
+function loadGoogleMapsScript() {
     function onErrorCallback(event) {
         if (navigator.onLine) {
             createErrorMessage('We\'re having trouble reaching Google maps. Maybe a firewall is blocking it.', 'www.maps.googleapis.com');
@@ -24,12 +26,12 @@ window.onload = loadGoogleMapsScript;
  * Initializes objects, makes elements needed by the app visible
  * and creates map, map components and view model.
  */
- function initialize() {
+function initialize() {
     /**
      * Will specify how we want to customize our map
      * @type google.maps.MapOptions (https://developers.google.com/maps/documentation/javascript/reference#MapOptions)
      */
-     var mapOptions = {
+    var mapOptions = {
         center: { lat: 27.4950000, lng: -109.969000},
         zoom: 16,
         panControl: false,
@@ -51,7 +53,7 @@ window.onload = loadGoogleMapsScript;
      * This sets is the appearance of our markers to a custom pin
      * @type google.maps.Symbol (https://developers.google.com/maps/documentation/javascript/reference#Symbol)
      */
-     pin = {
+    pin = {
         // Get this from pin-red-10-small.svg
         path: 'm5.7173 24.562c-6.148-10.931-6.5821-15.691-1.8615-20.412 4.3413-4.3413 10.181-4.3413 14.522 0 4.7683 4.7683 4.3293 9.6487-1.8444 20.501-2.7042 4.7537-5.1417 8.6382-5.4167 8.6322s-2.7048-3.9309-5.3995-8.722zm9.1995-9.4112c1.5469-1.5469 1.5469-6.0531 0-7.6s-6.0531-1.5469-7.6 0-1.5469 6.0531 0 7.6 6.0531 1.5469 7.6 0z',
         fillOpacity: 1,
@@ -72,7 +74,7 @@ window.onload = loadGoogleMapsScript;
      * and give us the assets of that group
      * @type Object
      */
-     type = {
+    type = {
         'food': {
             'marker': pin.setColor('#dd4229')
         }
@@ -127,7 +129,7 @@ window.onload = loadGoogleMapsScript;
  * @param type   kind        Location's category. Set in the form type.[category]
  * @param Object thirdParty  The Id's associated to the location (for the call to third party APIs)
  */
- var Location = function(title, description, latitude, longitude, kind, thirdParty) {
+var Location = function(title, description, latitude, longitude, kind, thirdParty) {
     var self = this;
     self.title = ko.observable(title);
     self.description = ko.observable(description);
@@ -142,8 +144,8 @@ window.onload = loadGoogleMapsScript;
     /**
      * @type google.maps.Marker (https://developers.google.com/maps/documentation/javascript/reference#Marker)
      */
-     self.marker = new google.maps.Marker({ 
-        position: new google.maps.LatLng(self.latitude(), self.longitude()), 
+    self.marker = new google.maps.Marker({
+        position: new google.maps.LatLng(self.latitude(), self.longitude()),
         map: map,
         icon: kind.marker,
         animation: google.maps.Animation.DROP,
@@ -159,7 +161,7 @@ window.onload = loadGoogleMapsScript;
 /**
  * Controls the behavior and logic of our view
  */
- var ViewModel = function() {
+var ViewModel = function() {
     var self = this;
     self.query = ko.observable(''); // text input in the search box
     self.queryResultsShown = ko.observable(false), // whether the locations list should be displayed
@@ -179,7 +181,7 @@ window.onload = loadGoogleMapsScript;
     /**
      * Toogles queryResultsShown
      */
-     self.showResults = function() {
+    self.showResults = function() {
         self.queryResultsShown(true);
     };
 
@@ -187,13 +189,13 @@ window.onload = loadGoogleMapsScript;
      * Sets the given location as the current location
      * @param Location obj currentLocation
      */
-     self.setCurrentLocation = function(obj) {
+    self.setCurrentLocation = function(obj) {
         if (obj = self.getLocation(obj.title())) {
             obj != self.currentLocation()? self.currentLocation().marker.setAnimation(null) : self.currentLocation();
-            
+
             obj.marker.setAnimation(google.maps.Animation.BOUNCE);
             map.panTo(obj.marker.getPosition());
-            return self.currentLocation(obj); 
+            return self.currentLocation(obj);
         }
     };
 
@@ -202,10 +204,10 @@ window.onload = loadGoogleMapsScript;
      * @param  String title   location's title
      * @return Location       location matching the title
      */
-     self.getLocation = function(title) {
+    self.getLocation = function(title) {
         for (var loc in self.locations()) {
             if (self.locations()[loc].title() === title) {
-                return self.locations()[loc]; 
+                return self.locations()[loc];
             }
         }
     };
@@ -280,7 +282,7 @@ window.onload = loadGoogleMapsScript;
     /**
      * Sets an active section whenever their "show[Detail]" observable updates
      */
-     self.defaultActive = ko.computed(function() {
+    self.defaultActive = ko.computed(function() {
         if (self.showInfo()) {
             self.setActiveInfo();
         } else if (self.showComments()) {
@@ -308,7 +310,7 @@ window.onload = loadGoogleMapsScript;
     self.areDetailsActive = function(expected) {
         return self.activeDetails() === expected ? 'active' : '';
     };
-    
+
     self.showAnyDetail = ko.pureComputed(function() { // are any of the details sections shown?
         return self.showPhoto() || self.showComments() || self.showInfo();
     });
@@ -318,12 +320,13 @@ window.onload = loadGoogleMapsScript;
      * and sets it as the current location.
      * @param  Location location
      */
-     self.openInfoWindow = function(location) {
+    self.openInfoWindow = function(location) {
+        self.setCurrentLocation(location);
         var content = '<div tabindex="1" href="#"><h2 class="info-title">' + location.title() + '</h2>'
         + '<p class="info-description">' + location.description() + '</p></div>';
+        //var content = '<div data-bind="template: {name: infowindow-template, data: currentLocation}">';
         infowindow.setContent(content);
         infowindow.open(map, location.marker);
-        self.setCurrentLocation(location);
         self.loadDetails(location);
         self.queryResultsShown(false);
         self.showDetails(true);
@@ -333,23 +336,22 @@ window.onload = loadGoogleMapsScript;
      * Filters the locations to the ones who match the filter
      * and whose title matches the query
      */
-     self.filterLocations = ko.computed(function() {
+    self.filterLocations = ko.computed(function() {
         return ko.utils.arrayFilter(self.locations(), function (location) {
-            if (valueMatches(self.query(), location.title()) &&
-                (self.filter() == location.kind() || !self.filter())) {
+            if (valueMatches(self.query(), location.title()) && (self.filter() == location.kind() || !self.filter())) {
                 location.marker.setMap(map);
-            return true;
-        } else {
-            location.marker.setMap(null);
-            return false;
-        }
-    });
+                return true;
+            } else {
+                location.marker.setMap(null);
+                return false;
+            }
+        });
     });
 
     /**
      * Selects the first location of the locations array
      */
-     self.selectMarker = function() {
+    self.selectMarker = function() {
         if (self.locations().length) {
             self.openInfoWindow(self.filterLocations()[0]);
             self.query('');
@@ -360,7 +362,7 @@ window.onload = loadGoogleMapsScript;
      * Loads all the detail sections
      * @param  Location location
      */
-     self.loadDetails = function(location) {
+    self.loadDetails = function(location) {
         self.loadInfo(location);
         self.loadComments(location);
         self.loadPhotos(location);
@@ -370,7 +372,7 @@ window.onload = loadGoogleMapsScript;
      * Loads the location's information if successful
      * @param  Location location
      */
-     self.loadInfo = function(location) {
+    self.loadInfo = function(location) {
         if (location.info()) {
             setWikipediaDescription(location.info());
         } else if (location.wikipediaId()) {
@@ -397,7 +399,7 @@ window.onload = loadGoogleMapsScript;
      * Loads a comment associated with the location if successful
      * @param  Location location
      */
-     self.loadComments = function(location) {
+    self.loadComments = function(location) {
         if (location.foursquareInfo()) {
             setFoursquareTips(location.foursquareInfo());
         } else if (location.foursquareId()) {
@@ -439,6 +441,10 @@ window.onload = loadGoogleMapsScript;
         }
     };
 
+    /**
+     * Loads a photo associated with the location if successful
+     * @param  Location location
+     */
     self.loadPhotos = function(location) {
         if (location.foursquareInfo()) {
             setFoursquarePhoto(location.foursquareInfo());

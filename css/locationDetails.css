@@ -6,7 +6,7 @@
     height: 40vh;
     transition: transform 600ms ease-in-out;
     color: rgba(0, 0, 0, 0.74902);
-    background: #FAFAFA;
+    background: #fafafa;
     box-shadow:  0 3px 10px rgba(145, 145, 145, 0.7);
 }
 
@@ -25,19 +25,19 @@
 
 .tabs,
 .tabs .tab-title > a {
-    background: #EEEADE;
+    background: #eeeade;
 }
 
 .tabs .tab-title.active > a {
-    background: #E8DDBD;
+    background: #e8ddbd;
 }
 
 .tabs .tab-title > a:hover {
-    background: #EEEACF;
+    background: #eeeacf;
 }
 
 .tabs .tab-title.active > a:hover {
-    background: #E8DDAE;
+    background: #e8ddae;
 }
 
 .tabs-content {
@@ -52,7 +52,7 @@
 }
 
 .tabs-content > .content p {
-    font-family: Roboto, Arial, sans-serif;
+    font-family: "Roboto", Arial, sans-serif;
     font-size: 16px;
     font-weight: 300;
 }
@@ -75,7 +75,7 @@
 @media only screen and (min-width: 642px) {
     .details {
         z-index: 1;
-    } 
+    }
 }
 
 /*As a sidebar*/
@@ -107,6 +107,6 @@
 
     .tabs-content > .content:not(:last-child) {
         margin: 3px 0;
-        border-bottom: 1px solid #E6E6E6;
+        border-bottom: 1px solid #e6e6e6;
     }
 }

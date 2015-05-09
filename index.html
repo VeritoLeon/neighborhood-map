@@ -55,7 +55,7 @@
             </dl>
             <!-- Filter menu END -->
         </div>
-    </nav>    
+    </nav>
     <!-- Locations list START -->
     <div class="hidden placeslist fixed" data-bind="css: { hidden: false }">
         <input title="show places list" type="checkbox" id="placeslist-switcher" data-bind="checked: queryResultsShown"/>
@@ -100,6 +100,14 @@
         </div>
     </article>
     <!-- Details END -->
+    <!-- Templates -->
+    <script type="text/html" id="infowindow-template">
+        <div tabindex="1" href="#">
+            <h2 data-bind="text: title" class="info-title"></h2>
+            <p data-bind="text: description" class="info-description"></p>
+        </div>
+    </script>
+    <!-- Templates END-->
     <script async src="js/knockout-3.3.0.js"></script>
     <script src="js/app.js?__inline=true"></script>
     <script src="js/helpers.js?__inline=true"></script>

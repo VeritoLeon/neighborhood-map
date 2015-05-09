@@ -1,14 +1,16 @@
+'use strict;'
+
 /**
  * Creates a sticky warning message
  * @param  String message   What the error message is going to say
  * @param  String serverUrl Url to check if it is down
  */
 function createErrorMessage(message, serverUrl) {
-    var newDiv = document.createElement('div'); 
-    var newContent = document.createTextNode(message + ' '); 
-    var downForEveryone = document.createElement('a'); 
+    var newDiv = document.createElement('div');
+    var newContent = document.createTextNode(message + ' ');
+    var downForEveryone = document.createElement('a');
     downForEveryone.setAttribute('href', 'http://www.isup.me/' + serverUrl);
-    var linkText = document.createTextNode('Maybe their servers are down?'); 
+    var linkText = document.createTextNode('Maybe their servers are down?');
     newDiv.appendChild(newContent);
     if (serverUrl) {
         downForEveryone.appendChild(linkText);
@@ -16,8 +18,8 @@ function createErrorMessage(message, serverUrl) {
     newDiv.appendChild(downForEveryone);
     newDiv.className = 'alert-box warning';
     newDiv.setAttribute('data-alert', '');
-    // add the newly created element and its content into the DOM 
-    var messagesDiv = document.getElementById('messages'); 
+    // add the newly created element and its content into the DOM
+    var messagesDiv = document.getElementById('messages');
     messagesDiv.appendChild(newDiv);
 }
 
@@ -44,7 +46,7 @@ function valueMatches(inputItem, testItem) {
 
 /**
  * Send an asynchronous request that returns a JSON
- * @param  String url            
+ * @param  String url
  * @param  function onSuccessCallback
  * @param  function onErrorCallback
  */
@@ -66,7 +68,7 @@ function getJSON(url, onSuccessCallback, onErrorCallback) {
 
 /**
  * Send an asynchronous request
- * @param  String url            
+ * @param  String url
  * @param  function onSuccessCallback
  * @param  function onErrorCallback
  */
