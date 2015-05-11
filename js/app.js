@@ -96,7 +96,7 @@ function initialize() {
     // We also create the element that will display our locations information.
     map = new google.maps.Map(mapCanvas, mapOptions);
     infowindow = new google.maps.InfoWindow();
-
+    
     // All the locations that will be put in the map
     initialLocations  = [
     new Location('Lockers', 'Sports restaurant and bar located in Arena Itson', 27.493913, -109.974022, type.food, {'foursquareId': '5254ea73498ebbc7b795c436'})
@@ -324,7 +324,6 @@ var ViewModel = function() {
         self.setCurrentLocation(location);
         var content = '<div tabindex="1" href="#"><h2 class="info-title">' + location.title() + '</h2>'
         + '<p class="info-description">' + location.description() + '</p></div>';
-        //var content = '<div data-bind="template: {name: infowindow-template, data: currentLocation}">';
         infowindow.setContent(content);
         infowindow.open(map, location.marker);
         self.loadDetails(location);
