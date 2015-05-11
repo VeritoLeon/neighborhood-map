@@ -18,7 +18,7 @@ Or you can clone this repository by running the following command
 ```
 git clone https://github.com/VeritoLeon/neighborhood-map
 ```
-Modify apiKey [js/app.js](js/app.js) (line 19) with your [Google Maps API Key](https://developers.google.com/maps/documentation/javascript/tutorial#api_key) and open [index.html](index.html) in the root folder with your browser.
+Modify apiKey [js/app.js](js/app.js) (line 21) with your [Google Maps API Key](https://developers.google.com/maps/documentation/javascript/tutorial#api_key) and open [index.html](index.html) in the root folder with your browser.
 If you want, after this you can run on the command line
 ```
 grunt
